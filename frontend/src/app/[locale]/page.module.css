@@ -1,0 +1,64 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+  
+  .main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 1rem;
+    animation: fadeIn 0.8s ease-out;
+  }
+  
+  .title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  
+  .content {
+    font-size: 1.25rem;
+    color: #4b5563;
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Темная тема */
+  @media (prefers-color-scheme: dark) {
+    .content {
+      color: #d1d5db;
+    }
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .title {
+      font-size: 2.5rem;
+    }
+    
+    .content {
+      font-size: 1.1rem;
+    }
+  }

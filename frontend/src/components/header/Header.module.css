@@ -1,0 +1,133 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scrolled {
+  padding: 0.75rem 2rem;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+}
+
+.nav {
+  display: flex;
+  gap: 1.75rem;
+}
+
+.navLink {
+  position: relative;
+  color: #333;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 0;
+  transition: color 0.2s ease;
+}
+
+.navLink:hover {
+  color: #000;
+}
+
+.navLink::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+
+.navLink:hover::before {
+  width: 100%;
+}
+
+.languageSwitcher {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.languageLabel {
+  color: #666;
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.languageButton {
+  background: none;
+  border: none;
+  color: #555;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.languageButton:hover {
+  color: #000;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.languageSeparator {
+  color: #e5e5e5;
+  user-select: none;
+}
+
+/* Темная тема */
+@media (prefers-color-scheme: dark) {
+  .header {
+    background: rgba(15, 23, 42, 0.96);
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .navLink {
+    color: #e5e5e5;
+  }
+
+  .navLink:hover {
+    color: #fff;
+  }
+
+  .languageLabel {
+    color: #a1a1aa;
+  }
+
+  .languageButton {
+    color: #d4d4d8;
+  }
+
+  .languageButton:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+  .header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .nav {
+    gap: 1rem;
+  }
+
+  .languageSwitcher {
+    margin-top: 0.5rem;
+  }
+}
