@@ -39,15 +39,15 @@ export default function Header({ locale }: HeaderProps) {
         <Link href="/contact" className={styles.navLink}>
           {t('contact')}
         </Link>
-        <Link href="/books" className={styles.navLink}>
+        {/* <Link href="/books" className={styles.navLink}>
           {t('books')}
-        </Link>
+        </Link> */}
         <Link href="/backend" className={styles.navLink}>
           {t('backend')}
         </Link>
-        <Link href="/secondBooks" className={styles.navLink}>
+        {/* <Link href="/secondBooks" className={styles.navLink}>
           {t('secondBooks')}
-        </Link>
+        </Link> */}
       </nav>   
 
       <div className={styles.languageSwitcher}>
