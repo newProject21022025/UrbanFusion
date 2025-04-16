@@ -1,4 +1,3 @@
-// main.ts
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -8,16 +7,12 @@ async function bootstrap() {
   
   app.setGlobalPrefix('uk');
   
-  // CORS Configuration
+  // CORS Configuration — дозволити все
   app.enableCors({
-    origin: [
-      'https://urban-fusion-5fee.vercel.app',
-      'https://urban-fusion-amber.vercel.app',
-      'http://localhost:3000'
-    ],
+    origin: true, // дозволити всі домени
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true,
-    allowedHeaders: 'Content-Type,Authorization,Accept',
+    credentials: true, // дозволити передачу cookie та авторизаційних заголовків
+    allowedHeaders: '*', // дозволити всі заголовки
     maxAge: 86400
   });
 
@@ -26,6 +21,7 @@ async function bootstrap() {
 }
 
 bootstrap();
+
 
 
 
