@@ -1,14 +1,12 @@
 // store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './slices/counterSlice';
-import booksReducer from './slices/booksSlice';
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
 
 // Створюємо store першим
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
-    books: booksReducer,
   },
 });
 

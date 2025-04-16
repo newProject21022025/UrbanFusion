@@ -36,19 +36,13 @@ export default function Header({ locale }: HeaderProps) {
         <Link href="/about" className={styles.navLink}>
           {t('about')}
         </Link>
-        <Link href="/contact" className={styles.navLink}>
+        <Link href="/catalog" className={styles.navLink}>
+          {t('catalog')}
+        </Link>
+        {/* <Link href="/contact" className={styles.navLink}>
           {t('contact')}
-        </Link>
-        {/* <Link href="/books" className={styles.navLink}>
-          {t('books')}
         </Link> */}
-        <Link href="/backend" className={styles.navLink}>
-          {t('backend')}
-        </Link>
-        {/* <Link href="/secondBooks" className={styles.navLink}>
-          {t('secondBooks')}
-        </Link> */}
-      </nav>   
+      </nav>
 
       <div className={styles.languageSwitcher}>
         <span className={styles.languageLabel}>{t('switchLanguage')}:</span>
