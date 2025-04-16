@@ -1,29 +1,30 @@
 // main.ts
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   
   app.setGlobalPrefix('uk');
   
-  // Детальніше налаштування CORS
+  // CORS Configuration
   app.enableCors({
     origin: [
-      'https://urban-fusion-amber.vercel.app',
       'https://urban-fusion-5fee.vercel.app',
-      'http://localhost:3000',
-      'http://localhost:3001'
+      'https://urban-fusion-amber.vercel.app',
+      'http://localhost:3000'
     ],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH', 'HEAD'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-    exposedHeaders: ['Content-Length', 'X-Request-ID'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
-    maxAge: 86400, // Кешування CORS на 24 години
+    allowedHeaders: 'Content-Type,Authorization,Accept',
+    maxAge: 86400
   });
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
+
 bootstrap();
 
 
