@@ -1,23 +1,23 @@
+// main.ts
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
-const allowedOrigins = [
-  'https://urban-fusion-5fee.vercel.app',
-  'https://urban-fusion-amber.vercel.app',
-  'http://localhost:3000'
-];
-
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  
+
   app.setGlobalPrefix('uk');
+
+  const allowedOrigins = [
+    'https://urban-fusion-amber.vercel.app',
+    'https://urban-fusion-5fee.vercel.app',
+    'http://localhost:3000'
+  ];
 
   app.enableCors({
     origin: (origin, callback) => {
-      // Дозволити запити без origin (наприклад, з Postman)
       if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, origin);
+        callback(null, origin); // ❗ важливо повертати origin, а не true
       } else {
         callback(new Error('Not allowed by CORS'));
       }
@@ -25,15 +25,14 @@ async function bootstrap() {
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type,Authorization,Accept',
-    exposedHeaders: 'Content-Length,X-Request-ID',
-    maxAge: 86400
   });
 
   await app.listen(process.env.PORT || 3000);
-  console.log(`✅ Server is running on: ${await app.getUrl()}`);
+  console.log(`Server is running on ${await app.getUrl()}`);
 }
 
 bootstrap();
+
 
 
 
