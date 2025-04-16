@@ -2,11 +2,8 @@
   "Header": {
     "home": "Home",
     "about": "About",
-    "contact": "Contact",
     "switchLanguage": "Language",
-    "books": "Books",
-    "backend": "Backend",
-    "secondBooks": "SecondBooks"
+    "catalog": "Catalog"
   },
   "Home": {
     "title": "Welcome to our website",
@@ -20,36 +17,8 @@
     "title": "Contact Us",
     "content": "This is the contact page content in English."
   },
-  "Books": {
-    "title": "Our bookss",
-    "content": "These are books in English."
-  },
-  "Cards": {
-    "title": "Cards",
-    "delete": "Delete",
-    "error": "Помилка"   
-  },
-  "FormAddBooks": {
-    "formTitle": "Add a New Book",
-    "titleEn": "Title (English)",
-    "titleUk": "Title (Ukrainian)",
-    "descriptionEn": "Description (English)",
-    "descriptionUk": "Description (Ukrainian)",
-    "image": "Image URL",
-    "submit": "Add Book",
-    "loading": "Adding...",
-    "success": "The book has been added successfully!",
-    "error": "Error: {error}",
-    "failed": "Failed to add the book. Please try again."
-  },
-   "Backend": {
-    "title": "Cards from Backend",
-    "loading": "Loading cards...",
-    "fetchError": "Failed to load cards",
-    "unknownError": "Unknown error occurred"
-  },
-  "SecondBooks": {
-    "title": "Our SecondBooks",
-    "content": "These are SecondBooks in English."
+  "Catalog": {
+    "title": "Catalog",
+    "content": "This is the catalog page content in English."
   }
 }
