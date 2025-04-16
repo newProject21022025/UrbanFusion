@@ -8,7 +8,7 @@ async function bootstrap() {
   app.setGlobalPrefix('uk');
   // Додайте цей блок
   app.enableCors({
-    origin: ['https://urban-fusion-amber.vercel.app', 'http://localhost:3001'], // Адреса вашого Next.js додатку
+    origin: ['https://urban-fusion-amber.vercel.app', 'http://localhost:3001', 'http://localhost:3000','https://urban-fusion-5fee.vercel.app'], // Адреса вашого Next.js додатку
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
     credentials: true,
