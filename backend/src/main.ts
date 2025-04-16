@@ -16,17 +16,19 @@ async function bootstrap() {
 
   app.enableCors({
     origin: (origin, callback) => {
+      const allowedOrigins = [
+        'https://urban-fusion-5fee.vercel.app',
+        'http://localhost:3000'
+      ];
       if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, origin); // ❗ важливо повертати origin, а не true
+        callback(null, origin);
       } else {
         callback(new Error('Not allowed by CORS'));
       }
     },
     credentials: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type,Authorization,Accept',
   });
-
+  
   await app.listen(process.env.PORT || 3000);
   console.log(`Server is running on ${await app.getUrl()}`);
 }
