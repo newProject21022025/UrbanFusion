@@ -9,33 +9,53 @@ async function bootstrap() {
   
   app.setGlobalPrefix('uk');
   
-  // Додайте middleware для ручного додавання CORS заголовків
+  // Список дозволених доменів
+  const allowedOrigins = [
+    'https://urban-fusion-5fee.vercel.app',
+    'https://urban-fusion-amber.vercel.app',
+    'http://localhost:3000'
+  ];
+
+  // Налаштування CORS через middleware
   app.use((req: Request, res: Response, next: NextFunction) => {
-    const allowedOrigins = [
-      'https://urban-fusion-5fee.vercel.app',
-      'https://urban-fusion-amber.vercel.app',
-      'http://localhost:3000'
-    ];
-    
     const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-      res.header('Access-Control-Allow-Origin', origin);
+    
+    // Перевірка чи origin є в списку дозволених
+    if (origin && allowedOrigins.includes(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept');
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      res.setHeader('Access-Control-Max-Age', '86400');
+      res.setHeader('Vary', 'Origin');
     }
-    
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Max-Age', '86400');
-    
+
+    // Обробка preflight запитів
     if (req.method === 'OPTIONS') {
-      return res.sendStatus(204);
+      return res.status(204).send();
     }
-    
+
     next();
   });
 
-  await app.listen(3000);
+  // Додаткове вмикання CORS для NestJS
+  app.enableCors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    credentials: true,
+    maxAge: 86400
+  });
+
+  await app.listen(process.env.PORT || 3000);
 }
+
 bootstrap();
 
 
