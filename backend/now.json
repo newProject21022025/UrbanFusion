@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "name": "urban-fusion-backend",
+    "builds": [
+      { "src": "dist/main.js", "use": "@vercel/node" }
+    ],
+    "routes": [
+      { "src": "/uk/(.*)", "dest": "dist/main.js" }
+    ]
+  }
