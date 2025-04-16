@@ -24,22 +24,30 @@ export default function Catalog() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await fetch('https://urban-fusion-amber.vercel.app/uk/books');
+        const response = await fetch('https://urban-fusion-amber.vercel.app/uk/books', {
+          method: 'GET',
+          mode: 'cors',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+        });
         
         if (!response.ok) {
-          throw new Error(`Помилка HTTP: ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const data = await response.json();
         setBooks(data);
       } catch (err) {
+        console.error('Fetch error:', err);
         setError(err instanceof Error ? err.message : 'Невідома помилка');
-        console.error('Помилка при отриманні даних:', err);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchBooks();
   }, []);
 
