@@ -19,6 +19,8 @@
   },
   "Catalog": {
     "title": "Catalog",
-    "content": "This is the catalog page content in English."
+    "content": "This is the catalog page content in English.",
+    "loading": "Loading...",
+    "error": "Error: {message}"
   }
 }
