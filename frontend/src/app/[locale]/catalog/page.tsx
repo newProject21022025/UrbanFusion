@@ -4,7 +4,7 @@
 
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
 import styles from './Catalog.module.css';
 
@@ -23,6 +23,7 @@ interface Book {
 
 export default function Catalog() {
   const t = useTranslations('Catalog');
+  const locale = useLocale(); // получаем текущую локаль
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -53,20 +54,20 @@ export default function Catalog() {
     <main className={styles.main}>
       <h1 className={styles.title}>{t('title')}</h1>
       <p className={styles.content}>{t('content')}</p>
-      
+
       <div className={styles.booksContainer}>
         {books.map((book) => (
           <div key={book._id} className={styles.bookCard}>
-            <img 
-              src={book.image} 
-              alt={book.title.uk} 
+            <img
+              src={book.image}
+              alt={book.title[locale as 'en' | 'uk']}
               className={styles.bookImage}
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = 'none';
               }}
             />
-            <h2>{book.title.uk}</h2>
-            <p>{book.description.uk}</p>
+            <h2>{book.title[locale as 'en' | 'uk']}</h2>
+            <p>{book.description[locale as 'en' | 'uk']}</p>
           </div>
         ))}
       </div>
@@ -95,82 +96,7 @@ export default function Catalog() {
 
 
 
-// import { useEffect, useState } from 'react';
-// import styles from './Catalog.module.css';
 
-// interface Book {
-//   _id: string;
-//   title: {
-//     en: string;
-//     uk: string;
-//   };
-//   description: {
-//     en: string;
-//     uk: string;
-//   };
-//   image: string;
-// }
-
-// export default function Catalog() {
-//   const [books, setBooks] = useState<Book[]>([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState<string | null>(null);
-
-//   useEffect(() => {
-//     const fetchBooks = async () => {
-//       try {
-//         const response = await fetch('https://urban-fusion-amber.vercel.app/uk/books', {
-//           method: 'GET',
-//           mode: 'cors',
-//           credentials: 'include',
-//           headers: {
-//             'Content-Type': 'application/json',
-//             'Accept': 'application/json',
-//           },
-//         });
-        
-//         if (!response.ok) {
-//           throw new Error(`HTTP error! status: ${response.status}`);
-//         }
-        
-//         const data = await response.json();
-//         setBooks(data);
-//       } catch (err) {
-//         console.error('Fetch error:', err);
-//         setError(err instanceof Error ? err.message : 'Невідома помилка');
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-  
-//     fetchBooks();
-//   }, []);
-
-//   if (loading) return <div className={styles.loading}>Завантаження...</div>;
-//   if (error) return <div className={styles.error}>Помилка: {error}</div>;
-
-//   return (
-//     <div className={styles.container}>
-//       <h1>Каталог книг</h1>
-//       <div className={styles.booksGrid}>
-//         {books.map((book) => (
-//           <div key={book._id} className={styles.bookCard}>
-//             <img 
-//               src={book.image} 
-//               alt={book.title.uk} 
-//               className={styles.bookImage}
-//               onError={(e) => {
-//                 (e.target as HTMLImageElement).style.display = 'none';
-//               }}
-//             />
-//             <h3>{book.title.uk}</h3>
-//             <p>{book.description.uk}</p>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
 
 // 'use client';
 
