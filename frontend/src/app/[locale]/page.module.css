@@ -48,7 +48,7 @@
   /* Темная тема */
   @media (prefers-color-scheme: dark) {
     .content {
-      color: #d1d5db;
+      color: #202020;
     }
   }
   

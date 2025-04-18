@@ -51,6 +51,20 @@
 .navLink:hover::before {
   width: 100%;
 }
+.logo{
+  display: flex;
+  align-items:end ;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 700;
+  transition: color 0.2s ease;
+  gap: 10px;
+}
+.logoSvg{
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.5rem;
+}
 
 .languageSwitcher {
   display: flex;
