@@ -1,9 +1,7 @@
 {
   "Header": {
-    "home": "Головна",
-    "about": "Про нас",    
-    "switchLanguage": "Language",
-    "catalog": "Каталог"
+   "catalog": "Каталог",
+   "logo": "UrbanFusion"
   },
   "Home": {
     "title": "Ласкаво просимо на наш сайт",
@@ -22,5 +20,19 @@
     "content": "Це вміст сторінки каталогу українською.",
     "loading": "Завантаження...",
     "error": "Помилка: {message}"
+  },
+  "login": {
+    "title": "Вхід",
+    "email": "Електронна адреса",
+    "password": "Пароль",
+    "forgot": "Забули пароль?",
+    "noAccount": "Немає облікового запису? Зареєструватися.",
+    "submitSuccess": "Успішний вхід!",
+    "submitting": "Вхід...",
+    "errors": {
+      "required": "Обов'язкове поле",
+      "invalidEmail": "Невірний формат email",
+      "passwordMin": "Мінімум {min} символів"
+    }
   }
 }
