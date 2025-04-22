@@ -4,6 +4,7 @@ import { usePathname, useRouter, Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import styles from './Header.module.css';
 import { useEffect, useState } from 'react';
+import LogIn from '../../svg/LogIn/logIn';
 
 type HeaderProps = {
   locale: 'en' | 'uk';
@@ -30,22 +31,22 @@ export default function Header({ locale }: HeaderProps) {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <nav className={styles.nav}>
-        <Link href="/" className={styles.navLink}>
-          {t('home')}
-        </Link>
-        <Link href="/about" className={styles.navLink}>
-          {t('about')}
-        </Link>
-        <Link href="/catalog" className={styles.navLink}>
+        <div>
+          <Link href="/catalog" className={styles.navLink}>
           {t('catalog')}
-        </Link>
-        {/* <Link href="/contact" className={styles.navLink}>
-          {t('contact')}
-        </Link> */}
-      </nav>
-
-      <div className={styles.languageSwitcher}>
-        <span className={styles.languageLabel}>{t('switchLanguage')}:</span>
+        </Link>        
+          <Link href="/AUF/tab1" className={styles.navLink}>ABXC
+          {/* {t('dynamic')} */}
+        </Link>        
+        </div>  
+          <Link href="/" className={styles.navLink}>
+            <span></span>
+          {t('logo')}
+        </Link>  
+              <div className={styles.languageSwitcher}>
+              <Link href="/logIn" className={styles.navLink}>
+            <LogIn/>        
+        </Link>  
         <button 
           onClick={() => changeLanguage('en')}
           className={`${styles.languageButton} ${locale === 'en' ? styles.active : ''}`}
@@ -60,6 +61,9 @@ export default function Header({ locale }: HeaderProps) {
           UK
         </button>
       </div>
+      </nav>
+
+      
     </header>
   );
 }

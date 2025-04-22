@@ -1,0 +1,32 @@
+/* app/[locale]/dynamic/page.module.css */
+
+.container {
+    padding: 24px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .buttonGroup {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .button {
+    padding: 8px 16px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .button:hover {
+    background-color: #2563eb;
+  }
+  

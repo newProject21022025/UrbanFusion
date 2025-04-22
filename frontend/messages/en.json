@@ -1,9 +1,7 @@
 {
   "Header": {
-    "home": "Home",
-    "about": "About",
-    "switchLanguage": "Language",
-    "catalog": "Catalog"
+    "catalog": "Catalog",
+    "logo": "UrbanFusion"
   },
   "Home": {
     "title": "Welcome to our website",
@@ -22,5 +20,19 @@
     "content": "This is the catalog page content in English.",
     "loading": "Loading...",
     "error": "Error: {message}"
-  }
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email address",
+    "password": "Password",
+    "forgot": "Forgot your password?",
+    "noAccount": "No account? Sign up.",
+    "submitSuccess": "Login successful!",
+    "submitting": "Login...",
+    "errors": {
+    "required": "Required field",
+    "invalidEmail": "Invalid email format",
+    "passwordMin": "Minimum {min} characters"
+    }
+    }
 }

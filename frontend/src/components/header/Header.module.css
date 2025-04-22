@@ -4,7 +4,8 @@
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(47, 79, 79, 1);
+  color: rgba(237, 231, 220, 1);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   padding: 1rem 2rem;
@@ -21,16 +22,17 @@
 
 .nav {
   display: flex;
-  gap: 1.75rem;
-}
+  justify-content: space-between;
+  width: 100%;
+  }
 
 .navLink {
-  position: relative;
-  color: #333;
+  position: relative; 
   font-weight: 500;
   font-size: 0.95rem;
   padding: 0.5rem 0;
   transition: color 0.2s ease;
+  color: rgba(237, 231, 220, 1);
 }
 
 .navLink:hover {
@@ -58,16 +60,9 @@
   gap: 0.75rem;
 }
 
-.languageLabel {
-  color: #666;
-  font-size: 0.85rem;
-  font-weight: 400;
-}
-
 .languageButton {
   background: none;
-  border: none;
-  color: #555;
+  border: none; 
   font-weight: 500;
   cursor: pointer;
   padding: 0.25rem 0.5rem;
@@ -81,53 +76,3 @@
   background: rgba(0, 0, 0, 0.05);
 }
 
-.languageSeparator {
-  color: #e5e5e5;
-  user-select: none;
-}
-
-/* Темная тема */
-@media (prefers-color-scheme: dark) {
-  .header {
-    background: rgba(15, 23, 42, 0.96);
-    border-bottom-color: rgba(255, 255, 255, 0.08);
-  }
-
-  .navLink {
-    color: #e5e5e5;
-  }
-
-  .navLink:hover {
-    color: #fff;
-  }
-
-  .languageLabel {
-    color: #a1a1aa;
-  }
-
-  .languageButton {
-    color: #d4d4d8;
-  }
-
-  .languageButton:hover {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.1);
-  }
-}
-
-/* Мобильная адаптация */
-@media (max-width: 768px) {
-  .header {
-    padding: 1rem;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .nav {
-    gap: 1rem;
-  }
-
-  .languageSwitcher {
-    margin-top: 0.5rem;
-  }
-}

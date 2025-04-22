@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.6.1",
+    "formik": "^2.4.6",
     "next": "15.2.4",
     "next-intl": "^4.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-redux": "^9.2.0"
+    "react-redux": "^9.2.0",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
