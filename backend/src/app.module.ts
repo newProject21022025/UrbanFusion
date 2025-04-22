@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CardController } from './start-test-backend/app.controller';
-import { CardService } from './start-test-backend/app.service';
+// import { CardController } from './start-test-backend/app.controller';
+// import { CardService } from './start-test-backend/app.service';
 import { BooksModule } from './books/books.module';
 
 @Module({
@@ -17,8 +17,8 @@ import { BooksModule } from './books/books.module';
     }),
     BooksModule, // Додаємо модуль для роботи з книгами
   ],
-  controllers: [CardController], // Ваш існуючий контролер
-  providers: [CardService], // Ваш існуючий сервіс
+  // controllers: [CardController], // Ваш існуючий контролер
+  // providers: [CardService], // Ваш існуючий сервіс
 })
 export class AppModule {}
 
