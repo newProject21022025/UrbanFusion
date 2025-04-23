@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl'; // <-- важливо для підтримки локалі
 import { LoginForm } from '../../../components/loginForm/LoginForm';
 import styles from './page.module.css';
@@ -10,7 +10,6 @@ import styles from './page.module.css';
 export default function LoginPage() {
   const router = useRouter();
   const locale = useLocale(); // отримуємо поточну локаль
-  const pathname = usePathname(); // для дебагу можна вивести
 
   const handleSubmit = async (values: { login: string; password: string }) => {
     try {
