@@ -7,17 +7,17 @@ import { User } from './schemas/user.schema';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    @InjectModel(User.name) private userModel: Model<User>
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
-  async validateAdmin(login: string, password: string): Promise<boolean> {
-    const user = await this.userModel.findOne({
-      login,
-      password,
-      role: 'admin'
-    }).exec();
-    return !!user;
+  async validateUser(login: string, password: string): Promise<any> {
+    const user = await this.userModel.findOne({ login }).exec();
+    
+    console.log('Found user:', user); // Логування для дебагу
+    
+    if (user && user.password === password) {
+      const { password, ...result } = user.toObject();
+      return result;
+    }
+    return null;
   }
 }
-
