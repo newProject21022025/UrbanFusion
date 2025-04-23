@@ -11,38 +11,42 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleSubmit = async (values: { login: string; password: string }) => {
-    console.log('Отправка данных:', values);
-    
     try {
+      console.log('Login attempt:', values.login);
+      
       const response = await fetch('/api/auth/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values)
       });
-
-      console.log('Статус ответа:', response.status);
-      
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || t('errors.authFailed'));
-      }
-
+  
       const data = await response.json();
-      console.log('Данные ответа:', data);
       
-      localStorage.setItem('authToken', data.token || 'authenticated');
-      localStorage.setItem('userRole', 'admin');
-      
-      router.push('/admin/dashboard');
-    } catch (error: unknown) {
-      let errorMessage = t('errors.generic');
-      if (error instanceof Error) {
-        errorMessage = error.message;
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Login failed');
       }
-      console.error('Ошибка при входе:', error);
-      alert(errorMessage);
+  
+      console.log('Login success:', data.user);
+      
+      // Зберігаємо дані користувача
+      localStorage.setItem('userData', JSON.stringify(data.user));
+      localStorage.setItem('isAuthenticated', 'true');
+      
+      // Перенаправляємо адміна
+      if (data.user.role === 'admin') {
+        router.push('/admin/dashboard');
+      } else {
+        router.push('/profile');
+      }
+      
+    } catch (error) {
+      console.error('Login error:', error);
+    
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert('Login failed. Please try again.');
+      }
     }
   };
 
