@@ -21,18 +21,10 @@
     "loading": "Loading...",
     "error": "Error: {message}"
   },
-  "login": {
-    "title": "Login",
-    "email": "Email address",
-    "password": "Password",
-    "forgot": "Forgot your password?",
-    "noAccount": "No account? Sign up.",
-    "submitSuccess": "Login successful!",
-    "submitting": "Login...",
+    "login": {
     "errors": {
-    "required": "Required field",
-    "invalidEmail": "Invalid email format",
-    "passwordMin": "Minimum {min} characters"
+      "authFailed": "Authentication failed",
+      "generic": "An error occurred"
     }
-    }
+  }
 }
