@@ -1,105 +1,50 @@
-// app/[locale]/login/page.tsx
-'use client'; // Форма є клієнтським компонентом
+// src/app/[locale]/logIn/page.tsx
+'use client';
 
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { useTranslations } from 'next-intl';
+import { LoginForm } from '../../../components/loginForm/LoginForm';
 import styles from './page.module.css';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const t = useTranslations('login');
+  const router = useRouter();
 
-  // Схема валідації з Yup
-  const validationSchema = Yup.object({
-    email: Yup.string()
-      .email(t('errors.invalidEmail'))
-      .required(t('errors.required')),
-    password: Yup.string()
-      .min(6, t('errors.passwordMin', { min: 6 }))
-      .required(t('errors.required'))
-  });
+  const handleSubmit = async (values: { login: string; password: string }) => {
+    console.log('Отправка данных:', values);
+    
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
 
-  // Конфігурація Formik
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: ''
-    },
-    validationSchema,
-    onSubmit: (values) => {
-      // Тут буде логіка відправки форми
-      console.log('Дані форми:', values);
-      alert(t('submitSuccess'));
+      console.log('Статус ответа:', response.status);
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || t('errors.authFailed'));
+      }
+
+      const data = await response.json();
+      console.log('Данные ответа:', data);
+      
+      localStorage.setItem('authToken', data.token || 'authenticated');
+      localStorage.setItem('userRole', 'admin');
+      
+      router.push('/admin/dashboard');
+    } catch (error: any) {
+      console.error('Ошибка при входе:', error);
+      alert(error.message || t('errors.generic'));
     }
-  });
+  };
 
   return (
     <div className={styles.container}>
-      <div className={styles.card}>
-        <h1 className={styles.title}>{t('title')}</h1>
-        
-        <form onSubmit={formik.handleSubmit} className={styles.form}>
-          <div className={styles.inputGroup}>
-            <label htmlFor="email" className={styles.label}>
-              {t('email')}
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              className={`${styles.input} ${
-                formik.touched.email && formik.errors.email ? styles.error : ''
-              }`}
-              placeholder="your@email.com"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
-            />
-            {formik.touched.email && formik.errors.email ? (
-              <div className={styles.errorMessage}>{formik.errors.email}</div>
-            ) : null}
-          </div>
-
-          <div className={styles.inputGroup}>
-            <label htmlFor="password" className={styles.label}>
-              {t('password')}
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              className={`${styles.input} ${
-                formik.touched.password && formik.errors.password ? styles.error : ''
-              }`}
-              placeholder="••••••••"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
-            />
-            {formik.touched.password && formik.errors.password ? (
-              <div className={styles.errorMessage}>{formik.errors.password}</div>
-            ) : null}
-          </div>
-
-          <div className={styles.inputGroup}>
-            <a href="#" className={styles.forgotLink}>
-              {t('forgot')}
-            </a>
-          </div>
-
-          <button
-            type="submit"
-            className={styles.submitButton}
-            disabled={formik.isSubmitting}
-          >
-            {formik.isSubmitting ? t('submitting') : t('title')}
-          </button>
-        </form>
-
-        <p className={styles.footerText}>
-          {t('noAccount')}
-        </p>
-      </div>
+      <LoginForm onSubmit={handleSubmit} />
     </div>
   );
 }

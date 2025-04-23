@@ -1,0 +1,96 @@
+/* components/LoginForm/LoginForm.module.css */
+
+.card {
+    width: 100%;
+    max-width: 28rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+  }
+  
+  .input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 1px #3b82f6;
+  }
+  
+  .forgotLink {
+    font-size: 0.875rem;
+    color: #2563eb;
+    text-decoration: underline;
+  }
+  
+  .forgotLink:hover {
+    color: #1d4ed8;
+  }
+  
+  .submitButton {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .submitButton:hover {
+    background-color: #1d4ed8;
+  }
+  
+  .footerText {
+    font-size: 0.875rem;
+    color: #4b5563;
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  
+  .error {
+    border-color: #ef4444 !important;
+  }
+  
+  .errorMessage {
+    color: #ef4444;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+  }
+  
+  .submitButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
