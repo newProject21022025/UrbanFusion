@@ -1,13 +1,13 @@
 // src/app/[locale]/logIn/page.tsx
 'use client';
 
-import { useTranslations } from 'next-intl';
+// import { useTranslations } from 'next-intl';
 import { LoginForm } from '../../../components/loginForm/LoginForm';
 import styles from './page.module.css';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-  const t = useTranslations('login');
+  // const t = useTranslations('login');
   const router = useRouter();
 
   const handleSubmit = async (values: { login: string; password: string }) => {
