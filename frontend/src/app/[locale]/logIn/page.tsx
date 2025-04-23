@@ -11,30 +11,37 @@ export default function LoginPage() {
   const router = useRouter();
 
   const handleSubmit = async (values: { login: string; password: string }) => {
+    console.log('Отправка данных:', values);
+    
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(values),
-        credentials: 'include'
       });
-  
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({
-          message: t('errors.authFailed')
-        }));
-        throw new Error(errorData.message);
-      }
-  
-      const data = await response.json();
-      // Обробка успішного логіну...
+
+      console.log('Статус ответа:', response.status);
       
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || t('errors.authFailed'));
+      }
+
+      const data = await response.json();
+      console.log('Данные ответа:', data);
+      
+      localStorage.setItem('authToken', data.token || 'authenticated');
+      localStorage.setItem('userRole', 'admin');
+      
+      router.push('/admin/dashboard');
     } catch (error: unknown) {
       let errorMessage = t('errors.generic');
       if (error instanceof Error) {
         errorMessage = error.message;
       }
-      console.error('Login error:', error);
+      console.error('Ошибка при входе:', error);
       alert(errorMessage);
     }
   };
