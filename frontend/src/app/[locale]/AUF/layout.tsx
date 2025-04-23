@@ -1,4 +1,5 @@
 'use client'
+//../src/app/[locale]/AUF/layout.tsx
 
 import { useRouter, usePathname } from 'next/navigation'
 import { ReactNode, useEffect } from 'react'
