@@ -3,8 +3,8 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: true, collection: 'clothes' })
 export class Clothes extends Document {
-  @Prop({ required: true, unique: true })
-  _id: string;
+  // @Prop({ required: true, unique: true })
+  // _id: string;
 
   @Prop({ required: true, unique: true })
   slug: string;
