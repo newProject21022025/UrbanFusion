@@ -2,11 +2,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from './slices/counterSlice';
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
+import authReducer from './slices/authSlice';
 
 // Створюємо store першим
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    auth: authReducer
   },
 });
 
