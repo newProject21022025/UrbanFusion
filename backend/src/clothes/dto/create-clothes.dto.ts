@@ -125,10 +125,10 @@ export class CreateClothesDto {
   @Type(() => ImageDto)
   @IsNotEmpty()
   mainImage: ImageDto;
-  
-  @IsString()
-  @IsNotEmpty()
-  _id: string;
+
+  // @IsString()
+  // @IsNotEmpty()
+  // _id: string;
 
   @IsString()
   @IsNotEmpty()
