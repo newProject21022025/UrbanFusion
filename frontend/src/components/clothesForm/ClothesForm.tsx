@@ -1,16 +1,52 @@
 import { useState } from 'react';
 import styles from './Create.module.css';
 
+interface Name {
+  en: string;
+  uk: string;
+}
+
+interface Description {
+  en: string;
+  uk: string;
+}
+
+interface ImageAlt {
+  en: string;
+  uk: string;
+}
+
+interface Image {
+  url: string;
+  alt: ImageAlt;
+}
+
+interface Price {
+  amount: number;
+  currency: string;
+  discount: number;
+}
+
+interface Category {
+  id: string;
+  en: string;
+  uk: string;
+}
+
+interface StockSize {
+  size: string;
+  quantity: number;
+}
+
+interface StockColor {
+  code: string;
+  en: string;
+  uk: string;
+}
+
 interface StockItem {
-  color: {
-    code: string;
-    en: string;
-    uk: string;
-  };
-  sizes: {
-    size: string;
-    quantity: number;
-  }[];
+  color: StockColor;
+  sizes: StockSize[];
 }
 
 interface CareInstruction {
@@ -23,8 +59,23 @@ interface Detail {
   uk: string;
 }
 
+interface FormData {
+  slug: string;
+  name: Name;
+  description: Description;
+  mainImage: Image;
+  price: Price;
+  availability: boolean;
+  category: Category;
+  tags: string[];
+  stock: StockItem[];
+  careInstructions: CareInstruction[];
+  details: Detail[];
+  gender: 'male' | 'female';
+}
+
 export default function ClothesForm() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     slug: '',
     name: { en: '', uk: '' },
     description: { en: '', uk: '' },
@@ -53,79 +104,37 @@ export default function ClothesForm() {
     gender: 'male'
   });
 
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-//     const { name, value } = e.target;
-    
-//     // Handle nested fields
-//     if (name.includes('.')) {
-//       const [parent, child, subChild] = name.split('.');
-      
-//       if (subChild) {
-//         setFormData(prev => ({
-//           ...prev,
-//           [parent]: {
-//             ...prev[parent as keyof typeof prev],
-//             [child]: {
-//               ...(prev[parent as keyof typeof prev] as any)[child],
-//               [subChild]: value
-//             }
-//           }
-//         }));
-//       } else {
-//         setFormData(prev => ({
-//           ...prev,
-//           [parent]: {
-//             ...prev[parent as keyof typeof prev],
-//             [child]: value
-//           }
-//         }));
-//       }
-//     } else {
-//       setFormData(prev => ({
-//         ...prev,
-//         [name]: value
-//       }));
-//     }
-//   };
-const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
-  
-    // Обработка вложенных полей (например, name.en, price.amount и т.д.)
+
     if (name.includes('.')) {
       const [parent, child, subChild] = name.split('.');
       
       setFormData(prev => {
-        // Для случаев вроде mainImage.alt.en (три уровня вложенности)
-        if (subChild && parent && child && subChild) {
+        if (subChild && parent in prev && typeof prev[parent as keyof FormData] === 'object' && child in (prev[parent as keyof FormData] as object)) {
           return {
             ...prev,
             [parent]: {
-              ...(prev as any)[parent],
+              ...(prev[parent as keyof FormData] as unknown as Record<string, unknown>),
               [child]: {
-                ...(prev as any)[parent][child],
-                [subChild]: value
+                ...(prev[parent as keyof FormData] as unknown as Record<string, unknown>)[child] as Record<string, unknown>,
+                [subChild]: type === 'number' ? Number(value) : value
               }
             }
           };
-        }
-        // Для случаев вроде price.amount (два уровня вложенности)
-        else if (parent && child) {
+        } else if (parent in prev && typeof prev[parent as keyof FormData] === 'object' && child in (prev[parent as keyof FormData] as object)) {
           return {
             ...prev,
             [parent]: {
-              ...(prev as any)[parent],
+              ...(prev[parent as keyof FormData] as unknown as Record<string, unknown>),
               [child]: type === 'number' ? Number(value) : value
             }
           };
         }
         return prev;
       });
-    } 
-    // Обработка обычных полей
-    else {
+    } else {
       setFormData(prev => ({
         ...prev,
         [name]: type === 'checkbox' ? checked : 
@@ -135,50 +144,54 @@ const handleChange = (
     }
   };
 
-  const handleStockChange = (index: number, field: string, value: any, subIndex?: number) => {
-    const updatedStock = [...formData.stock];
-    
-    if (subIndex !== undefined) {
-      // Handle sizes array
-      updatedStock[index].sizes[subIndex] = {
-        ...updatedStock[index].sizes[subIndex],
-        [field]: field === 'quantity' ? Number(value) : value
+  const handleStockChange = (index: number, field: keyof StockColor | keyof StockSize, value: string | number, sizeIndex?: number) => {
+    setFormData(prev => {
+      const updatedStock = [...prev.stock];
+      
+      if (sizeIndex !== undefined && (field === 'size' || field === 'quantity')) {
+        const updatedSizes = [...updatedStock[index].sizes];
+        updatedSizes[sizeIndex] = {
+          ...updatedSizes[sizeIndex],
+          [field]: field === 'quantity' ? Number(value) : value
+        };
+        
+        updatedStock[index] = {
+          ...updatedStock[index],
+          sizes: updatedSizes
+        };
+      } else if (field in updatedStock[index].color) {
+        updatedStock[index] = {
+          ...updatedStock[index],
+          color: {
+            ...updatedStock[index].color,
+            [field]: value
+          }
+        };
+      }
+      
+      return {
+        ...prev,
+        stock: updatedStock
       };
-    } else if (field in updatedStock[index].color) {
-      // Handle color object
-      updatedStock[index].color = {
-        ...updatedStock[index].color,
-        [field]: value
-      };
-    }
-    
-    setFormData(prev => ({
-      ...prev,
-      stock: updatedStock
-    }));
+    });
   };
 
   const handleArrayChange = (
     arrayName: 'careInstructions' | 'details' | 'tags',
     index: number,
-    field: string,
+    field: 'en' | 'uk' | '',
     value: string
   ) => {
     setFormData(prev => {
-      // Создаем копию массива с правильным типом
-      const updatedArray = [...prev[arrayName]] as 
-        | CareInstruction[]
-        | Detail[]
-        | string[];
+      const updatedArray = [...prev[arrayName]];
       
       if (arrayName === 'tags') {
-        // Обработка массива тегов (string[])
-        (updatedArray as string[])[index] = value;
-      } else {
-        // Обработка careInstructions или details (объекты)
-        const item = { ...(updatedArray as (CareInstruction | Detail)[])[index] };
-        (item as any)[field] = value;
-        (updatedArray as (CareInstruction | Detail)[])[index] = item;
+        updatedArray[index] = value;
+      } else if (field) {
+        updatedArray[index] = {
+          ...updatedArray[index] as CareInstruction | Detail,
+          [field]: value
+        };
       }
       
       return {
@@ -187,29 +200,6 @@ const handleChange = (
       };
     });
   };
-
-
-//   const handleArrayChange = (arrayName: 'careInstructions' | 'details' | 'tags', index: number, field: string, value: string) => {
-//     setFormData(prev => {
-//       const updatedArray = [...prev[arrayName]];
-      
-//       if (field) {
-//         // For objects in array (careInstructions, details)
-//         updatedArray[index] = {
-//           ...updatedArray[index],
-//           [field]: value
-//         };
-//       } else {
-//         // For simple array (tags)
-//         updatedArray[index] = value;
-//       }
-      
-//       return {
-//         ...prev,
-//         [arrayName]: updatedArray
-//       };
-//     });
-//   };
 
   const addStockItem = () => {
     setFormData(prev => ({
