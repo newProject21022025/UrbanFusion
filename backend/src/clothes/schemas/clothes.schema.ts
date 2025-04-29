@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 @Schema({ timestamps: true, collection: 'clothes' })
 export class Clothes extends Document {
-  // @Prop({ required: true, unique: true })
-  // _id: string;
+  @Prop({ auto: true })
+  _id: Types.ObjectId;
 
   @Prop({ required: true, unique: true })
   slug: string;
@@ -23,9 +23,27 @@ export class Clothes extends Document {
 
   @Prop({
     type: {
-      amount: Number,
-      currency: String,
-      discount: { type: Number, default: null }
+      url: { type: String, required: true },
+      alt: {
+        en: { type: String, required: true },
+        uk: { type: String, required: true }
+      }
+    },
+    required: true
+  })
+  mainImage: {
+    url: string;
+    alt: {
+      en: string;
+      uk: string;
+    };
+  };
+
+  @Prop({
+    type: {
+      amount: { type: Number, required: true, min: 0 },
+      currency: { type: String, required: true },
+      discount: { type: Number, default: null, min: 0, max: 100 }
     },
     required: true
   })
@@ -40,9 +58,9 @@ export class Clothes extends Document {
 
   @Prop({
     type: {
-      id: String,
-      en: String,
-      uk: String
+      id: { type: String, required: true },
+      en: { type: String, required: true },
+      uk: { type: String, required: true }
     },
     required: true
   })
@@ -58,13 +76,13 @@ export class Clothes extends Document {
   @Prop({
     type: [{
       color: {
-        code: String,
-        en: String,
-        uk: String
+        code: { type: String, required: true },
+        en: { type: String, required: true },
+        uk: { type: String, required: true }
       },
       sizes: [{
-        size: String,
-        quantity: Number
+        size: { type: String, required: true },
+        quantity: { type: Number, required: true, min: 0 }
       }]
     }],
     required: true
@@ -83,8 +101,8 @@ export class Clothes extends Document {
 
   @Prop({
     type: [{
-      en: String,
-      uk: String
+      en: { type: String, required: true },
+      uk: { type: String, required: true }
     }],
     required: true
   })
@@ -95,8 +113,8 @@ export class Clothes extends Document {
 
   @Prop({
     type: [{
-      en: String,
-      uk: String
+      en: { type: String, required: true },
+      uk: { type: String, required: true }
     }],
     required: true
   })
@@ -107,16 +125,16 @@ export class Clothes extends Document {
 
   @Prop({
     type: [{
-      id: String,
-      userId: String,
-      userName: String,
-      rating: Number,
+      id: { type: String, required: true },
+      userId: { type: String, required: true },
+      userName: { type: String, required: true },
+      rating: { type: Number, required: true, min: 1, max: 5 },
       comment: {
-        en: String,
-        uk: String
+        en: { type: String, required: true },
+        uk: { type: String, required: true }
       },
-      date: Date,
-      likes: [String]
+      date: { type: Date, default: Date.now },
+      likes: { type: [String], default: [] }
     }],
     default: []
   })
@@ -132,22 +150,6 @@ export class Clothes extends Document {
     date: Date;
     likes: string[];
   }>;
-
-  @Prop({
-    type: {
-      url: String,
-      alt: { en: String, uk: String }
-    },
-    required: true
-  })
-  mainImage: {
-    url: string;
-    alt: {
-      en: string;
-      uk: string;
-    };
-  };
-  
 }
 
 export const ClothesSchema = SchemaFactory.createForClass(Clothes);
