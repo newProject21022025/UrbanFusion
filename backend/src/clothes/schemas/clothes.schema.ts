@@ -1,6 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { IsNumber, IsString, IsOptional } from 'class-validator';
+import { IsString, IsIn } from 'class-validator';
+
+export enum Gender {
+  Male = 'male',
+  Female = 'female',
+}
 
 @Schema({ timestamps: true, collection: 'clothes' })
 export class Clothes extends Document {
@@ -149,9 +154,15 @@ export class Clothes extends Document {
     };
     likes: string[];
   }[];
+
+  // 💡 Новое поле gender
+  @Prop({ type: String, enum: Gender, required: true })
+  @IsIn([Gender.Male, Gender.Female])
+  gender: Gender;
 }
 
 export const ClothesSchema = SchemaFactory.createForClass(Clothes);
+
 
 
 

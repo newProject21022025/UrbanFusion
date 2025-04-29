@@ -192,4 +192,9 @@ export class CreateClothesDto {
   @ValidateNested({ each: true })
   @Type(() => DetailDto)
   details: DetailDto[];
+
+  @IsString()
+  @IsNotEmpty()
+  @Matches(/^(male|female)$/, { message: 'Gender must be either "male" or "female"' })
+  gender: 'male' | 'female';
 }

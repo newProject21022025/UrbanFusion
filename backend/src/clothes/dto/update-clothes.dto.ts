@@ -11,7 +11,8 @@ import {
   MaxLength,
   Min,
   ValidateNested,
-  ArrayMinSize
+  ArrayMinSize,
+  Matches
 } from 'class-validator';
 
 class NameDto {
@@ -220,4 +221,9 @@ export class UpdateClothesDto {
   @Type(() => DetailDto)
   @IsOptional()
   details?: DetailDto[];
+
+  @IsString()
+  @IsOptional()
+  @Matches(/^(male|female)$/, { message: 'Gender must be either "male" or "female"' })
+  gender?: 'male' | 'female';
 }
