@@ -1,0 +1,96 @@
+.main {
+    padding: 2rem;
+  }
+  
+  .form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    /* max-width: 1000px; */
+    margin: 0 auto;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .formSection {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid #eee;
+  }
+  
+  .formGroup {
+    margin-bottom: 1rem;
+  }
+  
+  .formGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+  
+  .formGroup input,
+  .formGroup textarea,
+  .formGroup select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .formGroup textarea {
+    min-height: 100px;
+  }
+  
+  .stockItem {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #f5f5f5;
+    border-radius: 5px;
+  }
+  
+  .sizeItem {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #f0f0f0;
+    border-radius: 5px;
+  }
+  
+  .formButton {
+    padding: 0.5rem 1rem;
+    background: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .formButton:hover {
+    background: #005bb5;
+  }
+  
+  .submitButton {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    background: #28a745;
+    margin-top: 2rem;
+  }
+  
+  .submitButton:hover {
+    background: #218838;
+  }
+
+  .removeButton {
+    /* composes: formButton; */
+    background: #dc3545;
+  }
+  
+  .removeButton:hover {
+    background: #c82333;
+  }
