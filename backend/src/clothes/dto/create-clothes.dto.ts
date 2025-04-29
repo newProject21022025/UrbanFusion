@@ -6,6 +6,7 @@ import {
   IsNumber,
   IsObject,
   IsString,
+  IsUrl,
   ValidateNested,
 } from 'class-validator';
 
@@ -97,7 +98,34 @@ class DetailDto {
   uk: string;
 }
 
+class ImageDto {
+  @IsUrl()
+  @IsNotEmpty()
+  url: string;
+
+  @IsObject()
+  @ValidateNested()
+  @Type(() => ImageAltDto)
+  alt: ImageAltDto;
+}
+
+class ImageAltDto {
+  @IsString()
+  @IsNotEmpty()
+  en: string;
+
+  @IsString()
+  @IsNotEmpty()
+  uk: string;
+}
+
 export class CreateClothesDto {
+
+  @ValidateNested()
+  @Type(() => ImageDto)
+  @IsNotEmpty()
+  mainImage: ImageDto;
+  
   @IsString()
   @IsNotEmpty()
   _id: string;
