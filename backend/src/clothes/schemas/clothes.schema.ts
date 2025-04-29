@@ -34,16 +34,19 @@ export class Clothes extends Document {
   mainImage: {
     url: string;
     alt: {
-      en: string;
-      uk: string;
-    };
+      type: {
+        en: { type: String, required: true },
+        uk: { type: String, required: true }
+      },
+      required: true
+    }
   };
 
   @Prop({
     type: {
       amount: { type: Number, required: true, min: 0 },
       currency: { type: String, required: true },
-      discount: { type: Number, default: null, min: 0, max: 100 }
+      discount: { type: Number, default: null, required: false, min: 0, max: 100 }
     },
     required: true
   })
