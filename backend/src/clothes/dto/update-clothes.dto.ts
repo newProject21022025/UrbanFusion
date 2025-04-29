@@ -8,7 +8,10 @@ import {
   IsOptional,
   IsString,
   IsUrl,
+  MaxLength,
+  Min,
   ValidateNested,
+  ArrayMinSize
 } from 'class-validator';
 
 class NameDto {
@@ -37,52 +40,63 @@ class DescriptionDto {
 
 class PriceDto {
   @IsNumber()
+  @Min(0)
   @IsOptional()
   amount?: number;
 
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   currency?: string;
 
   @IsNumber()
+  @Min(0)
   @IsOptional()
   discount?: number | null;
 }
 
 class CategoryDto {
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   id?: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   en?: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   uk?: string;
 }
 
 class StockSizeDto {
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   size?: string;
 
   @IsNumber()
+  @Min(0)
   @IsOptional()
   quantity?: number;
 }
 
 class StockColorDto {
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   code?: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   en?: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   uk?: string;
 }
@@ -102,35 +116,26 @@ class StockItemDto {
 
 class CareInstructionDto {
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   en?: string;
 
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   uk?: string;
 }
 
 class DetailDto {
   @IsString()
+  @IsNotEmpty()
   @IsOptional()
   en?: string;
 
   @IsString()
-  @IsOptional()
-  uk?: string;
-}
-
-class ImageDto {
-  @IsUrl()
   @IsNotEmpty()
   @IsOptional()
-  url?: string;
-
-  @IsObject()
-  @ValidateNested()
-  @Type(() => ImageAltDto)
-  @IsOptional()
-  alt?: ImageAltDto;
+  uk?: string;
 }
 
 class ImageAltDto {
@@ -145,13 +150,20 @@ class ImageAltDto {
   uk?: string;
 }
 
-export class UpdateClothesDto {
-
-  @ValidateNested()
-  @Type(() => ImageDto)
+class ImageDto {
+  @IsUrl()
+  @MaxLength(2048)
   @IsOptional()
-  mainImage?: ImageDto;
-  
+  url?: string;
+
+  @IsObject()
+  @ValidateNested()
+  @Type(() => ImageAltDto)
+  @IsOptional()
+  alt?: ImageAltDto;
+}
+
+export class UpdateClothesDto {
   @IsString()
   @IsNotEmpty()
   @IsOptional()
@@ -166,6 +178,11 @@ export class UpdateClothesDto {
   @Type(() => DescriptionDto)
   @IsOptional()
   description?: DescriptionDto;
+
+  @ValidateNested()
+  @Type(() => ImageDto)
+  @IsOptional()
+  mainImage?: ImageDto;
 
   @ValidateNested()
   @Type(() => PriceDto)
