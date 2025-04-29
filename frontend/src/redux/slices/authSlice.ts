@@ -16,16 +16,16 @@ const loadAuthState = (): AuthState => {
     return saved ? JSON.parse(saved) : { 
       isAdmin: false,
       adminLinks: {
-        aufLink: '/AUF/tab1',
-        aufLabel: 'ABXC'
+        aufLink: '/AUF/edit',
+        aufLabel: 'BOSS'
       }
     };
   }
   return { 
     isAdmin: false,
     adminLinks: {
-      aufLink: '/AUF/tab1',
-      aufLabel: 'ABXC'
+      aufLink: '/AUF/edit',
+      aufLabel: 'BOSS'
     }
   };
 };

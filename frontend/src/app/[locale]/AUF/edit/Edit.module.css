@@ -1,0 +1,35 @@
+/* frontend/src/app/[locale]/AUF/edit/Edit.module.css */
+.main {
+    padding: 20px;
+  }
+  
+  .cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .card {
+    width: 200px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .card h3 {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+  
+  .card p {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+  
