@@ -132,6 +132,22 @@ export class Clothes extends Document {
     date: Date;
     likes: string[];
   }>;
+
+  @Prop({
+    type: {
+      url: String,
+      alt: { en: String, uk: String }
+    },
+    required: true
+  })
+  mainImage: {
+    url: string;
+    alt: {
+      en: string;
+      uk: string;
+    };
+  };
+  
 }
 
 export const ClothesSchema = SchemaFactory.createForClass(Clothes);
