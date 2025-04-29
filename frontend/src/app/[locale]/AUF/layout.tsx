@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { ReactNode, useEffect } from 'react'
 import styles from './page.module.css'
 
-const TABS = ['tab1', 'tab2', 'tab3']
+const TABS = ['edit', 'create', 'feedback']
 
 export default function AUFLayout({ children }: { children: ReactNode }) {
   const router = useRouter()
@@ -21,7 +21,7 @@ export default function AUFLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Редірект на tab1, якщо просто /adminUrbanFusion
     if (pathname === basePath) {
-      router.push(`${basePath}/tab1`)
+      router.push(`${basePath}/edit`)
     }
   }, [pathname, router, basePath])
 

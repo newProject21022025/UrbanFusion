@@ -32,7 +32,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
       if (isSuccess) {
         dispatch(loginAdmin());
         dispatch(setAdminLinks({
-          link: '/AUF/tab1',
+          link: '/AUF/edit',
           label: 'BOSS'
         }));
         router.push('/');
