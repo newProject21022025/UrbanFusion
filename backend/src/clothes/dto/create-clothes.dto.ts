@@ -51,9 +51,9 @@ class PriceDto {
 }
 
 class CategoryDto {
-  @IsString()
-  @IsNotEmpty()
-  id: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // id: string;
 
   @IsString()
   @IsNotEmpty()
@@ -142,10 +142,10 @@ class ImageDto {
 }
 
 export class CreateClothesDto {
-  @IsString()
-  @IsNotEmpty()
-  @Matches(/^[a-z0-9-]+$/, { message: 'Slug can only contain lowercase letters, numbers and hyphens' })
-  slug: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // @Matches(/^[a-z0-9-]+$/, { message: 'Slug can only contain lowercase letters, numbers and hyphens' })
+  // slug: string;
 
   @ValidateNested()
   @Type(() => NameDto)
@@ -170,10 +170,10 @@ export class CreateClothesDto {
   @Type(() => CategoryDto)
   category: CategoryDto;
 
-  @IsArray()
-  @IsString({ each: true })
-  @ArrayMinSize(1)
-  tags: string[];
+  // @IsArray()
+  // @IsString({ each: true })
+  // @ArrayMinSize(1)
+  // tags: string[];
 
   @IsArray()
   @ArrayMinSize(1)
