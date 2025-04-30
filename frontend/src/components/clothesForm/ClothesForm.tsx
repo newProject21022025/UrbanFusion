@@ -1,5 +1,12 @@
-import { useState } from 'react';
-import styles from './Create.module.css';
+import { useState } from "react";
+import styles from "./ClothesForm.module.css";
+import BasicInfoSection from "./BasicInfoSection";
+import ImageSection from "./ImageSection";
+import PriceSection from "./PriceSection";
+import CategorySection from "./CategorySection";
+import StockSection from "./StockSection";
+import CareInstructionsSection from "./CareInstructionsSection";
+import DetailsSection from "./DetailsSection";
 
 interface Name {
   en: string;
@@ -27,8 +34,13 @@ interface Price {
   discount: number;
 }
 
-interface Category {
-  id: string;
+interface Category {  
+  en: string;
+  uk: string;
+}
+
+interface StockColor {
+  code: string;
   en: string;
   uk: string;
 }
@@ -36,12 +48,6 @@ interface Category {
 interface StockSize {
   size: string;
   quantity: number;
-}
-
-interface StockColor {
-  code: string;
-  en: string;
-  uk: string;
 }
 
 interface StockItem {
@@ -59,617 +65,295 @@ interface Detail {
   uk: string;
 }
 
-interface FormData {
-  slug: string;
+export interface FormData {
+  // slug: string;
   name: Name;
   description: Description;
   mainImage: Image;
   price: Price;
   availability: boolean;
   category: Category;
-  tags: string[];
   stock: StockItem[];
   careInstructions: CareInstruction[];
   details: Detail[];
-  gender: 'male' | 'female';
+  gender: "male" | "female";
 }
 
 export default function ClothesForm() {
-  const [formData, setFormData] = useState<FormData>({
-    slug: '',
-    name: { en: '', uk: '' },
-    description: { en: '', uk: '' },
+  const [formData, setFormData] = useState<FormData>({  
+    name: { en: "", uk: "" },
+    description: { en: "", uk: "" },
     mainImage: {
-      url: '',
-      alt: { en: '', uk: '' }
+      url: "",
+      alt: { en: "", uk: "" },
     },
     price: {
       amount: 0,
-      currency: 'USD',
-      discount: 0
+      currency: "USD",
+      discount: 0,
     },
     availability: true,
-    category: {
-      id: '',
-      en: '',
-      uk: ''
-    },
-    tags: [''],
-    stock: [{
-      color: { code: '', en: '', uk: '' },
-      sizes: [{ size: '', quantity: 0 }]
-    }],
-    careInstructions: [{ en: '', uk: '' }],
-    details: [{ en: '', uk: '' }],
-    gender: 'male'
+    category: {      
+      en: "",
+      uk: "",
+    },   
+    stock: [
+      {
+        color: { code: "", en: "", uk: "" },
+        sizes: [{ size: "", quantity: 0 }],
+      },
+    ],
+    careInstructions: [{ en: "", uk: "" }],
+    details: [{ en: "", uk: "" }],
+    gender: "male",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value, type } = e.target;
-    const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
+    const checked =
+      type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
 
-    if (name.includes('.')) {
-      const [parent, child, subChild] = name.split('.');
-      
-      setFormData(prev => {
-        if (subChild && parent in prev && typeof prev[parent as keyof FormData] === 'object' && child in (prev[parent as keyof FormData] as object)) {
+    if (name.includes(".")) {
+      const [parent, child, subChild] = name.split(".");
+
+      setFormData((prev) => {
+        if (
+          subChild &&
+          parent in prev &&
+          typeof prev[parent as keyof FormData] === "object" &&
+          child in (prev[parent as keyof FormData] as object)
+        ) {
           return {
             ...prev,
             [parent]: {
-              ...(prev[parent as keyof FormData] as unknown as Record<string, unknown>),
+              ...(prev[parent as keyof FormData] as unknown as Record<
+                string,
+                unknown
+              >),
               [child]: {
-                ...(prev[parent as keyof FormData] as unknown as Record<string, unknown>)[child] as Record<string, unknown>,
-                [subChild]: type === 'number' ? Number(value) : value
-              }
-            }
+                ...((
+                  prev[parent as keyof FormData] as unknown as Record<
+                    string,
+                    unknown
+                  >
+                )[child] as Record<string, unknown>),
+                [subChild]: type === "number" ? Number(value) : value,
+              },
+            },
           };
-        } else if (parent in prev && typeof prev[parent as keyof FormData] === 'object' && child in (prev[parent as keyof FormData] as object)) {
+        } else if (
+          parent in prev &&
+          typeof prev[parent as keyof FormData] === "object" &&
+          child in (prev[parent as keyof FormData] as object)
+        ) {
           return {
             ...prev,
             [parent]: {
-              ...(prev[parent as keyof FormData] as unknown as Record<string, unknown>),
-              [child]: type === 'number' ? Number(value) : value
-            }
+              ...(prev[parent as keyof FormData] as unknown as Record<
+                string,
+                unknown
+              >),
+              [child]: type === "number" ? Number(value) : value,
+            },
           };
         }
         return prev;
       });
     } else {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        [name]: type === 'checkbox' ? checked : 
-                type === 'number' ? Number(value) : 
-                value
+        [name]:
+          type === "checkbox"
+            ? checked
+            : type === "number"
+            ? Number(value)
+            : value,
       }));
     }
   };
 
-  const handleStockChange = (index: number, field: keyof StockColor | keyof StockSize, value: string | number, sizeIndex?: number) => {
+  const handleStockChange = (
+    index: number,
+    field: string, // Змінити на string
+    value: string | number,
+    sizeIndex?: number
+  ) => {
     setFormData(prev => {
       const updatedStock = [...prev.stock];
+      const stockItem = updatedStock[index];
       
-      if (sizeIndex !== undefined && (field === 'size' || field === 'quantity')) {
-        const updatedSizes = [...updatedStock[index].sizes];
+      if (sizeIndex !== undefined) {
+        
+        if (field !== 'size' && field !== 'quantity') return prev;
+        
+        const updatedSizes = [...stockItem.sizes];
         updatedSizes[sizeIndex] = {
           ...updatedSizes[sizeIndex],
           [field]: field === 'quantity' ? Number(value) : value
         };
         
         updatedStock[index] = {
-          ...updatedStock[index],
+          ...stockItem,
           sizes: updatedSizes
         };
-      } else if (field in updatedStock[index].color) {
+      } else {
+        
+        if (field !== 'code' && field !== 'en' && field !== 'uk') return prev;
+        
         updatedStock[index] = {
-          ...updatedStock[index],
+          ...stockItem,
           color: {
-            ...updatedStock[index].color,
+            ...stockItem.color,
             [field]: value
           }
         };
       }
-      
       return {
         ...prev,
-        stock: updatedStock
+        stock: updatedStock,
       };
     });
   };
 
   const handleArrayChange = (
-    arrayName: 'careInstructions' | 'details' | 'tags',
+    arrayName: "careInstructions" | "details", 
     index: number,
-    field: 'en' | 'uk' | '',
+    field: "en" | "uk",
     value: string
   ) => {
-    setFormData(prev => {
+    setFormData((prev) => {
       const updatedArray = [...prev[arrayName]];
-      
-      if (arrayName === 'tags') {
-        updatedArray[index] = value;
-      } else if (field) {
-        updatedArray[index] = {
-          ...updatedArray[index] as CareInstruction | Detail,
-          [field]: value
-        };
-      }
-      
+      updatedArray[index] = {
+        ...(updatedArray[index] as CareInstruction | Detail),
+        [field]: value,
+      };
       return {
         ...prev,
-        [arrayName]: updatedArray
+        [arrayName]: updatedArray,
       };
     });
   };
 
   const addStockItem = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       stock: [
         ...prev.stock,
         {
-          color: { code: '', en: '', uk: '' },
-          sizes: [{ size: '', quantity: 0 }]
-        }
-      ]
+          color: { code: "", en: "", uk: "" },
+          sizes: [{ size: "", quantity: 0 }],
+        },
+      ],
     }));
   };
 
   const addSize = (stockIndex: number) => {
     const updatedStock = [...formData.stock];
-    updatedStock[stockIndex].sizes.push({ size: '', quantity: 0 });
-    setFormData(prev => ({
+    updatedStock[stockIndex].sizes.push({ size: "", quantity: 0 });
+    setFormData((prev) => ({
       ...prev,
-      stock: updatedStock
+      stock: updatedStock,
     }));
   };
 
-  const addArrayItem = (arrayName: 'careInstructions' | 'details' | 'tags') => {
-    setFormData(prev => {
-      const newItem = arrayName === 'tags' ? '' : { en: '', uk: '' };
-      return {
-        ...prev,
-        [arrayName]: [...prev[arrayName], newItem]
-      };
-    });
+  const addArrayItem = (arrayName: "careInstructions" | "details") => { 
+    setFormData((prev) => ({
+      ...prev,
+      [arrayName]: [...prev[arrayName], { en: "", uk: "" }],
+    }));
   };
 
   const removeStockItem = (index: number) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      stock: prev.stock.filter((_, i) => i !== index)
+      stock: prev.stock.filter((_, i) => i !== index),
     }));
   };
 
   const removeSize = (stockIndex: number, sizeIndex: number) => {
     const updatedStock = [...formData.stock];
-    updatedStock[stockIndex].sizes = updatedStock[stockIndex].sizes.filter((_, i) => i !== sizeIndex);
-    setFormData(prev => ({
+    updatedStock[stockIndex].sizes = updatedStock[stockIndex].sizes.filter(
+      (_, i) => i !== sizeIndex
+    );
+    setFormData((prev) => ({
       ...prev,
-      stock: updatedStock
+      stock: updatedStock,
     }));
   };
 
-  const removeArrayItem = (arrayName: 'careInstructions' | 'details' | 'tags', index: number) => {
-    setFormData(prev => ({
+  const removeArrayItem = (
+    arrayName: "careInstructions" | "details", 
+    index: number
+  ) => {
+    setFormData((prev) => ({
       ...prev,
-      [arrayName]: prev[arrayName].filter((_, i) => i !== index)
+      [arrayName]: prev[arrayName].filter((_, i) => i !== index),
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/clothes`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(        
+        `${process.env.NEXT_PUBLIC_API_URL}/uk/clothes`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
+      console.log("API URL:", `${process.env.NEXT_PUBLIC_API_URL}/uk/clothes`);
 
       const result = await response.json();
-      console.log('Success:', result);
-      alert('Clothes item created successfully!');
-      // Reset form or redirect if needed
+      console.log("Success:", result);
+      alert("Clothes item created successfully!");      
     } catch (error) {
-      console.error('Error:', error);
-      alert('Error creating clothes item');
+      console.error("Error:", error);
+      alert("Error creating clothes item");
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      {/* <h2>Create New Clothes Item</h2> */}
-      
-      {/* Basic Information */}
-      <div className={styles.formSection}>
-        {/* <h3>Basic Information</h3> */}
-        <div className={styles.formGroup}>
-          <label>Slug (URL identifier):</label>
-          <input
-            type="text"
-            name="slug"
-            value={formData.slug}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Name (English):</label>
-          <input
-            type="text"
-            name="name.en"
-            value={formData.name.en}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Name (Ukrainian):</label>
-          <input
-            type="text"
-            name="name.uk"
-            value={formData.name.uk}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Description (English):</label>
-          <textarea
-            name="description.en"
-            value={formData.description.en}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Description (Ukrainian):</label>
-          <textarea
-            name="description.uk"
-            value={formData.description.uk}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Gender:</label>
-          <select
-            name="gender"
-            value={formData.gender}
-            onChange={handleChange}
-            required
-          >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Image */}
-      <div className={styles.formSection}>
-        <h3>Main Image</h3>
-        <div className={styles.formGroup}>
-          <label>Image URL:</label>
-          <input
-            type="url"
-            name="mainImage.url"
-            value={formData.mainImage.url}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Alt Text (English):</label>
-          <input
-            type="text"
-            name="mainImage.alt.en"
-            value={formData.mainImage.alt.en}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Alt Text (Ukrainian):</label>
-          <input
-            type="text"
-            name="mainImage.alt.uk"
-            value={formData.mainImage.alt.uk}
-            onChange={handleChange}
-            required
-          />
-        </div>
-      </div>
-
-      {/* Price */}
-      <div className={styles.formSection}>
-        <h3>Price</h3>
-        <div className={styles.formGroup}>
-          <label>Amount:</label>
-          <input
-            type="number"
-            name="price.amount"
-            value={formData.price.amount}
-            onChange={handleChange}
-            min="0"
-            step="0.01"
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Currency:</label>
-          <input
-            type="text"
-            name="price.currency"
-            value={formData.price.currency}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Discount:</label>
-          <input
-            type="number"
-            name="price.discount"
-            value={formData.price.discount}
-            onChange={handleChange}
-            min="0"
-            step="0.01"
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Availability:</label>
-          <select
-            name="availability"
-            value={formData.availability.toString()}
-            onChange={(e) => setFormData(prev => ({
-              ...prev,
-              availability: e.target.value === 'true'
-            }))}
-            required
-          >
-            <option value="true">Available</option>
-            <option value="false">Not Available</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Category */}
-      <div className={styles.formSection}>
-        <h3>Category</h3>
-        <div className={styles.formGroup}>
-          <label>Category ID:</label>
-          <input
-            type="text"
-            name="category.id"
-            value={formData.category.id}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Category Name (English):</label>
-          <input
-            type="text"
-            name="category.en"
-            value={formData.category.en}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className={styles.formGroup}>
-          <label>Category Name (Ukrainian):</label>
-          <input
-            type="text"
-            name="category.uk"
-            value={formData.category.uk}
-            onChange={handleChange}
-            required
-          />
-        </div>
-      </div>
-
-      {/* Tags */}
-      <div className={styles.formSection}>
-        <h3>Tags</h3>
-        {formData.tags.map((tag, index) => (
-          <div key={index} className={styles.formGroup}>
-            <label>Tag {index + 1}:</label>
-            <input
-              type="text"
-              value={tag}
-              onChange={(e) => handleArrayChange('tags', index, '', e.target.value)}
-              required
-            />
-            {formData.tags.length > 1 && (
-              <button className={styles.formButton} type="button" onClick={() => removeArrayItem('tags', index)}>
-                Remove
-              </button>
-            )}
-          </div>
-        ))}
-        <button className={`${styles.formButton} ${styles.submitButton}`}  type="button" onClick={() => addArrayItem('tags')}>
-          Add Tag
-        </button>
-      </div>
-
-      {/* Stock */}
-      <div className={styles.formSection}>
-        <h3>Stock</h3>
-        {formData.stock.map((stockItem, stockIndex) => (
-          <div key={stockIndex} className={styles.stockItem}>
-            <h4>Color Variant {stockIndex + 1}</h4>
-            
-            <div className={styles.formGroup}>
-              <label>Color Code:</label>
-              <input
-                type="text"
-                value={stockItem.color.code}
-                onChange={(e) => handleStockChange(stockIndex, 'code', e.target.value)}
-                required
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label>Color Name (English):</label>
-              <input
-                type="text"
-                value={stockItem.color.en}
-                onChange={(e) => handleStockChange(stockIndex, 'en', e.target.value)}
-                required
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label>Color Name (Ukrainian):</label>
-              <input
-                type="text"
-                value={stockItem.color.uk}
-                onChange={(e) => handleStockChange(stockIndex, 'uk', e.target.value)}
-                required
-              />
-            </div>
-
-            <h5>Sizes</h5>
-            {stockItem.sizes.map((size, sizeIndex) => (
-              <div key={sizeIndex} className={styles.sizeItem}>
-                <div className={styles.formGroup}>
-                  <label>Size:</label>
-                  <input
-                    type="text"
-                    value={size.size}
-                    onChange={(e) => handleStockChange(stockIndex, 'size', e.target.value, sizeIndex)}
-                    required
-                  />
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label>Quantity:</label>
-                  <input
-                    type="number"
-                    value={size.quantity}
-                    onChange={(e) => handleStockChange(stockIndex, 'quantity', e.target.value, sizeIndex)}
-                    min="0"
-                    required
-                  />
-                </div>
-
-                {stockItem.sizes.length > 1 && (
-                  <button type="button" onClick={() => removeSize(stockIndex, sizeIndex)}>
-                    Remove Size
-                  </button>
-                )}
-              </div>
-            ))}
-
-            <button type="button" onClick={() => addSize(stockIndex)}>
-              Add Size
-            </button>
-
-            {formData.stock.length > 1 && (
-              <button type="button" onClick={() => removeStockItem(stockIndex)}>
-                Remove Color Variant
-              </button>
-            )}
-          </div>
-        ))}
-
-        <button type="button" onClick={addStockItem}>
-          Add Color Variant
-        </button>
-      </div>
-
-      {/* Care Instructions */}
-      <div className={styles.formSection}>
-        <h3>Care Instructions</h3>
-        {formData.careInstructions.map((instruction, index) => (
-          <div key={index} className={styles.formGroup}>
-            <h4>Instruction {index + 1}</h4>
-            <div className={styles.formGroup}>
-              <label>English:</label>
-              <textarea
-                value={instruction.en}
-                onChange={(e) => handleArrayChange('careInstructions', index, 'en', e.target.value)}
-                required
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label>Ukrainian:</label>
-              <textarea
-                value={instruction.uk}
-                onChange={(e) => handleArrayChange('careInstructions', index, 'uk', e.target.value)}
-                required
-              />
-            </div>
-
-            {formData.careInstructions.length > 1 && (
-              <button type="button" onClick={() => removeArrayItem('careInstructions', index)}>
-                Remove Instruction
-              </button>
-            )}
-          </div>
-        ))}
-
-        <button type="button" onClick={() => addArrayItem('careInstructions')}>
-          Add Care Instruction
-        </button>
-      </div>
-
-      {/* Details */}
-      <div className={styles.formSection}>
-        <h3>Details</h3>
-        {formData.details.map((detail, index) => (
-          <div key={index} className={styles.formGroup}>
-            <h4>Detail {index + 1}</h4>
-            <div className={styles.formGroup}>
-              <label>English:</label>
-              <textarea
-                value={detail.en}
-                onChange={(e) => handleArrayChange('details', index, 'en', e.target.value)}
-                required
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label>Ukrainian:</label>
-              <textarea
-                value={detail.uk}
-                onChange={(e) => handleArrayChange('details', index, 'uk', e.target.value)}
-                required
-              />
-            </div>
-
-            {formData.details.length > 1 && (
-              <button type="button" onClick={() => removeArrayItem('details', index)}>
-                Remove Detail
-              </button>
-            )}
-          </div>
-        ))}
-
-        <button type="button" onClick={() => addArrayItem('details')}>
-          Add Detail
-        </button>
-      </div>
-
+      <BasicInfoSection formData={formData} handleChange={handleChange} />
+      <ImageSection formData={formData} handleChange={handleChange} />
+      <PriceSection
+        formData={formData}
+        handleChange={handleChange}
+        setFormData={setFormData}
+      />
+      <CategorySection formData={formData} handleChange={handleChange} />    
+      <StockSection
+        formData={formData}
+        handleStockChange={handleStockChange}
+        addStockItem={addStockItem}
+        removeStockItem={removeStockItem}
+        addSize={addSize}
+        removeSize={removeSize}
+      />
+      <CareInstructionsSection
+        formData={formData}
+        handleArrayChange={handleArrayChange}
+        removeArrayItem={removeArrayItem}
+        addArrayItem={addArrayItem}
+      />
+      <DetailsSection
+        formData={formData}
+        handleArrayChange={handleArrayChange}
+        removeArrayItem={removeArrayItem}
+        addArrayItem={addArrayItem}
+      />
       <button type="submit" className={styles.submitButton}>
         Create Clothes Item
       </button>

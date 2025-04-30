@@ -57,10 +57,10 @@ class PriceDto {
 }
 
 class CategoryDto {
-  @IsString()
-  @IsNotEmpty()
-  @IsOptional()
-  id?: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // @IsOptional()
+  // id?: string;
 
   @IsString()
   @IsNotEmpty()
@@ -165,10 +165,10 @@ class ImageDto {
 }
 
 export class UpdateClothesDto {
-  @IsString()
-  @IsNotEmpty()
-  @IsOptional()
-  slug?: string;
+  // @IsString()
+  // @IsNotEmpty()
+  // @IsOptional()
+  // slug?: string;
 
   @ValidateNested()
   @Type(() => NameDto)
@@ -199,10 +199,10 @@ export class UpdateClothesDto {
   @IsOptional()
   category?: CategoryDto;
 
-  @IsArray()
-  @IsString({ each: true })
-  @IsOptional()
-  tags?: string[];
+  // @IsArray()
+  // @IsString({ each: true })
+  // @IsOptional()
+  // tags?: string[];
 
   @IsArray()
   @ValidateNested({ each: true })

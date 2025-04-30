@@ -94,3 +94,26 @@
   .removeButton:hover {
     background: #c82333;
   }
+
+  .readonlyInput {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 100%;
+  }
+
+  .readonlyInput {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 100%;
+  }
+  
+  .select {
+    padding: 8px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
