@@ -39,15 +39,15 @@ interface Category {
   uk: string;
 }
 
-interface StockSize {
-  size: string;
-  quantity: number;
-}
-
 interface StockColor {
   code: string;
   en: string;
   uk: string;
+}
+
+interface StockSize {
+  size: string;
+  quantity: number;
 }
 
 interface StockItem {
