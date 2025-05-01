@@ -3,7 +3,6 @@
 import { useLocale } from 'next-intl';
 import { useEffect, useState } from 'react';
 import styles from './Edit.module.css';
-import Image from 'next/image';
 
 interface Clothes {
   _id: string;
@@ -102,7 +101,7 @@ export default function Edit() {
           <div key={item._id} className={styles.clothesCard}>
             {/* Перевірка наявності mainImage перед використанням */}
             {item.mainImage && item.mainImage.url ? (
-              <Image 
+              <img 
                 src={item.mainImage.url}
                 alt={item.mainImage.alt[locale as 'en' | 'uk']}
                 className={styles.clothesImage}
