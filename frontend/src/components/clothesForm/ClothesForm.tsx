@@ -300,7 +300,7 @@ export default function ClothesForm() {
 
     try {
       const response = await fetch(        
-        `${process.env.NEXT_PUBLIC_API_URL}/clothes`,
+        `https://urban-fusion-amber.vercel.app/uk/clothes`,
         {
           method: "POST",
           headers: {
@@ -313,7 +313,7 @@ export default function ClothesForm() {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      console.log("API URL:", `${process.env.NEXT_PUBLIC_API_URL}/clothes`);
+      console.log("API URL:", `${process.env.BACKEND_URL}/clothes`);
 
       const result = await response.json();
       console.log("Success:", result);
