@@ -14,25 +14,12 @@
       {
         "src": "/uk/(.*)",
         "dest": "src/main.ts",
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-        "headers": {
-          "Access-Control-Allow-Origin": "https://urban-fusion-amber.vercel.app http://localhost:3000",
-          "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,OPTIONS,PATCH",
-          "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Requested-With",
-          "Access-Control-Allow-Credentials": "true"
-        }
-      },
-      {
-        "src": "/uk/(.*)",
-        "dest": "src/main.ts",
-        "methods": ["GET", "OPTIONS"]
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
       },
       {
         "src": "/(.*)",
-        "dest": "/public/$1",
-        "headers": {
-          "Access-Control-Allow-Origin": "*"
-        }
+        "dest": "src/main.ts",
+        "methods": ["GET", "OPTIONS"]
       }
     ],
     "headers": [
@@ -40,37 +27,22 @@
         "source": "/uk/(.*)",
         "headers": [
           {
-            "key": "Access-Control-Expose-Headers",
-            "value": "Content-Length, X-JSON"
-          },
-          {
-            "key": "Access-Control-Max-Age",
-            "value": "86400"
-          },
-          {
-            "key": "Vary",
-            "value": "Origin, Accept-Encoding"
-          }
-        ]
-      },
-      {
-        "source": "/_next/static/(.*)",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, max-age=31536000, immutable"
-          },
-          {
             "key": "Access-Control-Allow-Origin",
-            "value": "*"
+            "value": "https://urban-fusion-amber.vercel.app http://localhost:3000"
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": "GET,POST,PUT,DELETE,OPTIONS,PATCH"
+          },
+          {
+            "key": "Access-Control-Allow-Headers",
+            "value": "Content-Type, Authorization, X-Requested-With"
+          },
+          {
+            "key": "Access-Control-Allow-Credentials",
+            "value": "true"
           }
         ]
-      }
-    ],
-    "rewrites": [
-      {
-        "source": "/:path*",
-        "destination": "/uk/:path*"
       }
     ]
   }
