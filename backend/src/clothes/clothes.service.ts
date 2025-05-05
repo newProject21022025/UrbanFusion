@@ -13,9 +13,8 @@ export class ClothesService {
   ) {}
 
   async create(createClothesDto: CreateClothesDto): Promise<Clothes> {
-    const slug = slugify(createClothesDto.name.en, { lower: true });
-    const newClothes = new this.clothesModel({ ...createClothesDto, slug });
-    return await newClothes.save();
+    const newClothes = new this.clothesModel(createClothesDto);
+    return await newClothes.save(); // Slug створиться автоматично в pre('save') хуку
   }
 
   async findAll(): Promise<Clothes[]> {
