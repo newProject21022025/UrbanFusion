@@ -22,7 +22,7 @@ export default function Create() {
         throw new Error("Failed to create clothes item");
       }
 
-      const createdItem = await response.json();
+      // const createdItem = await response.json();
       alert("Картку створено успішно!");
 
       // Переадресація після створення, наприклад на сторінку списку товарів
