@@ -1,200 +1,324 @@
-import { Type } from 'class-transformer';
-import {
-  IsArray,
-  IsBoolean,
-  IsNotEmpty,
-  IsNumber,
-  IsObject,
-  IsString,
-  IsUrl,
-  MaxLength,
-  Min,
-  ValidateNested,
-  Matches,
-  ArrayMinSize,
-  IsOptional,
-} from 'class-validator';
+// import { Type } from 'class-transformer';
+// import {
+//   IsArray,
+//   IsBoolean,
+//   IsNotEmpty,
+//   IsNumber,
+//   IsObject,
+//   IsString,
+//   IsUrl,
+//   MaxLength,
+//   Min,
+//   ValidateNested,
+//   Matches,
+//   ArrayMinSize,
+//   IsOptional,
+// } from 'class-validator';
 
-class NameDto {
-  @IsString()
-  @IsNotEmpty()
-  en: string;
+// class NameDto {
+//   @IsString()
+//   @IsNotEmpty()
+//   en?: string;
 
-  @IsString()
-  @IsNotEmpty()
-  uk: string;
-}
+//   @IsString()
+//   @IsNotEmpty()
+//   uk?: string;
+// }
 
-class DescriptionDto {
-  @IsString()
-  @IsNotEmpty()
-  en: string;
+// class DescriptionDto {
+//   @IsString()
+//   @IsNotEmpty()
+//   en?: string;
 
-  @IsString()
-  @IsNotEmpty()
-  uk: string;
-}
+//   @IsString()
+//   @IsNotEmpty()
+//   uk?: string;
+// }
 
-class PriceDto {
-  @IsNumber()
-  @Min(0)
-  amount: number;
+// class PriceDto {
+//   @IsNumber()
+//   @Min(0)
+//   amount?: number;
 
-  @IsString()
-  @IsNotEmpty()
-  currency: string;
+//   @IsString()
+//   @IsNotEmpty()
+//   currency?: string;
 
-  @IsNumber()
-  @Min(0)
-  @IsOptional()
-  discount: number | null;
-}
+//   @IsNumber()
+//   @Min(0)
+//   @IsOptional()
+//   discount?: number | null;
+// }
 
-class CategoryDto {
-  // @IsString()
-  // @IsNotEmpty()
-  // id: string;
+// class CommentDto {
+//   @IsString()
+//   @IsNotEmpty()
+//   en?: string;
 
-  @IsString()
-  @IsNotEmpty()
-  en: string;
+//   @IsString()
+//   @IsNotEmpty()
+//   uk?: string;
+// }
 
-  @IsString()
-  @IsNotEmpty()
-  uk: string;
-}
+// class ReviewDto {
+//   @IsString()
+//   @IsNotEmpty()
+//   id?: string;
 
-class StockSizeDto {
-  @IsString()
-  @IsNotEmpty()
-  size: string;
+//   @IsString()
+//   @IsNotEmpty()
+//   userId?: string;
 
-  @IsNumber()
-  @Min(0)
-  quantity: number;
-}
+//   @IsString()
+//   @IsNotEmpty()
+//   userName?: string;
 
-class StockColorDto {
-  @IsString()
-  @IsNotEmpty()
-  code: string;
+//   @IsNumber()
+//   rating?: number;
 
-  @IsString()
-  @IsNotEmpty()
-  en: string;
+//   @ValidateNested()
+//   @Type(() => CommentDto)
+//   comment?: CommentDto;
 
-  @IsString()
-  @IsNotEmpty()
-  uk: string;
-}
+//   @IsArray()
+//   @ArrayMinSize(1)
+//   @IsString({ each: true })
+//   likes?: string[];}
 
-class StockItemDto {
-  @ValidateNested()
-  @Type(() => StockColorDto)
-  color: StockColorDto;
 
-  @IsArray()
-  @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => StockSizeDto)
-  sizes: StockSizeDto[];
-}
+// class CategoryDto {
+//   @IsArray()
+//   @ArrayMinSize(1)
+//   @ValidateNested({ each: true })
+//   @Type(() => ReviewDto)
+//   reviews?: ReviewDto[];
 
-class CareInstructionDto {
-  @IsString()
-  @IsNotEmpty()
-  en: string;
+//   @IsString()
+//   @IsNotEmpty()
+//   en?: string;
 
-  @IsString()
-  @IsNotEmpty()
-  uk: string;
-}
+//   @IsString()
+//   @IsNotEmpty()
+//   uk?: string;
+// }
 
-class DetailDto {
-  @IsString()
-  @IsNotEmpty()
-  en: string;
+// class StockSizeDto {
+//   @IsString()
+//   @IsNotEmpty()
+//   size?: string;
 
-  @IsString()
-  @IsNotEmpty()
-  uk: string;
-}
+//   @IsNumber()
+//   @Min(0)
+//   quantity?: number;
+// }
 
-class ImageAltDto {
-  @IsString()
-  @IsNotEmpty()
-  en: string;
+// class StockColorDto {
+//   @IsString()
+//   @IsNotEmpty()
+//   code?: string;
 
-  @IsString()
-  @IsNotEmpty()
-  uk: string;
-}
+//   @IsString()
+//   @IsNotEmpty()
+//   en?: string;
 
-class ImageDto {
-  @IsUrl()
-  @MaxLength(2048)
-  url: string;
+//   @IsString()
+//   @IsNotEmpty()
+//   uk?: string;
+// }
 
-  @IsObject()
-  @ValidateNested()
-  @Type(() => ImageAltDto)
-  alt: ImageAltDto;
-}
+// class StockItemDto {
+//   @ValidateNested()
+//   @Type(() => StockColorDto)
+//   color?: StockColorDto;
+
+//   @IsArray()
+//   @ArrayMinSize(1)
+//   @ValidateNested({ each: true })
+//   @Type(() => StockSizeDto)
+//   sizes?: StockSizeDto[];
+// }
+
+// class CareInstructionDto {
+//   @IsString()
+//   @IsNotEmpty()
+//   en?: string;
+
+//   @IsString()
+//   @IsNotEmpty()
+//   uk?: string;
+// }
+
+// class DetailDto {
+//   @IsString()
+//   @IsNotEmpty()
+//   en?: string;
+
+//   @IsString()
+//   @IsNotEmpty()
+//   uk?: string;
+// }
+
+// class ImageAltDto {
+//   @IsString()
+//   @IsNotEmpty()
+//   en?: string;
+
+//   @IsString()
+//   @IsNotEmpty()
+//   uk?: string;
+// }
+
+// class ImageDto {
+//   @IsUrl()
+//   @MaxLength(2048)
+//   url?: string;
+
+//   @IsObject()
+//   @ValidateNested()
+//   @Type(() => ImageAltDto)
+//   alt?: ImageAltDto;
+// }
+
+// export class CreateClothesDto {
+
+
+//   @ValidateNested()
+//   @Type(() => NameDto)
+//   name?: NameDto;
+
+//   @ValidateNested()
+//   @Type(() => DescriptionDto)
+//   description?: DescriptionDto;
+
+//   @ValidateNested()
+//   @Type(() => ImageDto)
+//   mainImage?: ImageDto;
+
+//   @ValidateNested()
+//   @Type(() => PriceDto)
+//   price?: PriceDto;
+
+//   @IsBoolean()
+//   availability?: boolean;
+
+//   @ValidateNested()
+//   @Type(() => CategoryDto)
+//   category?: CategoryDto;
+
+//   @IsArray()
+//   @ArrayMinSize(1)
+//   @ValidateNested({ each: true })
+//   @Type(() => StockItemDto)
+//   stock?: StockItemDto[];
+
+//   @IsArray()
+//   @ArrayMinSize(1)
+//   @ValidateNested({ each: true })
+//   @Type(() => CareInstructionDto)
+//   careInstructions?: CareInstructionDto[];
+
+//   @IsArray()
+//   @ArrayMinSize(1)
+//   @ValidateNested({ each: true })
+//   @Type(() => DetailDto)
+//   details?: DetailDto[];
+
+//   @IsString()
+//   @IsNotEmpty()
+//   @Matches(/^(male|female)$/, { message: 'Gender must be either "male" or "female"' })
+//   gender?: 'male' | 'female';
+// }
+
+
+import { IsString, IsBoolean, IsIn, IsArray, IsObject, IsNumber, IsOptional } from 'class-validator';
+import { Gender } from '../schemas/clothes.schema'; // Якщо це потрібно для імпорту enum
+
 
 export class CreateClothesDto {
-  // @IsString()
-  // @IsNotEmpty()
-  // @Matches(/^[a-z0-9-]+$/, { message: 'Slug can only contain lowercase letters, numbers and hyphens' })
-  // slug: string;
 
-  @ValidateNested()
-  @Type(() => NameDto)
-  name: NameDto;
+  @IsObject()
+  @IsString({ each: true })
+  name!: {
+    en: string;
+    uk: string;
+  };
 
-  @ValidateNested()
-  @Type(() => DescriptionDto)
-  description: DescriptionDto;
+  @IsObject()
+  @IsString({ each: true })
+  description!: {
+    en: string;
+    uk: string;
+  };
 
-  @ValidateNested()
-  @Type(() => ImageDto)
-  mainImage: ImageDto;
+  @IsObject()
+  @IsString()
+  mainImage!: {
+    url: string;
+    alt: {
+      en: string;
+      uk: string;
+    };
+  };
 
-  @ValidateNested()
-  @Type(() => PriceDto)
-  price: PriceDto;
+  @IsObject()
+  price!: {
+    amount: number;
+    currency: string;
+    discount: number;
+  };
 
   @IsBoolean()
-  availability: boolean;
+  @IsOptional() // Це поле має стандартне значення true
+  availability!: boolean;
 
-  @ValidateNested()
-  @Type(() => CategoryDto)
-  category: CategoryDto;
-
-  // @IsArray()
-  // @IsString({ each: true })
-  // @ArrayMinSize(1)
-  // tags: string[];
+  @IsObject()
+  category!: {
+    en: string;
+    uk: string;
+  };
 
   @IsArray()
-  @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => StockItemDto)
-  stock: StockItemDto[];
+  stock!: {
+    color: {
+      code: string;
+      en: string;
+      uk: string;
+    };
+    sizes: {
+      size: string;
+      quantity: number;
+    }[];
+  }[];
 
   @IsArray()
-  @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => CareInstructionDto)
-  careInstructions: CareInstructionDto[];
+  @IsObject({ each: true })
+  careInstructions!: {
+    en: string;
+    uk: string;
+  }[];
 
   @IsArray()
-  @ArrayMinSize(1)
-  @ValidateNested({ each: true })
-  @Type(() => DetailDto)
-  details: DetailDto[];
+  @IsObject({ each: true })
+  details!: {
+    en: string;
+    uk: string;
+  }[];
 
-  @IsString()
-  @IsNotEmpty()
-  @Matches(/^(male|female)$/, { message: 'Gender must be either "male" or "female"' })
-  gender: 'male' | 'female';
+  @IsArray()
+  @IsObject({ each: true })
+  reviews!: {
+    id: string;
+    userId: string;
+    userName: string;
+    rating: number;
+    comment: {
+      en: string;
+      uk: string;
+    };
+    likes: string[];
+  }[];
+
+  @IsIn([Gender.Male, Gender.Female])
+  gender!: Gender;
+  
 }
