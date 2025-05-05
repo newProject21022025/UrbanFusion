@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { Clothes } from './schemas/clothes.schema';
 import { CreateClothesDto } from './dto/create-clothes.dto';
 import { UpdateClothesDto } from './dto/update-clothes.dto';
+import slugify from 'slugify'; 
 
 @Injectable()
 export class ClothesService {
@@ -12,8 +13,9 @@ export class ClothesService {
   ) {}
 
   async create(createClothesDto: CreateClothesDto): Promise<Clothes> {
-    const createdClothes = new this.clothesModel(createClothesDto);
-    return createdClothes.save();
+    const slug = slugify(createClothesDto.name.en, { lower: true });
+    const newClothes = new this.clothesModel({ ...createClothesDto, slug });
+    return await newClothes.save();
   }
 
   async findAll(): Promise<Clothes[]> {

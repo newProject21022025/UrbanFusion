@@ -28,7 +28,8 @@
     "class-validator": "^0.14.1",
     "mongoose": "^8.14.0",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "slugify": "^1.6.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -64,7 +65,6 @@
   "engines": {
     "node": ">=18.x"
   },
-  
   "jest": {
     "moduleFileExtensions": [
       "js",

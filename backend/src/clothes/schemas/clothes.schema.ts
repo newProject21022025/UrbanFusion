@@ -9,20 +9,20 @@ export enum Gender {
 
 @Schema({ timestamps: true, collection: 'clothes' })
 export class Clothes extends Document {
-  // @Prop({ required: true, unique: true })
-  // @IsString()
-  // slug: string;
+
+  @Prop({ type: String, unique: true, required: true })
+  slug!: string;
 
   @Prop({ type: Object, required: true })
   @IsString()
-  name: {
+  name!: {
     en: string;
     uk: string;
   };
 
   @Prop({ type: Object, required: true })
   @IsString()
-  description: {
+  description!: {
     en: string;
     uk: string;
   };
@@ -37,7 +37,7 @@ export class Clothes extends Document {
     },
     required: true,
   })
-  mainImage: {
+  mainImage!: {
     url: string;
     alt: {
       en: string;
@@ -53,14 +53,14 @@ export class Clothes extends Document {
     },
     required: true,
   })
-  price: {
+  price!: {
     amount: number;
     currency: string;
     discount: number;
   };
 
   @Prop({ default: true })
-  availability: boolean;
+  availability!: boolean;
 
   @Prop({
     type: {
@@ -70,14 +70,12 @@ export class Clothes extends Document {
     },
     required: true,
   })
-  category: {
-    // id: string;
+  category!: {
+
     en: string;
     uk: string;
   };
 
-  // @Prop([String])
-  // tags: string[];
 
   @Prop({
     type: [
@@ -96,7 +94,7 @@ export class Clothes extends Document {
       },
     ],
   })
-  stock: {
+  stock!: {
     color: {
       code: string;
       en: string;
@@ -114,7 +112,7 @@ export class Clothes extends Document {
       uk: String,
     },
   ])
-  careInstructions: {
+  careInstructions!: {
     en: string;
     uk: string;
   }[];
@@ -125,7 +123,7 @@ export class Clothes extends Document {
       uk: String,
     },
   ])
-  details: {
+  details!: {
     en: string;
     uk: string;
   }[];
@@ -143,7 +141,7 @@ export class Clothes extends Document {
       likes: [String],
     },
   ])
-  reviews: {
+  reviews!: {
     id: string;
     userId: string;
     userName: string;
@@ -158,8 +156,10 @@ export class Clothes extends Document {
   // 💡 Новое поле gender
   @Prop({ type: String, enum: Gender, required: true })
   @IsIn([Gender.Male, Gender.Female])
-  gender: Gender;
+  gender!: Gender;
 }
+
+
 
 export const ClothesSchema = SchemaFactory.createForClass(Clothes);
 
