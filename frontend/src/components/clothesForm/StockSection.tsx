@@ -1,16 +1,6 @@
 import { FormData } from "./ClothesForm";
 import styles from './ClothesForm.module.css';
 
-// interface StockColor {
-//   code: string;
-//   en: string;
-//   uk: string;
-// }
-
-// interface StockSize {
-//   size: string;
-//   quantity: number;
-// }
 
 interface StockSectionProps {
   formData: FormData;

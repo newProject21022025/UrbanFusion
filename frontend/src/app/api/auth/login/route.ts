@@ -6,7 +6,7 @@ export async function POST(request: Request) {
     const body = await request.json();
     console.log('API Login request:', body);
 
-    const apiUrl = process.env.BACKEND_URL || 'https://urban-fusion-5fee.vercel.app';
+    const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://urban-fusion-5fee.vercel.app';
 
     const res = await fetch(`${apiUrl}/uk/auth/login`, {
       method: 'POST',
