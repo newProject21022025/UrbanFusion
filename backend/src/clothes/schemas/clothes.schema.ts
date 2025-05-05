@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { IsString, IsIn } from 'class-validator';
+import slugify from 'slugify';
 
 export enum Gender {
   Male = 'male',
@@ -9,8 +10,7 @@ export enum Gender {
 
 @Schema({ timestamps: true, collection: 'clothes' })
 export class Clothes extends Document {
-
-  @Prop({ type: String, unique: true, required: true })
+  @Prop({ type: String, unique: true })
   slug!: string;
 
   @Prop({ type: Object, required: true })
@@ -49,7 +49,7 @@ export class Clothes extends Document {
     type: {
       amount: { type: Number, required: true },
       currency: { type: String, required: true },
-      discount: { type: Number, default: 0, required: false },
+      discount: { type: Number, default: 0 },
     },
     required: true,
   })
@@ -64,18 +64,15 @@ export class Clothes extends Document {
 
   @Prop({
     type: {
-      id: String,
       en: String,
       uk: String,
     },
     required: true,
   })
   category!: {
-
     en: string;
     uk: string;
   };
-
 
   @Prop({
     type: [
@@ -153,16 +150,17 @@ export class Clothes extends Document {
     likes: string[];
   }[];
 
-  // 💡 Новое поле gender
   @Prop({ type: String, enum: Gender, required: true })
   @IsIn([Gender.Male, Gender.Female])
   gender!: Gender;
 }
 
-
-
 export const ClothesSchema = SchemaFactory.createForClass(Clothes);
 
-
-
-
+// ✅ Додаємо хук на автогенерацію slug
+ClothesSchema.pre('save', function (next) {
+  if (!this.slug && this.name?.en) {
+    this.slug = slugify(this.name.en, { lower: true, strict: true });
+  }
+  next();
+});
