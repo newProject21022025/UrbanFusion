@@ -8,17 +8,7 @@ interface BasicInfoSectionProps {
 
 export default function BasicInfoSection({ formData, handleChange }: BasicInfoSectionProps) {
   return (
-    <div className={styles.formSection}>
-      {/* <div className={styles.formGroup}>
-        <label>Slug (URL identifier):</label>
-        <input
-          type="text"
-          name="slug"
-          value={formData.slug}
-          onChange={handleChange}
-          required
-        />
-      </div> */}
+    <div className={styles.formSection}>      
 
       <div className={styles.formGroup}>
         <label>Name (English):</label>
