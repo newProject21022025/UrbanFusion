@@ -1,4 +1,24 @@
+/* Create.module.css */
 .main {
-    display: flex;
-}
-
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+  }
+  
+  .error {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #d32f2f;
+  }
+  
+  /* .h2 {
+    margin-bottom: 2rem;
+    color: #333;
+  } */

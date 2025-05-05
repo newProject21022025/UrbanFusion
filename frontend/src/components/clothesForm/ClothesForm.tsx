@@ -1,4 +1,6 @@
-import { useState } from "react";
+//frontend/src/components/clothesForm/ClothesForm.tsx
+
+import { useState, useEffect } from "react";
 import styles from "./ClothesForm.module.css";
 import BasicInfoSection from "./BasicInfoSection";
 import ImageSection from "./ImageSection";
@@ -79,7 +81,18 @@ export interface FormData {
   gender: "male" | "female";
 }
 
-export default function ClothesForm() {
+interface ClothesFormProps {
+  initialData?: FormData;
+  onSubmit: (formData: FormData) => void;
+  isEditMode?: boolean;
+}
+
+
+export default function ClothesForm({ 
+  initialData, 
+  onSubmit, 
+  isEditMode = false 
+}: ClothesFormProps) {
   const [formData, setFormData] = useState<FormData>({  
     name: { en: "", uk: "" },
     description: { en: "", uk: "" },
@@ -295,33 +308,40 @@ export default function ClothesForm() {
     }));
   };
 
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    onSubmit(formData);
 
-    try {
-      const response = await fetch(        
-        `https://urban-fusion-amber.vercel.app/uk/clothes`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+    // try {
+    //   const response = await fetch(        
+    //     `https://urban-fusion-amber.vercel.app/uk/clothes`,
+    //     {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(formData),
+    //     }
+    //   );
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      console.log("API URL:", `${process.env.BACKEND_URL}/clothes`);
+    //   if (!response.ok) {
+    //     throw new Error("Network response was not ok");
+    //   }
+    //   console.log("API URL:", `${process.env.BACKEND_URL}/clothes`);
 
-      const result = await response.json();
-      console.log("Success:", result);
-      alert("Clothes item created successfully!");      
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Error creating clothes item");
-    }
+    //   const result = await response.json();
+    //   console.log("Success:", result);
+    //   alert("Clothes item created successfully!");      
+    // } catch (error) {
+    //   console.error("Error:", error);
+    //   alert("Error creating clothes item");
+    // }
   };
 
   return (
@@ -354,8 +374,11 @@ export default function ClothesForm() {
         removeArrayItem={removeArrayItem}
         addArrayItem={addArrayItem}
       />
-      <button type="submit" className={styles.submitButton}>
+      {/* <button type="submit" className={styles.submitButton}>
         Create Clothes Item
+      </button> */}
+      <button type="submit" className={styles.submitButton}>
+        {isEditMode ? 'Update Clothes Item' : 'Create Clothes Item'}
       </button>
     </form>
   );
