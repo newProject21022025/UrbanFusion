@@ -26,7 +26,7 @@ export default function Create() {
       alert("Картку створено успішно!");
 
       // Переадресація після створення, наприклад на сторінку списку товарів
-      // router.push("/AUF");
+      router.push("/AUF");
     } catch (error) {
       console.error("Error creating item:", error);
       alert("Помилка при створенні картки.");
