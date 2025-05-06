@@ -15,7 +15,7 @@ export default function ImageSection({ formData, handleChange }: ImageSectionPro
         <input
           type="url"
           name="mainImage.url"
-          value={formData.mainImage.url}
+          value={formData.mainImage?.url ?? ''}
           onChange={handleChange}
           required
         />
@@ -26,7 +26,7 @@ export default function ImageSection({ formData, handleChange }: ImageSectionPro
         <input
           type="text"
           name="mainImage.alt.en"
-          value={formData.mainImage.alt.en}
+          value={formData.mainImage?.alt.en}
           onChange={handleChange}
           required
         />
@@ -37,7 +37,7 @@ export default function ImageSection({ formData, handleChange }: ImageSectionPro
         <input
           type="text"
           name="mainImage.alt.uk"
-          value={formData.mainImage.alt.uk}
+          value={formData.mainImage?.alt.uk}
           onChange={handleChange}
           required
         />

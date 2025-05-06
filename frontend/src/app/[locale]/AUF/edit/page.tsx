@@ -6,67 +6,7 @@ import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
 import styles from "./Edit.module.css";
 import { useRouter } from "next/navigation";
-
-interface Clothes {
-  _id: string;
-  slug: string;
-  name: {
-    en: string;
-    uk: string;
-  };
-  description: {
-    en: string;
-    uk: string;
-  };
-  mainImage: {
-    url: string;
-    alt: {
-      en: string;
-      uk: string;
-    };
-  } | null;
-  price: {
-    amount: number;
-    currency: string;
-    discount: number;
-  };
-  availability: boolean;
-  category: {
-    id: string;
-    en: string;
-    uk: string;
-  };
-  stock: {
-    color: {
-      code: string;
-      en: string;
-      uk: string;
-    };
-    sizes: {
-      size: string;
-      quantity: number;
-    }[];
-  }[];
-  careInstructions: {
-    en: string;
-    uk: string;
-  }[];
-  details: {
-    en: string;
-    uk: string;
-  }[];
-  reviews: {
-    id: string;
-    userId: string;
-    userName: string;
-    rating: number;
-    comment: {
-      en: string;
-      uk: string;
-    };
-    likes: string[];
-  }[];
-}
+import { clothesService, Clothes } from "../../../api/clothes/clothesService";
 
 export default function Edit() {
   const router = useRouter();
@@ -83,12 +23,7 @@ export default function Edit() {
   const fetchClothes = async () => {
     try {
       setLoading(true);
-      const url = `https://urban-fusion-amber.vercel.app/${locale}/clothes`;
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
+      const data = await clothesService.getAllClothes(locale);
       setClothes(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error");
@@ -108,17 +43,7 @@ export default function Edit() {
 
     try {
       setDeletingId(id);
-      const response = await fetch(
-        `https://urban-fusion-amber.vercel.app/uk/clothes/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Failed to delete item: ${response.status}`);
-      }
-
+      await clothesService.deleteClothes(id, locale);
       setClothes(clothes.filter((item) => item._id !== id));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete item");

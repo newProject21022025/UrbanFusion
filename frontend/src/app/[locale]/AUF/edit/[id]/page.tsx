@@ -3,13 +3,15 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import ClothesForm from '../../../../../components/clothesForm/ClothesForm';
+import ClothesForm, { FormData } from '../../../../../components/clothesForm/ClothesForm';
 import styles from './page.module.css';
-import { FormData } from '../../../../../components/clothesForm/ClothesForm';
+import { clothesService } from '../../../../api/clothes/clothesService';
+import { useLocale } from 'next-intl';
 
 export default function EditClothesItem() {
   const { id } = useParams();
   const router = useRouter();
+  const locale = useLocale();
   const [initialData, setInitialData] = useState<FormData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,39 +19,25 @@ export default function EditClothesItem() {
   useEffect(() => {
     const fetchClothesItem = async () => {
       try {
-        const response = await fetch(`https://urban-fusion-amber.vercel.app/uk/clothes/${id}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch clothes item');
-        }
-        const data: FormData = await response.json();
+        const data = await clothesService.getClothesById(id as string, locale);
         setInitialData(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An unknown error occurred');
+        setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
         setLoading(false);
       }
     };
 
     fetchClothesItem();
-  }, [id]);
+  }, [id, locale]);
 
   const handleSubmit = async (formData: FormData) => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/clothes/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update clothes item');
-      }
-
-      router.push('/AUF/edit');
+      await clothesService.updateClothes(id as string, formData, locale);
+      alert("Картку успішно оновлено!");
+      router.push('/AUF');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unknown error occurred');
+      setError(err instanceof Error ? err.message : 'Unknown error');
     }
   };
 
@@ -59,7 +47,7 @@ export default function EditClothesItem() {
 
   return (
     <div className={styles.main}>
-      <h2>Edit Clothes Item</h2>
+      <h2>Редагування картки одягу</h2>
       <ClothesForm 
         initialData={initialData} 
         onSubmit={handleSubmit} 
