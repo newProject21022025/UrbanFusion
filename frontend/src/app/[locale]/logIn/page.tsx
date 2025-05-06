@@ -2,14 +2,14 @@
 
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
+// import { useRouter } from 'next/navigation';
+// import { useLocale } from 'next-intl';
 import { LoginForm } from '../../../components/loginForm/LoginForm';
 import styles from './page.module.css';
 
 export default function LoginPage() {
-  const router = useRouter();
-  const locale = useLocale();
+  // const router = useRouter();
+  // const locale = useLocale();
 
   const handleSubmit = async (values: { login: string; password: string }): Promise<{ success: boolean; isAdmin: boolean }> => {
     try {
