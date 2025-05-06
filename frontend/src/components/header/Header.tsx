@@ -9,8 +9,7 @@ import { useEffect, useState } from 'react';
 import LogIn from '../../svg/LogIn/logIn';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { logoutAdmin } from '../../redux/slices/authSlice';
-
+import { logoutAdmin, logoutUser } from '../../redux/slices/authSlice';
 
 type HeaderProps = {
   locale: 'en' | 'uk';
@@ -21,7 +20,7 @@ export default function Header({ locale }: HeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
-  const { isAdmin, adminLinks } = useSelector((state: RootState) => state.auth);
+  const { isAdmin, isAuthenticated, adminLinks } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,7 +36,11 @@ export default function Header({ locale }: HeaderProps) {
   };
 
   const handleLogout = () => {
-    dispatch(logoutAdmin());
+    if (isAdmin) {
+      dispatch(logoutAdmin());
+    } else {
+      dispatch(logoutUser());
+    }
     router.push('/');
   };
 
@@ -49,8 +52,8 @@ export default function Header({ locale }: HeaderProps) {
             {t('catalog')}
           </Link>        
           {isAdmin && (
-            <Link href={adminLinks.aufLink} className={styles.navLink}>
-              {adminLinks.aufLabel}
+            <Link href={adminLinks.link} className={styles.navLink}>
+              {adminLinks.label}
             </Link>
           )}        
         </div>  
@@ -59,7 +62,7 @@ export default function Header({ locale }: HeaderProps) {
           {t('logo')}
         </Link>  
         <div className={styles.languageSwitcher}>
-          {isAdmin ? (
+          {isAuthenticated ? (
             <button onClick={handleLogout} className={styles.navLink}>
               Вийти
             </button>

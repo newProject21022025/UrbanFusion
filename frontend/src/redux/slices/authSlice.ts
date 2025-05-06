@@ -3,10 +3,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface AuthState {
+  isAuthenticated: boolean;
   isAdmin: boolean;
   adminLinks: {
-    aufLink: string;
-    aufLabel: string;
+    link: string;
+    label: string;
   };
 }
 
@@ -14,18 +15,20 @@ const loadAuthState = (): AuthState => {
   if (typeof window !== 'undefined') {
     const saved = localStorage.getItem('authState');
     return saved ? JSON.parse(saved) : { 
+      isAuthenticated: false,
       isAdmin: false,
       adminLinks: {
-        aufLink: '/AUF/edit',
-        aufLabel: 'BOSS'
+        link: '/AUF/edit',
+        label: 'BOSS'
       }
     };
   }
   return { 
+    isAuthenticated: false,
     isAdmin: false,
     adminLinks: {
-      aufLink: '/AUF/edit',
-      aufLabel: 'BOSS'
+      link: '/AUF/edit',
+      label: 'BOSS'
     }
   };
 };
@@ -37,28 +40,46 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     loginAdmin: (state) => {
+      state.isAuthenticated = true;
       state.isAdmin = true;
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('authState', JSON.stringify(state));
-      }
+      saveToLocalStorage(state);
+    },
+    loginUser: (state) => {
+      state.isAuthenticated = true;
+      state.isAdmin = false;
+      saveToLocalStorage(state);
     },
     logoutAdmin: (state) => {
+      state.isAuthenticated = false;
       state.isAdmin = false;
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('authState');
-      }
+      clearLocalStorage();
+    },
+    logoutUser: (state) => {
+      state.isAuthenticated = false;
+      state.isAdmin = false;
+      clearLocalStorage();
     },
     setAdminLinks: (state, action: PayloadAction<{link: string, label: string}>) => {
       state.adminLinks = {
-        aufLink: action.payload.link,
-        aufLabel: action.payload.label
+        link: action.payload.link,
+        label: action.payload.label
       };
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('authState', JSON.stringify(state));
-      }
+      saveToLocalStorage(state);
     }
   },
 });
 
-export const { loginAdmin, logoutAdmin, setAdminLinks } = authSlice.actions;
+function saveToLocalStorage(state: AuthState) {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('authState', JSON.stringify(state));
+  }
+}
+
+function clearLocalStorage() {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('authState');
+  }
+}
+
+export const { loginAdmin, loginUser, logoutAdmin, logoutUser, setAdminLinks } = authSlice.actions;
 export default authSlice.reducer;

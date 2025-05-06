@@ -2,19 +2,20 @@
 
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl'; // <-- важливо для підтримки локалі
+// import { useRouter } from 'next/navigation';
+// import { useLocale } from 'next-intl';
 import { LoginForm } from '../../../components/loginForm/LoginForm';
 import styles from './page.module.css';
 
 export default function LoginPage() {
-  const router = useRouter();
-  const locale = useLocale(); // отримуємо поточну локаль
+  // const router = useRouter();
+  // const locale = useLocale();
 
-  const handleSubmit = async (values: { login: string; password: string }): Promise<boolean> => {
+  const handleSubmit = async (values: { login: string; password: string }): Promise<{ success: boolean; isAdmin: boolean }> => {
     try {
       console.log('Login attempt:', values.login);
       
+      // This would be your actual API call
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -29,18 +30,19 @@ export default function LoginPage() {
   
       console.log('Login success:', data.user);
   
-      // Зберігаємо дані користувача
-      localStorage.setItem('userData', JSON.stringify(data.user));
-      localStorage.setItem('isAuthenticated', 'true');
-  
-      // Перенаправлення з урахуванням локалі
-      if (data.user.role === 'admin') {
-        router.push(`/${locale}/AUF`);
-      } else {
-        router.push(`/${locale}/profile`);
+      // Determine if user is admin
+      const isAdmin = data.user.role === 'admin';
+      
+      // Save user data to localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('userData', JSON.stringify(data.user));
+        localStorage.setItem('isAuthenticated', 'true');
+        if (isAdmin) {
+          localStorage.setItem('isAdmin', 'true');
+        }
       }
-  
-      return true; // Успішний вхід
+
+      return { success: true, isAdmin };
     } catch (error) {
       console.error('Login error:', error);
   
@@ -50,7 +52,7 @@ export default function LoginPage() {
         alert('Login failed. Please try again.');
       }
       
-      return false; // Невдалий вхід
+      return { success: false, isAdmin: false };
     }
   };
 
@@ -60,7 +62,6 @@ export default function LoginPage() {
     </div>
   );
 }
-
 
 
 
