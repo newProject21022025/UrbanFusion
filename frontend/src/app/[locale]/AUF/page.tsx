@@ -15,7 +15,7 @@ export default function AUFRootRedirect() {
     : '/AUF';
 
   useEffect(() => {
-    router.push(`${basePath}/tab1`);
+    router.push(`${basePath}/edit`);
   }, [router, basePath]);
 
   return null;

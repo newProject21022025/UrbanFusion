@@ -6,10 +6,10 @@ import * as Yup from 'yup';
 import styles from './LoginForm.module.css';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
-import { loginAdmin, setAdminLinks } from '../../redux/slices/authSlice';
+import { loginAdmin, loginUser, setAdminLinks } from '../../redux/slices/authSlice';
 
 interface LoginFormProps {
-  onSubmit: (values: { login: string; password: string }) => Promise<boolean>;
+  onSubmit: (values: { login: string; password: string }) => Promise<{ success: boolean; isAdmin: boolean }>;
 }
 
 export function LoginForm({ onSubmit }: LoginFormProps) {
@@ -28,13 +28,17 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
     },
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
-      const isSuccess = await onSubmit(values);
-      if (isSuccess) {
-        dispatch(loginAdmin());
-        dispatch(setAdminLinks({
-          link: '/AUF/edit',
-          label: 'BOSS'
-        }));
+      const { success, isAdmin } = await onSubmit(values);
+      if (success) {
+        if (isAdmin) {
+          dispatch(loginAdmin());
+          dispatch(setAdminLinks({
+            link: '/AUF/edit',
+            label: 'BOSS'
+          }));
+        } else {
+          dispatch(loginUser());
+        }
         router.push('/');
       }
       setSubmitting(false);
@@ -43,7 +47,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
 
   return (
     <div className={styles.card}>
-      <h1 className={styles.title}>Вхід для адміністратора</h1>
+      <h1 className={styles.title}>Вхід</h1>
       
       <form onSubmit={formik.handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
