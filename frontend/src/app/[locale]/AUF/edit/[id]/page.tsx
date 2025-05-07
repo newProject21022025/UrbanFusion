@@ -20,7 +20,7 @@ export default function EditClothesItem() {
     const fetchClothesItem = async () => {
       try {
         const data = await clothesService.getClothesById(id as string, locale);
-        setInitialData(data);
+        setInitialData(data as FormData);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
