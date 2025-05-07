@@ -1,22 +1,12 @@
 import { useState, useRef } from 'react';
 import axios from 'axios';
 import styles from './ClothesForm.module.css';
-
-// Типізація formData
-interface FormData {
-  mainImage: {
-    url: string;
-    alt: {
-      en: string;
-      uk: string;
-    };
-  };
-}
+import { FormData as ClothesFormData } from './ClothesForm'; // Перейменуємо імпорт
 
 interface ImageSectionProps {
-  formData: FormData;
+  formData: ClothesFormData;
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
-  setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  setFormData: React.Dispatch<React.SetStateAction<ClothesFormData>>;
 }
 
 export default function ImageSection({ formData, handleChange, setFormData }: ImageSectionProps) {
@@ -31,15 +21,16 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
     setIsUploading(true);
     setUploadProgress(0);
 
-    const uploadData = new FormData();
-    uploadData.append('file', file);
-    uploadData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!);
-    uploadData.append('folder', process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER!);
+    // Використовуємо оригінальний FormData без конфлікту імен
+    const formDataObject = new FormData();
+    formDataObject.append('file', file);
+    formDataObject.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!);
+    formDataObject.append('folder', process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER!);
 
     try {
       const response = await axios.post(
         `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-        uploadData,
+        formDataObject,
         {
           onUploadProgress: (progressEvent) => {
             const percentCompleted = Math.round(
@@ -94,7 +85,7 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
         <input
           type="url"
           name="mainImage.url"
-          value={formData.mainImage.url}
+          value={formData.mainImage?.url || ''}
           onChange={handleChange}
           required
         />
@@ -105,7 +96,7 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
         <input
           type="text"
           name="mainImage.alt.en"
-          value={formData.mainImage.alt.en}
+          value={formData.mainImage?.alt?.en || ''}
           onChange={handleChange}
           required
         />
@@ -116,7 +107,7 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
         <input
           type="text"
           name="mainImage.alt.uk"
-          value={formData.mainImage.alt.uk}
+          value={formData.mainImage?.alt?.uk || ''}
           onChange={handleChange}
           required
         />

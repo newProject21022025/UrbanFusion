@@ -71,7 +71,7 @@ export interface FormData {
   // slug: string;
   name: Name;
   description: Description;
-  mainImage: Image | null;
+  mainImage: Image;
   price: Price;
   availability: boolean;
   category: Category;
