@@ -71,7 +71,7 @@ export interface FormData {
   // slug: string;
   name: Name;
   description: Description;
-  mainImage: Image | null;
+  mainImage: Image;
   price: Price;
   availability: boolean;
   category: Category;
@@ -319,7 +319,11 @@ export default function ClothesForm({
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <BasicInfoSection formData={formData} handleChange={handleChange} />
-      <ImageSection formData={formData} handleChange={handleChange} />
+      <ImageSection
+        formData={formData}
+        handleChange={handleChange}
+        setFormData={setFormData}
+      />
       <PriceSection
         formData={formData}
         handleChange={handleChange}
@@ -352,7 +356,3 @@ export default function ClothesForm({
     </form>
   );
 }
-
-
-
-
