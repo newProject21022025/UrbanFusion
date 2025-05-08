@@ -1,3 +1,5 @@
+// src/clothes/dto/update-clothes.dto.ts
+
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -11,9 +13,10 @@ import {
   MaxLength,
   Min,
   ValidateNested,
-  ArrayMinSize,
+  // ArrayMinSize,
   Matches
 } from 'class-validator';
+
 
 class NameDto {
   @IsString()
@@ -169,6 +172,9 @@ export class UpdateClothesDto {
   // @IsNotEmpty()
   // @IsOptional()
   // slug?: string;
+  @IsString()
+  locale!: string; // ✅ Додано поле locale
+
 
   @ValidateNested()
   @Type(() => NameDto)

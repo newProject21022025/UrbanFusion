@@ -1,5 +1,4 @@
 // main.ts
-
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -7,13 +6,14 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.setGlobalPrefix('uk');
+  // 🔁 Підтримка :locale як глобального параметра
+  app.setGlobalPrefix(':locale');
 
   const allowedOrigins = [
     'https://urban-fusion-amber.vercel.app',
     'https://urban-fusion-5fee.vercel.app',
     'http://localhost:3000',
-    'http://localhost:3001'
+    'http://localhost:3001',
   ];
 
   app.enableCors({
@@ -21,17 +21,21 @@ async function bootstrap() {
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type,Authorization',
-    exposedHeaders: ['Authorization']
+    exposedHeaders: ['Authorization'],
   });
 
   const port = process.env.PORT || 3000;
-await app.listen(port, '0.0.0.0', () => {
-  console.log(`Server is running on port ${port}`);
-});
+  await app.listen(port, '0.0.0.0', () => {
+    console.log(`Server is running on port ${port}`);
+  });
 }
 
 bootstrap();
 
+
+
+
+// // main.ts
 
 // import { NestFactory } from '@nestjs/core';
 // import { AppModule } from './app.module';
@@ -50,20 +54,17 @@ bootstrap();
 //   ];
 
 //   app.enableCors({
-//     origin: (origin, callback) => {
-//       if (!origin || allowedOrigins.includes(origin)) {
-//         callback(null, origin);
-//       } else {
-//         callback(new Error('Not allowed by CORS'));
-//       }
-//     },
+//     origin: allowedOrigins,
 //     credentials: true,
 //     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
 //     allowedHeaders: 'Content-Type,Authorization',
+//     exposedHeaders: ['Authorization']
 //   });
 
-//   await app.listen(process.env.PORT || 3000);
-//   console.log(`Server is running on ${await app.getUrl()}`);
+//   const port = process.env.PORT || 3000;
+// await app.listen(port, '0.0.0.0', () => {
+//   console.log(`Server is running on port ${port}`);
+// });
 // }
 
 // bootstrap();
