@@ -3,11 +3,11 @@ import React from "react";
 import styles from "./Catalog.module.css";
 import { useLocale } from "next-intl";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { clothesService, Clothes } from "../../api/clothes/clothesService";
 
 export default function Catalog() {
-  const router = useRouter();
+  // const router = useRouter();
   const locale = useLocale();
   const [clothes, setClothes] = useState<Clothes[]>([]);
   const [loading, setLoading] = useState(true);
