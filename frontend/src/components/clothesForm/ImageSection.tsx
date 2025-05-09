@@ -14,6 +14,7 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
   const t = useTranslations('ImageSection');
 
   const [isUploading, setIsUploading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [uploadProgress, setUploadProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -66,7 +67,7 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
     <div className={styles.formSection}>
       <h3>{t('mainImage')}</h3>
 
-      <div className={styles.formGroup}>
+      {/* <div className={styles.formGroup}>
         <label>{t('uploadImage')}:</label>
         <input
           type="file"
@@ -80,9 +81,9 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
             <div style={{ width: `${uploadProgress}%` }}></div>
           </div>
         )}
-      </div>
+      </div> */}
 
-      {/* <div className={styles.customFileInput}>
+      <div className={styles.customFileInput}>
   <button type="button" onClick={() => fileInputRef.current?.click()} disabled={isUploading}>
     {t('chooseFile')}
   </button>
@@ -97,7 +98,7 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
     disabled={isUploading}
     style={{ display: 'none' }}
   />
-</div> */}
+</div>
 
       <div className={styles.formGroup}>
         <label>{t('imageUrl')}:</label>
