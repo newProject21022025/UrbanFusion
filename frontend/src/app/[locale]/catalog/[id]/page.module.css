@@ -1,0 +1,67 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .image {
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .description {
+    font-size: 1.1rem;
+    margin-top: 1rem;
+  }
+  
+  .label {
+    margin-top: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .stockBlock {
+    margin-top: 1rem;
+  }
+  
+  .colorDot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    border: 1px solid #ccc;
+  }
+
+  .priceBlock {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  
+  .oldPrice {
+    text-decoration: line-through;
+    color: #888;
+    font-size: 14px;
+  }
+  
+  .discount {
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .newPrice {
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  
