@@ -14,6 +14,7 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
   const t = useTranslations('ImageSection');
 
   const [isUploading, setIsUploading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [uploadProgress, setUploadProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
