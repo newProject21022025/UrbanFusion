@@ -1,13 +1,12 @@
 // src/app/[locale]/catalog/[id]/page.tsx
 
 "use client";
-
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { useParams } from "next/navigation";
 import { clothesService } from "../../../api/clothes/clothesService";
+
 
 export default function ClothesPage() {
   const t = useTranslations();
@@ -35,9 +34,6 @@ export default function ClothesPage() {
   const discountedPrice =
     clothes.price.amount * (1 - clothes.price.discount / 100);
   const hideSizesFor = ["Окуляри", "Сумки", "Glasses", "Bags"];
-  const shouldShowSizes =
-    !hideSizesFor.includes(clothes.category?.nameUk) &&
-    !hideSizesFor.includes(clothes.category?.nameEn);
 
   return (
     <main className={styles.container}>
