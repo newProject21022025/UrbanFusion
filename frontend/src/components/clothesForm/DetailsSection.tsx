@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import { FormData } from "./ClothesForm";
 import styles from './ClothesForm.module.css';
 
@@ -6,27 +7,30 @@ interface DetailsSectionProps {
   handleArrayChange: (
     arrayName: 'careInstructions' | 'details',
     index: number,
-    field: 'en' | 'uk' ,
+    field: 'en' | 'uk',
     value: string
   ) => void;
   removeArrayItem: (arrayName: 'careInstructions' | 'details', index: number) => void;
   addArrayItem: (arrayName: 'careInstructions' | 'details') => void;
 }
 
-export default function DetailsSection({ 
-  formData, 
-  handleArrayChange, 
-  removeArrayItem, 
-  addArrayItem 
+export default function DetailsSection({
+  formData,
+  handleArrayChange,
+  removeArrayItem,
+  addArrayItem
 }: DetailsSectionProps) {
+  const t = useTranslations('DetailsSection');
+
   return (
     <div className={styles.formSection}>
-      <h3>Details</h3>
+      <h3>{t('details')}</h3>
       {formData.details.map((detail, index) => (
         <div key={index} className={styles.formGroup}>
-          <h4>Detail {index + 1}</h4>
+          <h4>{t('detail', { number: index + 1 })}</h4>
+
           <div className={styles.formGroup}>
-            <label>English:</label>
+            <label>{t('english')}:</label>
             <textarea
               value={detail.en}
               onChange={(e) => handleArrayChange('details', index, 'en', e.target.value)}
@@ -35,7 +39,7 @@ export default function DetailsSection({
           </div>
 
           <div className={styles.formGroup}>
-            <label>Ukrainian:</label>
+            <label>{t('ukrainian')}:</label>
             <textarea
               value={detail.uk}
               onChange={(e) => handleArrayChange('details', index, 'uk', e.target.value)}
@@ -45,14 +49,14 @@ export default function DetailsSection({
 
           {formData.details.length > 1 && (
             <button type="button" onClick={() => removeArrayItem('details', index)}>
-              Remove Detail
+              {t('removeDetail')}
             </button>
           )}
         </div>
       ))}
 
       <button type="button" onClick={() => addArrayItem('details')}>
-        Add Detail
+        {t('addDetail')}
       </button>
     </div>
   );

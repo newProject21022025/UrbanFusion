@@ -1,5 +1,6 @@
 import { FormData } from "./ClothesForm";
 import styles from './ClothesForm.module.css';
+import { useTranslations } from 'next-intl';
 
 interface BasicInfoSectionProps {
   formData: FormData;
@@ -7,11 +8,12 @@ interface BasicInfoSectionProps {
 }
 
 export default function BasicInfoSection({ formData, handleChange }: BasicInfoSectionProps) {
+  const t = useTranslations('BasicInfoSection');
   return (
     <div className={styles.formSection}>      
 
       <div className={styles.formGroup}>
-        <label>Name (English):</label>
+        <label>{t('nameEn')}</label>
         <input
           type="text"
           name="name.en"
@@ -22,7 +24,7 @@ export default function BasicInfoSection({ formData, handleChange }: BasicInfoSe
       </div>
 
       <div className={styles.formGroup}>
-        <label>Name (Ukrainian):</label>
+        <label>{t('nameUk')}</label>
         <input
           type="text"
           name="name.uk"
@@ -33,7 +35,7 @@ export default function BasicInfoSection({ formData, handleChange }: BasicInfoSe
       </div>
 
       <div className={styles.formGroup}>
-        <label>Description (English):</label>
+        <label>{t('descEn')}</label>
         <textarea
           name="description.en"
           value={formData.description.en}
@@ -43,7 +45,7 @@ export default function BasicInfoSection({ formData, handleChange }: BasicInfoSe
       </div>
 
       <div className={styles.formGroup}>
-        <label>Description (Ukrainian):</label>
+        <label>{t('descUk')}</label>
         <textarea
           name="description.uk"
           value={formData.description.uk}
@@ -53,15 +55,15 @@ export default function BasicInfoSection({ formData, handleChange }: BasicInfoSe
       </div>
 
       <div className={styles.formGroup}>
-        <label>Gender:</label>
+        <label>{t('gender')}</label>
         <select
           name="gender"
           value={formData.gender}
           onChange={handleChange}
           required
         >
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+          <option value="male">{t('male')}</option>
+          <option value="female">{t('female')}</option>
         </select>
       </div>
     </div>

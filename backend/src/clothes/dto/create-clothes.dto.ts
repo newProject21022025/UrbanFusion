@@ -5,8 +5,8 @@ import { Gender } from '../schemas/clothes.schema'; // Якщо це потрі�
 
 export class CreateClothesDto {
 
-  @IsString()
-  locale!: string; // ✅ Додано поле locale
+  // @IsString()
+  // locale!: string; // ✅ Додано поле locale
 
   @IsObject()
   @IsString({ each: true })

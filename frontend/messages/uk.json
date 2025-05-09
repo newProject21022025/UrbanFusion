@@ -34,5 +34,77 @@
       "invalidEmail": "Невірний формат email",
       "passwordMin": "Мінімум {min} символів"
     }
+  },
+  "BasicInfoSection": {
+    "nameEn": "Назва (англійською)",
+    "nameUk": "Назва (українською)",
+    "descEn": "Опис (англійською)",
+    "descUk": "Опис (українською)",
+    "gender": "Стать",
+    "male": "Чоловіча",
+    "female": "Жіноча"
+  },
+  "ImageSection": {
+    "mainImage": "Основне зображення",
+    "uploadImage": "Завантажити зображення",
+    "uploadFailed": "Не вдалося завантажити. Спробуйте ще раз.",
+    "imageUrl": "URL зображення",
+    "altTextEn": "Альтернативний текст (англійською)",
+    "altTextUk": "Альтернативний текст (українською)",
+    "chooseFile": "Вибрати файл",
+    "noFileChosen": "Файл не вибрано"
+  },
+  "PriceSection": {
+    "title": "Ціна",
+    "amount": "Сума",
+    "currency": "Валюта",
+    "discount": "Знижка",
+    "availability": "Наявність",
+    "available": "Доступно",
+    "notAvailable": "Недоступно"
+  },
+  "CategorySection": {
+    "title": "Категорія",
+    "label": "Оберіть категорію",
+    "placeholder": "Оберіть категорію",
+    "selectedEn": "Обрана категорія (англійською)",
+    "selectedUk": "Обрана категорія (українською)"
+  },
+  "StockSection": {
+    "title": "Сток",
+    "colorVariant": "Кольоровий варіант {index}",
+    "selectColor": "Виберіть колір",
+    "selectColorPlaceholder": "Виберіть колір",
+    "colorCode": "Код кольору",
+    "colorNameEn": "Назва кольору (Англійською)",
+    "sizes": "Розміри",
+    "selectSize": "Виберіть розмір",
+    "selectSizePlaceholder": "Виберіть розмір",
+    "quantity": "Кількість",
+    "removeSize": "Видалити розмір",
+    "addSize": "Додати розмір",
+    "removeColorVariant": "Видалити кольоровий варіант",
+    "addColorVariant": "Додати кольоровий варіант"
+  },
+  "CareInstructionsSection": {
+    "careInstructions": "Інструкції з догляду",
+    "instruction": "Інструкція {number}",
+    "english": "Англійською",
+    "ukrainian": "Українською",
+    "removeInstruction": "Видалити інструкцію",
+    "addCareInstruction": "Додати інструкцію з догляду"
+  },
+  "DetailsSection": {
+    "details": "Деталі",
+    "detail": "Деталь {number}",
+    "english": "Англійською",
+    "ukrainian": "Українською",
+    "removeDetail": "Видалити деталь",
+    "addDetail": "Додати деталь"
+  },
+  "ClothesForm": {
+    "create": "Створити одяг",
+    "update": "Оновити одяг"
   }
+  
 }

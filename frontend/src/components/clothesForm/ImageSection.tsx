@@ -1,7 +1,8 @@
 import { useState, useRef } from 'react';
 import axios from 'axios';
+import { useTranslations } from 'next-intl';
 import styles from './ClothesForm.module.css';
-import { FormData as ClothesFormData } from './ClothesForm'; // Перейменуємо імпорт
+import { FormData as ClothesFormData } from './ClothesForm';
 
 interface ImageSectionProps {
   formData: ClothesFormData;
@@ -10,6 +11,8 @@ interface ImageSectionProps {
 }
 
 export default function ImageSection({ formData, handleChange, setFormData }: ImageSectionProps) {
+  const t = useTranslations('ImageSection');
+
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -21,7 +24,6 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
     setIsUploading(true);
     setUploadProgress(0);
 
-    // Використовуємо оригінальний FormData без конфлікту імен
     const formDataObject = new FormData();
     formDataObject.append('file', file);
     formDataObject.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!);
@@ -53,7 +55,7 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
       }));
     } catch (error) {
       console.error('Upload failed:', error);
-      alert('Upload failed. Please try again.');
+      alert(t('uploadFailed'));
     } finally {
       setIsUploading(false);
       setUploadProgress(0);
@@ -62,10 +64,10 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
 
   return (
     <div className={styles.formSection}>
-      <h3>Main Image</h3>
+      <h3>{t('mainImage')}</h3>
 
       <div className={styles.formGroup}>
-        <label>Upload Image:</label>
+        <label>{t('uploadImage')}:</label>
         <input
           type="file"
           accept="image/*"
@@ -80,8 +82,25 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
         )}
       </div>
 
+      {/* <div className={styles.customFileInput}>
+  <button type="button" onClick={() => fileInputRef.current?.click()} disabled={isUploading}>
+    {t('chooseFile')}
+  </button>
+  <span>
+    {fileInputRef.current?.files?.[0]?.name || t('noFileChosen')}
+  </span>
+  <input
+    type="file"
+    accept="image/*"
+    onChange={handleFileUpload}
+    ref={fileInputRef}
+    disabled={isUploading}
+    style={{ display: 'none' }}
+  />
+</div> */}
+
       <div className={styles.formGroup}>
-        <label>Image URL:</label>
+        <label>{t('imageUrl')}:</label>
         <input
           type="url"
           name="mainImage.url"
@@ -92,7 +111,7 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
       </div>
 
       <div className={styles.formGroup}>
-        <label>Alt Text (English):</label>
+        <label>{t('altTextEn')}:</label>
         <input
           type="text"
           name="mainImage.alt.en"
@@ -103,7 +122,7 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
       </div>
 
       <div className={styles.formGroup}>
-        <label>Alt Text (Ukrainian):</label>
+        <label>{t('altTextUk')}:</label>
         <input
           type="text"
           name="mainImage.alt.uk"

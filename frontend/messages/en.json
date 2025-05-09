@@ -30,9 +30,80 @@
     "submitSuccess": "Login successful!",
     "submitting": "Login...",
     "errors": {
-    "required": "Required field",
-    "invalidEmail": "Invalid email format",
-    "passwordMin": "Minimum {min} characters"
+      "required": "Required field",
+      "invalidEmail": "Invalid email format",
+      "passwordMin": "Minimum {min} characters"
     }
-    }
+  },
+  "BasicInfoSection": {
+    "nameEn": "Name (English)",
+    "nameUk": "Name (Ukrainian)",
+    "descEn": "Description (English)",
+    "descUk": "Description (Ukrainian)",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female"
+  },
+  "ImageSection": {
+    "mainImage": "Main Image",
+    "uploadImage": "Upload Image",
+    "uploadFailed": "Upload failed. Please try again.",
+    "imageUrl": "Image URL",
+    "altTextEn": "Alt Text (English)",
+    "altTextUk": "Alt Text (Ukrainian)",
+    "chooseFile": "Choose File",
+    "noFileChosen": "No file chosen"
+  },
+  "PriceSection": {
+    "title": "Price",
+    "amount": "Amount",
+    "currency": "Currency",
+    "discount": "Discount",
+    "availability": "Availability",
+    "available": "Available",
+    "notAvailable": "Not Available"
+  },
+  "CategorySection": {
+    "title": "Category",
+    "label": "Select Category",
+    "placeholder": "Select a category",
+    "selectedEn": "Selected Category (English)",
+    "selectedUk": "Selected Category (Ukrainian)"
+  },
+  "StockSection": {
+    "title": "Stock",
+    "colorVariant": "Color Variant {index}",
+    "selectColor": "Select Color",
+    "selectColorPlaceholder": "Select a color",
+    "colorCode": "Color Code",
+    "colorNameEn": "Color Name (English)",
+    "sizes": "Sizes",
+    "selectSize": "Select Size",
+    "selectSizePlaceholder": "Select a size",
+    "quantity": "Quantity",
+    "removeSize": "Remove Size",
+    "addSize": "Add Size",
+    "removeColorVariant": "Remove Color Variant",
+    "addColorVariant": "Add Color Variant"
+  },
+  "CareInstructionsSection": {
+    "careInstructions": "Care Instructions",
+    "instruction": "Instruction {number}",
+    "english": "English",
+    "ukrainian": "Ukrainian",
+    "removeInstruction": "Remove Instruction",
+    "addCareInstruction": "Add Care Instruction"
+  },
+  "DetailsSection": {
+    "details": "Details",
+    "detail": "Detail {number}",
+    "english": "English",
+    "ukrainian": "Ukrainian",
+    "removeDetail": "Remove Detail",
+    "addDetail": "Add Detail"
+  },
+  "ClothesForm": {
+    "create": "Create Clothes Item",
+    "update": "Update Clothes Item"
+  }
 }
