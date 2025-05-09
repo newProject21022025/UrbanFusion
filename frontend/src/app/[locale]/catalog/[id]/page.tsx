@@ -2,10 +2,10 @@
 
 "use client";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import styles from "./page.module.css";
 import { useParams } from "next/navigation";
-import { clothesService } from "../../../api/clothes/clothesService";
+import { clothesService, type Clothes } from "../../../api/clothes/clothesService";
 
 
 export default function ClothesPage() {
@@ -14,26 +14,31 @@ export default function ClothesPage() {
   const locale = params.locale as "en" | "uk";
   const id = params.id as string;
 
-  const [clothes, setClothes] = useState<any | null>(null);
+  const [clothes, setClothes] = useState<Clothes | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchClothes = async () => {
-      try {
-        const data = await clothesService.getClothesById(id, locale);
-        setClothes(data);
-      } catch (err: any) {
-        setError(t("Catalog.error", { message: err.message }));
-      }
-    };
-    fetchClothes();
+  const fetchClothes = useCallback(async () => {
+    try {
+      const data = await clothesService.getClothesById(id, locale);
+      setClothes(data);
+    } catch (err: unknown) {
+      setError(
+        t("Catalog.error", {
+          message: err instanceof Error ? err.message : "Unknown error",
+        })
+      );
+    }
   }, [id, locale, t]);
+
+  useEffect(() => {
+    fetchClothes();
+  }, [fetchClothes]);
 
   if (error) return <div>{error}</div>;
   if (!clothes) return <div>{t("Catalog.loading")}</div>;
+  
   const discountedPrice =
     clothes.price.amount * (1 - clothes.price.discount / 100);
-  const hideSizesFor = ["Окуляри", "Сумки", "Glasses", "Bags"];
 
   return (
     <main className={styles.container}>
@@ -46,6 +51,7 @@ export default function ClothesPage() {
           width={600}
           height={600}
           className={styles.image}
+          // priority
         />
       )}
 
@@ -83,40 +89,37 @@ export default function ClothesPage() {
           : t("PriceSection.notAvailable")}
       </div>
 
-      {/* Логіка для приховування розмірів */}
-      {(() => {
-        const hideSizesFor = ["Окуляри", "Сумки", "Glasses", "Bags"];
-        const categoryName = clothes.category[locale];
-        const shouldShowSizes = !hideSizesFor.includes(categoryName);
+      <div className={styles.stockBlock}>
+        <h2>{t("StockSection.title")}:</h2>
+        {clothes.stock.map((stock, i) => {
+          const hideSizesFor = ["Окуляри", "Сумки", "Glasses", "Bags"];
+          const categoryName = clothes.category[locale];
+          const shouldShowSizes = !hideSizesFor.includes(categoryName);
 
-        return (
-          <div className={styles.stockBlock}>
-            <h2>{t("StockSection.title")}:</h2>
-            {clothes.stock.map((stock: any, i: number) => (
-              <div key={i}>
-                <div className={styles.label}>
-                  <span
-                    className={styles.colorDot}
-                    style={{ backgroundColor: stock.color.code }}
-                    title={stock.color[locale]}
-                  />
-                  {stock.color[locale]}
-                </div>
-                {shouldShowSizes && (
-                  <div style={{ marginLeft: "1rem" }}>
-                    {stock.sizes.map((sizeObj: any, j: number) => (
-                      <div key={j}>
-                        {t("StockSection.selectSize")}: {sizeObj.size},{" "}
-                        {t("StockSection.quantity")}: {sizeObj.quantity}
-                      </div>
-                    ))}
-                  </div>
-                )}
+          return (
+            <div key={i}>
+              <div className={styles.label}>
+                <span
+                  className={styles.colorDot}
+                  style={{ backgroundColor: stock.color.code }}
+                  title={stock.color[locale]}
+                />
+                {stock.color[locale]}
               </div>
-            ))}
-          </div>
-        );
-      })()}
+              {shouldShowSizes && (
+                <div style={{ marginLeft: "1rem" }}>
+                  {stock.sizes.map((sizeObj, j) => (
+                    <div key={j}>
+                      {t("StockSection.selectSize")}: {sizeObj.size},{" "}
+                      {t("StockSection.quantity")}: {sizeObj.quantity}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </main>
   );
 }
