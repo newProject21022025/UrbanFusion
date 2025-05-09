@@ -1,6 +1,6 @@
 import { FormData } from "./ClothesForm";
 import styles from './ClothesForm.module.css';
-
+import { useTranslations } from 'next-intl';
 
 interface StockSectionProps {
   formData: FormData;
@@ -16,7 +16,6 @@ interface StockSectionProps {
   removeSize: (stockIndex: number, sizeIndex: number) => void;
 }
 
-// Список кольорів
 const colors = [
   { code: '#FF0000', en: 'Red', uk: 'Червоний' },
   { code: '#00FF00', en: 'Green', uk: 'Зелений' },
@@ -32,7 +31,6 @@ const colors = [
   { code: '#A52A2A', en: 'Brown', uk: 'Коричневий' }
 ];
 
-// Список розмірів
 const sizes = [
   { size: 'XS', description: '44' },
   { size: 'S', description: '46' },
@@ -52,6 +50,8 @@ export default function StockSection({
   addSize, 
   removeSize 
 }: StockSectionProps) {
+  const t = useTranslations('StockSection');
+
   const handleColorChange = (index: number, value: string) => {
     const selectedColor = colors.find(c => c.code === value);
     if (selectedColor) {
@@ -67,19 +67,19 @@ export default function StockSection({
 
   return (
     <div className={styles.formSection}>
-      <h3>Stock</h3>
+      <h3>{t('title')}</h3>
       {formData.stock.map((stockItem, stockIndex) => (
         <div key={stockIndex} className={styles.stockItem}>
-          <h4>Color Variant {stockIndex + 1}</h4>
+          <h4>{t('colorVariant', { index: stockIndex + 1 })}</h4>
           
           <div className={styles.formGroup}>
-            <label>Select Color:</label>
+            <label>{t('selectColor')}:</label>
             <select
               value={stockItem.color.code}
               onChange={(e) => handleColorChange(stockIndex, e.target.value)}
               required
             >
-              <option value="">Select a color</option>
+              <option value="">{t('selectColorPlaceholder')}</option>
               {colors.map(color => (
                 <option key={color.code} value={color.code}>
                   {color.en} / {color.uk}
@@ -89,7 +89,7 @@ export default function StockSection({
           </div>
 
           <div className={styles.formGroup}>
-            <label>Color Code:</label>
+            <label>{t('colorCode')}:</label>
             <input
               type="text"
               value={stockItem.color.code}
@@ -99,7 +99,7 @@ export default function StockSection({
           </div>
 
           <div className={styles.formGroup}>
-            <label>Color Name (English):</label>
+            <label>{t('colorNameEn')}:</label>
             <input
               type="text"
               value={stockItem.color.en}
@@ -108,27 +108,17 @@ export default function StockSection({
             />
           </div>
 
-          <div className={styles.formGroup}>
-            <label>Color Name (Ukrainian):</label>
-            <input
-              type="text"
-              value={stockItem.color.uk}
-              readOnly
-              className={styles.readonlyInput}
-            />
-          </div>
-
-          <h5>Sizes</h5>
+          <h5>{t('sizes')}</h5>
           {stockItem.sizes.map((size, sizeIndex) => (
             <div key={sizeIndex} className={styles.sizeItem}>
               <div className={styles.formGroup}>
-                <label>Select Size:</label>
+                <label>{t('selectSize')}:</label>
                 <select
                   value={size.size}
                   onChange={(e) => handleSizeChange(stockIndex, sizeIndex, e.target.value)}
                   required
                 >
-                  <option value="">Select a size</option>
+                  <option value="">{t('selectSizePlaceholder')}</option>
                   {sizes.map(s => (
                     <option key={s.size} value={s.size}>
                       {s.size} - {s.description}
@@ -138,7 +128,7 @@ export default function StockSection({
               </div>
 
               <div className={styles.formGroup}>
-                <label>Quantity:</label>
+                <label>{t('quantity')}:</label>
                 <input
                   type="number"
                   value={size.quantity}
@@ -150,26 +140,26 @@ export default function StockSection({
 
               {stockItem.sizes.length > 1 && (
                 <button type="button" onClick={() => removeSize(stockIndex, sizeIndex)}>
-                  Remove Size
+                  {t('removeSize')}
                 </button>
               )}
             </div>
           ))}
 
           <button type="button" onClick={() => addSize(stockIndex)}>
-            Add Size
+            {t('addSize')}
           </button>
 
           {formData.stock.length > 1 && (
             <button type="button" onClick={() => removeStockItem(stockIndex)}>
-              Remove Color Variant
+              {t('removeColorVariant')}
             </button>
           )}
         </div>
       ))}
 
       <button type="button" onClick={addStockItem}>
-        Add Color Variant
+        {t('addColorVariant')}
       </button>
     </div>
   );

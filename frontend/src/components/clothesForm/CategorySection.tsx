@@ -1,9 +1,12 @@
 import { FormData } from "./ClothesForm";
 import styles from './ClothesForm.module.css';
+import { useTranslations } from 'next-intl';
 
 interface CategorySectionProps {
   formData: FormData;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => void;
 }
 
 const categories = [
@@ -18,13 +21,16 @@ const categories = [
 ];
 
 export default function CategorySection({ formData, handleChange }: CategorySectionProps) {
+  const t = useTranslations('CategorySection');
+
   return (
     <div className={styles.formSection}>
-      <h3>Category</h3>
-      
+      <h3>{t('title')}</h3>
+
       <div className={styles.formGroup}>
-        <label>Select Category:</label>
+        <label htmlFor="category">{t('label')}:</label>
         <select
+          id="category"
           name="category.en"
           value={formData.category.en}
           onChange={(e) => {
@@ -41,7 +47,7 @@ export default function CategorySection({ formData, handleChange }: CategorySect
           }}
           required
         >
-          <option value="">Select a category</option>
+          <option value="">{t('placeholder')}</option>
           {categories.map((category) => (
             <option key={category.id} value={category.en}>
               {category.en} / {category.uk}
@@ -51,9 +57,10 @@ export default function CategorySection({ formData, handleChange }: CategorySect
       </div>
 
       <div className={styles.formGroup}>
-        <label>Selected Category (English):</label>
+        <label htmlFor="category.en">{t('selectedEn')}:</label>
         <input
           type="text"
+          id="category.en"
           name="category.en"
           value={formData.category.en}
           readOnly
@@ -62,9 +69,10 @@ export default function CategorySection({ formData, handleChange }: CategorySect
       </div>
 
       <div className={styles.formGroup}>
-        <label>Selected Category (Ukrainian):</label>
+        <label htmlFor="category.uk">{t('selectedUk')}:</label>
         <input
           type="text"
+          id="category.uk"
           name="category.uk"
           value={formData.category.uk}
           readOnly

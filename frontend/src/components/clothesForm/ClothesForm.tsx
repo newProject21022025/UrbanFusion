@@ -9,6 +9,7 @@ import CategorySection from "./CategorySection";
 import StockSection from "./StockSection";
 import CareInstructionsSection from "./CareInstructionsSection";
 import DetailsSection from "./DetailsSection";
+import { useTranslations } from "next-intl";
 
 interface Name {
   en: string;
@@ -92,6 +93,7 @@ export default function ClothesForm({
   onSubmit,
   isEditMode = false,
 }: ClothesFormProps) {
+  const t = useTranslations("ClothesForm");
   const [formData, setFormData] = useState<FormData>({
     name: { en: "", uk: "" },
     description: { en: "", uk: "" },
@@ -351,7 +353,7 @@ export default function ClothesForm({
         addArrayItem={addArrayItem}
       />
       <button type="submit" className={styles.submitButton}>
-        {isEditMode ? "Update Clothes Item" : "Create Clothes Item"}
+        {isEditMode ? t("update") : t("create")}
       </button>
     </form>
   );

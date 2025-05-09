@@ -10,9 +10,9 @@ export enum Gender {
 
 @Schema({ timestamps: true, collection: 'clothes' })
 export class Clothes extends Document {
-  @Prop({ type: String, required: true })
-  @IsString()
-  locale!: string; // ✅ додано поле locale
+  // @Prop({ type: String, required: true })
+  // @IsString()
+  // locale!: string; // ✅ додано поле locale
 
   @Prop({ type: String, unique: true })
   slug!: string;

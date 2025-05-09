@@ -1,5 +1,6 @@
 import { FormData } from "./ClothesForm";
 import styles from './ClothesForm.module.css';
+import { useTranslations } from 'next-intl';
 
 interface CareInstructionsSectionProps {
   formData: FormData;
@@ -13,20 +14,23 @@ interface CareInstructionsSectionProps {
   addArrayItem: (arrayName: 'careInstructions' | 'details') => void;
 }
 
-export default function CareInstructionsSection({ 
-  formData, 
-  handleArrayChange, 
-  removeArrayItem, 
-  addArrayItem 
+export default function CareInstructionsSection({
+  formData,
+  handleArrayChange,
+  removeArrayItem,
+  addArrayItem
 }: CareInstructionsSectionProps) {
+  const t = useTranslations('CareInstructionsSection');
+
   return (
     <div className={styles.formSection}>
-      <h3>Care Instructions</h3>
+      <h3>{t('careInstructions')}</h3>
       {formData.careInstructions.map((instruction, index) => (
         <div key={index} className={styles.formGroup}>
-          <h4>Instruction {index + 1}</h4>
+          <h4>{t('instruction', { number: index + 1 })}</h4>
+
           <div className={styles.formGroup}>
-            <label>English:</label>
+            <label>{t('english')}:</label>
             <textarea
               value={instruction.en}
               onChange={(e) => handleArrayChange('careInstructions', index, 'en', e.target.value)}
@@ -35,7 +39,7 @@ export default function CareInstructionsSection({
           </div>
 
           <div className={styles.formGroup}>
-            <label>Ukrainian:</label>
+            <label>{t('ukrainian')}:</label>
             <textarea
               value={instruction.uk}
               onChange={(e) => handleArrayChange('careInstructions', index, 'uk', e.target.value)}
@@ -45,14 +49,14 @@ export default function CareInstructionsSection({
 
           {formData.careInstructions.length > 1 && (
             <button type="button" onClick={() => removeArrayItem('careInstructions', index)}>
-              Remove Instruction
+              {t('removeInstruction')}
             </button>
           )}
         </div>
       ))}
 
       <button type="button" onClick={() => addArrayItem('careInstructions')}>
-        Add Care Instruction
+        {t('addCareInstruction')}
       </button>
     </div>
   );

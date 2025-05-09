@@ -172,8 +172,9 @@ export class UpdateClothesDto {
   // @IsNotEmpty()
   // @IsOptional()
   // slug?: string;
-  @IsString()
-  locale!: string; // ✅ Додано поле locale
+  
+  // @IsString()
+  // locale!: string; // ✅ Додано поле locale
 
 
   @ValidateNested()
