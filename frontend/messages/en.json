@@ -41,7 +41,9 @@
     "continueShopping": "Continue shopping",
     "total": "Total",
     "clearBasket": "Clear basket",
-    "proceedToCheckout": "Proceed to checkout"
+    "proceedToCheckout": "Proceed to checkout",
+    "color": "Color",
+    "size": "Size"
   },
 
   "BasicInfoSection": {

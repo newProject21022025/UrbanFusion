@@ -41,7 +41,9 @@
     "continueShopping": "Продовжити покупки",
     "total": "Всього",
     "clearBasket": "Очистити кошик",
-    "proceedToCheckout": "Оформити замовлення"
+    "proceedToCheckout": "Оформити замовлення",
+    "color": "Колір",
+    "size": "Розмір"
   },  
   "BasicInfoSection": {
     "nameEn": "Назва (англійською)",
