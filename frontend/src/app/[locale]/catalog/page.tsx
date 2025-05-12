@@ -83,9 +83,9 @@ export default function Catalog() {
 
       <div className={styles.clothesContainer}>
         {clothes.map((item) => {
-          const firstStockItem = item.stock?.[0];
-          const selectedColor = firstStockItem?.color.code;
-          const selectedSize = firstStockItem?.sizes?.[0]?.size;
+          // const firstStockItem = item.stock?.[0];
+          // const selectedColor = firstStockItem?.color.code;
+          // const selectedSize = firstStockItem?.sizes?.[0]?.size;
 
           const categoryKey = getCategoryKey(
             item.category?.[locale as "en" | "uk"]
