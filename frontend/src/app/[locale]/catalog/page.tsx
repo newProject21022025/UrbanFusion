@@ -1,22 +1,26 @@
 // src/app/[locale]/catalog/page.tsx
 
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Catalog.module.css";
 import { useLocale } from "next-intl";
-import { useEffect, useState } from "react";
 import { clothesService, Clothes } from "../../api/clothes/clothesService";
 import Eco from "../../../svg/Eco/eco";
 import Cross from "../../../svg/Cross/cross";
-import { ecoDescriptions, getCategoryKey } from "./data/ecoDescriptions"; // Import your ecoDescriptions here
+import { ecoDescriptions, getCategoryKey } from "./data/ecoDescriptions";
 import Link from "next/link";
+import BasketBlack from "../../../svg/Basket/basketBlack";
+import HeartWhite from "../../../svg/Heart/heartWhite";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export default function Catalog() {
   const locale = useLocale();
   const [clothes, setClothes] = useState<Clothes[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
+  const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({}); 
+  const basketItems = useSelector((state: RootState) => state.basket.items);
 
   useEffect(() => {
     fetchClothes();
@@ -64,6 +68,12 @@ export default function Catalog() {
     }));
   };
 
+  
+  const isItemInBasket = (id: string) => {
+    return basketItems.some((item) => item._id === id);
+  };
+  
+
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>Каталог товарів</h1>
@@ -73,6 +83,10 @@ export default function Catalog() {
 
       <div className={styles.clothesContainer}>
         {clothes.map((item) => {
+          const firstStockItem = item.stock?.[0];
+          const selectedColor = firstStockItem?.color.code;
+          const selectedSize = firstStockItem?.sizes?.[0]?.size;
+
           const categoryKey = getCategoryKey(
             item.category?.[locale as "en" | "uk"]
           );
@@ -87,38 +101,36 @@ export default function Catalog() {
               }`}
             >
               <div className={styles.cardInner}>
-                {/* Передня сторона картки */}
+                {/* Передня сторона */}
                 <div className={styles.cardFront}>
-                  <Link href={`/${locale}/catalog/${item._id}`} passHref>                   
-                                        
-                      <div className={styles.imageContainer}>
-                        {item.mainImage?.url ? (
-                          <img
-                            src={item.mainImage.url}
-                            alt={
-                              item.mainImage?.alt?.[locale as "en" | "uk"] || ""
-                            }
-                            className={styles.clothesImage}
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display =
-                                "none";
-                            }}
-                          />
-                        ) : (
-                          <div className={styles.noImage}>No image</div>
-                        )}
-                        {!item.availability && (
-                          <div className={styles.soldOutBadge}>
-                            Немає в наявності
-                          </div>
-                        )}
-                        {item.price.discount > 0 && (
-                          <div className={styles.discountBadge}>
-                            -{item.price.discount}%
-                          </div>
-                        )}
-                      </div>
-                    
+                  <Link href={`/${locale}/catalog/${item._id}`} passHref>
+                    <div className={styles.imageContainer}>
+                      {item.mainImage?.url ? (
+                        <img
+                          src={item.mainImage.url}
+                          alt={
+                            item.mainImage?.alt?.[locale as "en" | "uk"] || ""
+                          }
+                          className={styles.clothesImage}
+                          onError={(e) =>
+                            ((e.target as HTMLImageElement).style.display =
+                              "none")
+                          }
+                        />
+                      ) : (
+                        <div className={styles.noImage}>No image</div>
+                      )}
+                      {!item.availability && (
+                        <div className={styles.soldOutBadge}>
+                          Немає в наявності
+                        </div>
+                      )}
+                      {item.price.discount > 0 && (
+                        <div className={styles.discountBadge}>
+                          -{item.price.discount}%
+                        </div>
+                      )}
+                    </div>
                   </Link>
 
                   <div className={styles.cardContent}>
@@ -140,7 +152,9 @@ export default function Catalog() {
                           <div
                             key={index}
                             className={styles.colorCircle}
-                            style={{ backgroundColor: stockItem.color.code }}
+                            style={{
+                              backgroundColor: stockItem.color.code,
+                            }}
                             title={stockItem.color[locale as "en" | "uk"]}
                           />
                         ))}
@@ -169,14 +183,20 @@ export default function Catalog() {
                       )}
                     </div>
 
-                    <button
-                      className={styles.addToCartButton}
-                      disabled={!item.availability}
+                    <div className={styles.heart}>
+                      <HeartWhite />
+                    </div>
+
+                    <div
+                      className={`${styles.basket} ${
+                        isItemInBasket(item._id)
+                          ? styles.active
+                          : ""
+                      }`}                     
                     >
-                      {item.availability
-                        ? "Додати в кошик"
-                        : "Немає в наявності"}
-                    </button>
+                      <BasketBlack />
+                    </div>
+
                     <div
                       className={styles.ecoIcon}
                       onClick={() => handleFlipCard(item._id)}
@@ -186,7 +206,7 @@ export default function Catalog() {
                   </div>
                 </div>
 
-                {/* Зворотня сторона картки */}
+                {/* Зворотна сторона */}
                 <div className={styles.cardBack}>
                   <div className={styles.cardBackContent}>
                     <h3>{ecoInfo.title}</h3>

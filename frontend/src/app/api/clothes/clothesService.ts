@@ -1,6 +1,8 @@
 // src/api/clothesService.ts
 import type { FormData as ClothesFormData } from "../../../components/clothesForm/ClothesForm";
 export interface Clothes {
+    selectedSize: string | undefined;
+    selectedColor: string | undefined;
     _id: string;
     slug: string;
     name: {
@@ -30,6 +32,8 @@ export interface Clothes {
       uk: string;
     };
     stock: {
+      quantity: any;
+      size: string | undefined;
       color: {
         code: string;
         en: string;

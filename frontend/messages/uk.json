@@ -1,7 +1,7 @@
 {
   "Header": {
-   "catalog": "Каталог",
-   "logo": "UrbanFusion"
+    "catalog": "Каталог",
+    "logo": "UrbanFusion"
   },
   "Home": {
     "title": "Ласкаво просимо на наш сайт",
@@ -35,6 +35,14 @@
       "passwordMin": "Мінімум {min} символів"
     }
   },
+  "Basket": {
+    "title": "Кошик",
+    "emptyBasket": "Ваш кошик порожній",
+    "continueShopping": "Продовжити покупки",
+    "total": "Всього",
+    "clearBasket": "Очистити кошик",
+    "proceedToCheckout": "Оформити замовлення"
+  },  
   "BasicInfoSection": {
     "nameEn": "Назва (англійською)",
     "nameUk": "Назва (українською)",
@@ -84,7 +92,8 @@
     "removeSize": "Видалити розмір",
     "addSize": "Додати розмір",
     "removeColorVariant": "Видалити кольоровий варіант",
-    "addColorVariant": "Додати кольоровий варіант"
+    "addColorVariant": "Додати кольоровий варіант",
+    "addToBasket": "Додати до кошика"
   },
   "CareInstructionsSection": {
     "careInstructions": "Інструкції з догляду",
@@ -106,5 +115,4 @@
     "create": "Створити одяг",
     "update": "Оновити одяг"
   }
-  
 }

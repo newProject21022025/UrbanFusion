@@ -3,18 +3,26 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { useEffect, useState, useCallback } from "react";
-import styles from "./page.module.css";
 import { useParams } from "next/navigation";
-import { clothesService, type Clothes } from "../../../api/clothes/clothesService";
-
+import styles from "./page.module.css";
+import {
+  clothesService,
+  type Clothes,
+} from "../../../api/clothes/clothesService";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../../../redux/slices/basketSlice";
 
 export default function ClothesPage() {
   const t = useTranslations();
   const params = useParams();
   const locale = params.locale as "en" | "uk";
   const id = params.id as string;
+  const dispatch = useDispatch();
 
   const [clothes, setClothes] = useState<Clothes | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | undefined>();
+  const [selectedSize, setSelectedSize] = useState<string | undefined>();
+  const [quantity, setQuantity] = useState<number>(1);
   const [error, setError] = useState<string | null>(null);
 
   const fetchClothes = useCallback(async () => {
@@ -36,9 +44,66 @@ export default function ClothesPage() {
 
   if (error) return <div>{error}</div>;
   if (!clothes) return <div>{t("Catalog.loading")}</div>;
-  
+
   const discountedPrice =
     clothes.price.amount * (1 - clothes.price.discount / 100);
+
+  const handleAddToBasket = () => {
+    // Перевірка на наявність обраного кольору та розміру
+    if (!selectedColor || !selectedSize) {
+      alert("Оберіть колір та розмір перед додаванням до кошика.");
+      return;
+    }
+
+    // Перевірка на наявність _id у товару
+    if (!clothes._id) {
+      console.error("У товару відсутній _id:", clothes);
+      return;
+    }
+
+    // Пошук stockItem по кольору та наявності розміру
+    const selectedStockItem = clothes.stock.find(
+      (stock) =>
+        stock.color.code === selectedColor &&
+        stock.sizes.some((sizeObj) => sizeObj.size === selectedSize)
+    );
+
+    if (!selectedStockItem) {
+      console.warn(
+        "Не знайдено відповідний stockItem для вибраного кольору/розміру",
+        {
+          selectedColor,
+          selectedSize,
+          stock: clothes.stock,
+        }
+      );
+      return;
+    }
+
+    // Отримання кількості товару на складі
+    const selectedSizeObj = selectedStockItem.sizes.find(
+      (sizeObj) => sizeObj.size === selectedSize
+    );
+    const availableStock = selectedSizeObj?.quantity || 0;
+
+    if (quantity > availableStock) {
+      alert(`Максимальна кількість цього товару на складі: ${availableStock}`);
+      setQuantity(availableStock); // Обмеження до максимуму
+      return;
+    }
+
+    const itemToAdd = {
+      ...clothes,
+      stockItem: selectedStockItem,
+      selectedColor,
+      selectedSize,
+      quantity,
+    };
+
+    console.log("Додаємо товар у кошик:", itemToAdd);
+
+    dispatch(addItem(itemToAdd));
+  };
 
   return (
     <main className={styles.container}>
@@ -51,7 +116,6 @@ export default function ClothesPage() {
           width={600}
           height={600}
           className={styles.image}
-          // priority
         />
       )}
 
@@ -71,24 +135,6 @@ export default function ClothesPage() {
         </span>
       </div>
 
-      <div className={styles.label}>
-        {t("CategorySection.title")}: {clothes.category[locale]}
-      </div>
-
-      <div className={styles.label}>
-        {t("BasicInfoSection.gender")}:{" "}
-        {clothes.gender === "male"
-          ? t("BasicInfoSection.male")
-          : t("BasicInfoSection.female")}
-      </div>
-
-      <div className={styles.label}>
-        {t("PriceSection.availability")}:{" "}
-        {clothes.availability
-          ? t("PriceSection.available")
-          : t("PriceSection.notAvailable")}
-      </div>
-
       <div className={styles.stockBlock}>
         <h2>{t("StockSection.title")}:</h2>
         {clothes.stock.map((stock, i) => {
@@ -98,7 +144,13 @@ export default function ClothesPage() {
 
           return (
             <div key={i}>
-              <div className={styles.label}>
+              <div
+                className={`${styles.label} ${
+                  selectedColor === stock.color.code ? styles.selected : ""
+                }`}
+                onClick={() => setSelectedColor(stock.color.code)}
+                style={{ cursor: "pointer" }}
+              >
                 <span
                   className={styles.colorDot}
                   style={{ backgroundColor: stock.color.code }}
@@ -106,12 +158,22 @@ export default function ClothesPage() {
                 />
                 {stock.color[locale]}
               </div>
+
               {shouldShowSizes && (
                 <div style={{ marginLeft: "1rem" }}>
                   {stock.sizes.map((sizeObj, j) => (
                     <div key={j}>
-                      {t("StockSection.selectSize")}: {sizeObj.size},{" "}
-                      {t("StockSection.quantity")}: {sizeObj.quantity}
+                      <label>
+                        <input
+                          type="radio"
+                          name="size"
+                          value={sizeObj.size}
+                          checked={selectedSize === sizeObj.size}
+                          onChange={() => setSelectedSize(sizeObj.size)}
+                        />
+                        {t("StockSection.selectSize")}: {sizeObj.size},{" "}
+                        {t("StockSection.quantity")}: {sizeObj.quantity}
+                      </label>
                     </div>
                   ))}
                 </div>
@@ -120,6 +182,24 @@ export default function ClothesPage() {
           );
         })}
       </div>
+
+      <div className={styles.quantityBlock}>
+        <label>{t("StockSection.quantity")}</label>
+        <input
+          type="number"
+          value={quantity}
+          onChange={(e) => {
+            const newValue = Number(e.target.value); // або parseInt
+            setQuantity(Math.max(1, Math.min(newValue, 10)));
+          }}
+          min="1"
+          max="10"
+        />
+      </div>
+
+      <button className={styles.addToBasketButton} onClick={handleAddToBasket}>
+        {t("StockSection.addToBasket")}
+      </button>
     </main>
   );
 }

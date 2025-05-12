@@ -54,6 +54,14 @@
   width: 100%;
 }
 
+.logo{
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
 .languageSwitcher {
   display: flex;
   align-items: center;
@@ -75,4 +83,20 @@
   color: #000;
   background: rgba(0, 0, 0, 0.05);
 }
+
+.basketWrapper {
+  position: relative;
+}
+
+.basketCount {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background-color: grey;
+  color: white;
+  font-size: 14px;
+  padding: 3px 9px;
+  border-radius: 50%;
+}
+
 

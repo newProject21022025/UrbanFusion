@@ -1,0 +1,151 @@
+.main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.emptyBasket {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+}
+
+.emptyBasket p {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.continueShopping {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #333;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.continueShopping:hover {
+    background-color: #555;
+}
+
+.basketItems {
+    margin-bottom: 2rem;
+}
+
+.basketItem {
+    display: grid;
+    grid-template-columns: 100px 2fr 1fr 1fr 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.itemImage img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.noImage {
+    width: 80px;
+    height: 80px;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.itemDetails h3 {
+    margin: 0 0 0.5rem 0;
+}
+
+.itemPrice, .itemTotal {
+    font-weight: bold;
+}
+
+.itemQuantity {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.itemQuantity button {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.itemQuantity button:hover {
+    background-color: #e0e0e0;
+}
+
+.removeItem {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+}
+
+.removeItem:hover {
+    color: #333;
+}
+
+.basketSummary {
+    padding: 1rem;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    text-align: right;
+}
+
+.total {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.clearBasket, .checkout {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.clearBasket {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.clearBasket:hover {
+    background-color: #e0e0e0;
+}
+
+.checkout {
+    background-color: #333;
+    color: white;
+}
+
+.checkout:hover {
+    background-color: #555;
+}
