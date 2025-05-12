@@ -6,8 +6,17 @@ import { Clothes } from '../../app/api/clothes/clothesService';
 
 type BasketBase = Omit<Clothes, 'selectedColor' | 'selectedSize'>;
 
+interface StockSize {
+  size: string;
+  quantity: number;
+}
+
+interface StockItem {
+  sizes: StockSize[];
+}
+
 interface BasketItem extends BasketBase {
-  stockItem: any;
+  stockItem: StockItem;
   quantity: number;
   selectedColor?: string;
   selectedSize?: string;

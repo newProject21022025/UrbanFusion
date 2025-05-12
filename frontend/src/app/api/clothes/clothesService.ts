@@ -32,7 +32,7 @@ export interface Clothes {
       uk: string;
     };
     stock: {
-      quantity: any;
+      quantity: number | null | undefined;
       size: string | undefined;
       color: {
         code: string;
