@@ -33,8 +33,19 @@
       "required": "Required field",
       "invalidEmail": "Invalid email format",
       "passwordMin": "Minimum {min} characters"
-    }
+    }     
   },
+  "Basket": {
+    "title": "Basket",
+    "emptyBasket": "Your basket is empty",
+    "continueShopping": "Continue shopping",
+    "total": "Total",
+    "clearBasket": "Clear basket",
+    "proceedToCheckout": "Proceed to checkout",
+    "color": "Color",
+    "size": "Size"
+  },
+
   "BasicInfoSection": {
     "nameEn": "Name (English)",
     "nameUk": "Name (Ukrainian)",
@@ -84,7 +95,8 @@
     "removeSize": "Remove Size",
     "addSize": "Add Size",
     "removeColorVariant": "Remove Color Variant",
-    "addColorVariant": "Add Color Variant"
+    "addColorVariant": "Add Color Variant",
+    "addToBasket": "Add to Basket"
   },
   "CareInstructionsSection": {
     "careInstructions": "Care Instructions",
