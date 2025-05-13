@@ -11,16 +11,22 @@ import { ecoDescriptions, getCategoryKey } from "./data/ecoDescriptions";
 import Link from "next/link";
 import BasketBlack from "../../../svg/Basket/basketBlack";
 import HeartWhite from "../../../svg/Heart/heartWhite";
-import { useSelector } from "react-redux";
+import HeartBlack from "../../../svg/Heart/heartBlack";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
+import { addToFavorites, removeFromFavorites } from "../../../redux/slices/favoritesSlice"; 
 
 export default function Catalog() {
   const locale = useLocale();
   const [clothes, setClothes] = useState<Clothes[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({}); 
+  const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
   const basketItems = useSelector((state: RootState) => state.basket.items);
+  const dispatch = useDispatch();
+  const favoriteItems = useSelector(
+    (state: RootState) => state.favorites.items
+  );
 
   useEffect(() => {
     fetchClothes();
@@ -68,11 +74,22 @@ export default function Catalog() {
     }));
   };
 
-  
   const isItemInBasket = (id: string) => {
     return basketItems.some((item) => item._id === id);
   };
-  
+  // Функція для перевірки, чи є товар у вибраному
+  const isItemInFavorites = (id: string) => {
+    return favoriteItems.some((item) => item._id === id);
+  };
+
+  // Функція для обробки кліку на серце
+  const handleFavoriteClick = (item: Clothes) => {
+    if (isItemInFavorites(item._id)) {
+      dispatch(removeFromFavorites(item._id));
+    } else {
+      dispatch(addToFavorites(item));
+    }
+  };
 
   return (
     <main className={styles.main}>
@@ -83,10 +100,6 @@ export default function Catalog() {
 
       <div className={styles.clothesContainer}>
         {clothes.map((item) => {
-          // const firstStockItem = item.stock?.[0];
-          // const selectedColor = firstStockItem?.color.code;
-          // const selectedSize = firstStockItem?.sizes?.[0]?.size;
-
           const categoryKey = getCategoryKey(
             item.category?.[locale as "en" | "uk"]
           );
@@ -183,16 +196,20 @@ export default function Catalog() {
                       )}
                     </div>
 
-                    <div className={styles.heart}>
-                      <HeartWhite />
+                    <div
+                      className={styles.heart}
+                      onClick={() => handleFavoriteClick(item)}
+                    >
+                      {isItemInFavorites(item._id) ? (
+                        <HeartBlack />
+                      ) : (
+                        <HeartWhite />
+                      )}
                     </div>
-
                     <div
                       className={`${styles.basket} ${
-                        isItemInBasket(item._id)
-                          ? styles.active
-                          : ""
-                      }`}                     
+                        isItemInBasket(item._id) ? styles.active : ""
+                      }`}
                     >
                       <BasketBlack />
                     </div>

@@ -19,7 +19,14 @@
     "title": "Catalog",
     "content": "This is the catalog page content in English.",
     "loading": "Loading...",
-    "error": "Error: {message}"
+    "error": "Error: {message}",
+    "detailsTitle": "Details",
+    "careTitle": "Care Instructions",
+    "addToBasket": "Add to Basket",
+    "quantity": "Quantity",
+    "selectSize": "Select Size",
+    "selectColor": "Select Color",
+    "addedToBasketMessage": "Item added to basket!"
   },
   "login": {
     "title": "Login",

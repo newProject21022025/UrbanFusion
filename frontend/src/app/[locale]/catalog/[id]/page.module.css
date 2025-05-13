@@ -69,6 +69,51 @@
     padding: 4px;
     border-radius: 6px;
   }
+
+  .detailsSection,
+.careSection {
+  margin-top: 2rem;
+}
+
+.detailsSection h2,
+.careSection h2 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.detailsSection ul,
+.careSection ul {
+  padding-left: 1.5rem;
+  list-style: disc;
+}
+
+.detailsSection li,
+.careSection li {
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.infoBlock {
+  margin-top: 2rem;
+}
+
+.list {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  line-height: 1.5;
+}
   
-  
+.successMessage {
+  color: green;
+  margin-top: 1rem;
+  font-weight: bold;
+  animation: fadein 0.5s ease-in-out;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+ 
   

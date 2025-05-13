@@ -4,6 +4,7 @@ import counterReducer from './slices/counterSlice';
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
 import authReducer from './slices/authSlice';
 import basketReducer from './slices/basketSlice';
+import favoritesReducer from './slices/favoritesSlice';
 
 // Створюємо store першим
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
     counter: counterReducer,
     auth: authReducer,
     basket: basketReducer,
+    favorites: favoritesReducer,
   },
 });
 

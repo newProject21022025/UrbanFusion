@@ -19,7 +19,14 @@
     "title": "Каталог",
     "content": "Це вміст сторінки каталогу українською.",
     "loading": "Завантаження...",
-    "error": "Помилка: {message}"
+    "error": "Помилка: {message}",
+    "detailsTitle": "Деталі",
+    "careTitle": "Інструкція з догляду",
+    "addToBasket": "Додати до кошика",
+    "quantity": "Кількість",
+    "selectSize": "Виберіть розмір",
+    "selectColor": "Виберіть колір",
+    "addedToBasketMessage": "Товар додано до кошика!"
   },
   "login": {
     "title": "Вхід",
