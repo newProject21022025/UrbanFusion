@@ -13,7 +13,6 @@ import {
   MaxLength,
   Min,
   ValidateNested,
-  // ArrayMinSize,
   Matches
 } from 'class-validator';
 
@@ -59,11 +58,7 @@ class PriceDto {
   discount?: number | null;
 }
 
-class CategoryDto {
-  // @IsString()
-  // @IsNotEmpty()
-  // @IsOptional()
-  // id?: string;
+class CategoryDto {  
 
   @IsString()
   @IsNotEmpty()
@@ -168,14 +163,6 @@ class ImageDto {
 }
 
 export class UpdateClothesDto {
-  // @IsString()
-  // @IsNotEmpty()
-  // @IsOptional()
-  // slug?: string;
-  
-  // @IsString()
-  // locale!: string; // ✅ Додано поле locale
-
 
   @ValidateNested()
   @Type(() => NameDto)
@@ -205,11 +192,6 @@ export class UpdateClothesDto {
   @Type(() => CategoryDto)
   @IsOptional()
   category?: CategoryDto;
-
-  // @IsArray()
-  // @IsString({ each: true })
-  // @IsOptional()
-  // tags?: string[];
 
   @IsArray()
   @ValidateNested({ each: true })
