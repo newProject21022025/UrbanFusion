@@ -1,0 +1,82 @@
+//src/components/createComment/CreateComment.tsx
+
+
+import { useState } from "react";
+import styles from "./CreateComment.module.css";
+import { commentService } from "../../app/api/commentService";
+
+interface CreateCommentProps {
+  clothesId: string;
+  locale: string;
+  userId: string;
+  userName: string;
+  onCommentAdded: () => void;
+}
+
+export default function CreateComment({
+  clothesId,
+  locale,
+  userId,
+  userName,
+  onCommentAdded,
+}: CreateCommentProps) {
+  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState(5);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!comment.trim()) return;
+
+    setIsSubmitting(true);
+    try {
+      await commentService.addComment(clothesId, locale, {
+        userId,
+        userName,
+        rating,
+        comment,
+      });
+
+      setComment("");
+      setRating(5);
+      onCommentAdded();
+    } catch (error) {
+      console.error("Error posting comment:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <h3>Залишити коментар</h3>
+      <div className={styles.rating}>
+        <label>Оцінка:</label>
+        <select
+          value={rating}
+          onChange={(e) => setRating(Number(e.target.value))}
+        >
+          {[1, 2, 3, 4, 5].map((num) => (
+            <option key={num} value={num}>
+              {num} ⭐
+            </option>
+          ))}
+        </select>
+      </div>
+      <textarea
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        placeholder="Ваш коментар..."
+        required
+        className={styles.textarea}
+      />
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className={styles.submitButton}
+      >
+        {isSubmitting ? "Відправка..." : "Відправити"}
+      </button>
+    </form>
+  );
+}

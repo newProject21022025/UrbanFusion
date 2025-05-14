@@ -26,7 +26,9 @@
     "quantity": "Quantity",
     "selectSize": "Select Size",
     "selectColor": "Select Color",
-    "addedToBasketMessage": "Item added to basket!"
+    "addedToBasketMessage": "Item added to basket!",
+    "reviewsTitle": "Reviews",
+    "likes": "Likes"
   },
   "login": {
     "title": "Login",

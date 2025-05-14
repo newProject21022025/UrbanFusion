@@ -1,4 +1,5 @@
 // src/api/clothesService.ts
+
 import type { FormData as ClothesFormData } from "../../../components/clothesForm/ClothesForm";
 export interface Clothes {
     selectedSize: string | undefined;
@@ -57,10 +58,7 @@ export interface Clothes {
       userId: string;
       userName: string;
       rating: number;
-      comment: {
-        en: string;
-        uk: string;
-      };
+      comment:string;      
       likes: string[];
     }[];
     gender: 'male' | 'female';
@@ -160,6 +158,5 @@ export interface Clothes {
         console.error(`Failed to delete clothes with id ${id}:`, error);
         throw error;
       }
-    },
-    
+    },    
   };

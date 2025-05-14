@@ -116,4 +116,34 @@
   to { opacity: 1; }
 }
  
+.reviewsBlock {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f6f6f6;
+  border-radius: 10px;
+}
+
+.reviewsList {
+  list-style: none;
+  padding: 0;
+}
+
+.reviewItem {
+  border-bottom: 1px solid #ccc;
+  padding: 0.5rem 0;
+}
+
+.reviewHeader {
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.reviewComment {
+  margin: 0.3rem 0;
+}
+
+.reviewLikes {
+  font-size: 0.85rem;
+  color: #888;
+}
   
