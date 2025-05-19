@@ -82,6 +82,7 @@ export class CreateClothesDto {
     rating: number;
     comment: string[];
     likes: string[];
+    dislikes: string[];
   }[];
 
   @IsIn([Gender.Male, Gender.Female])

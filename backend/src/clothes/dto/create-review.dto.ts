@@ -35,6 +35,11 @@ import {
   
     @IsOptional()
     @IsArray()
-    likes?: string[]; // за замовчуванням []
+    likes?: string[] = [];
+    
+    @IsOptional()
+    @IsArray()
+    dislikes?: string[] = [];
+    
   }
   

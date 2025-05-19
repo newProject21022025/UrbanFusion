@@ -58,12 +58,13 @@ export interface CommentData {
       clothesId: string,
       commentId: string,
       userId: string,
-      locale: string
+      locale: string,
+      isLike: boolean // true = like, false = dislike
     ): Promise<void> {
       try {
-        const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes/${clothesId}/reviews`.replace(/([^:]\/)\/+/g, "$1");
-
-  
+        const action = isLike ? "like" : "dislike";
+        const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes/${clothesId}/reviews/${commentId}/${action}`.replace(/([^:]\/)\/+/g, "$1");
+    
         const response = await fetch(url, {
           method: "PATCH",
           headers: {
@@ -71,14 +72,14 @@ export interface CommentData {
           },
           body: JSON.stringify({ userId }),
         });
-  
+    
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
       } catch (error) {
-        console.error(`Failed to like comment ${commentId}:`, error);
+        console.error(`Failed to ${isLike ? "like" : "dislike"} comment ${commentId}:`, error);
         throw error;
       }
-    },
+    },    
   };
   
