@@ -256,6 +256,10 @@ export default function ClothesPage() {
   );
 }
 
+
+
+
+
 // "use client";
 // import { useTranslations } from "next-intl";
 // import { useEffect, useState, useCallback } from "react";
@@ -268,6 +272,21 @@ export default function ClothesPage() {
 // import { useDispatch } from "react-redux";
 // import { addItem } from "../../../../redux/slices/basketSlice";
 // import { useRouter } from "next/navigation";
+// import CreateComment from "../../../../components/createComment/CreateComment";
+// import { commentService } from "../../../api/commentService";
+// import { useSelector } from "react-redux";
+// import { useAppSelector } from '../../../../redux/store';
+
+// export interface Comment {
+//   _id: string;
+//   userId: string;
+//   userName: string;
+//   comment: string;
+//   rating: number;
+//   likes: string[]; // масив id користувачів, які лайкнули
+//   dislikes: string[]; // масив id користувачів, які дизлайкнули
+//   createdAt?: string; // якщо є
+// }
 
 // export default function ClothesPage() {
 //   const t = useTranslations("Catalog");
@@ -282,6 +301,8 @@ export default function ClothesPage() {
 //   const [selectedSize, setSelectedSize] = useState<string | undefined>();
 //   const [error, setError] = useState<string | null>(null);
 //   const [itemAdded, setItemAdded] = useState(false);
+//   const userId = useAppSelector(state => state.user.userId);
+//   const clothesId = params?.id as string;
 
 //   const fetchClothes = useCallback(async () => {
 //     try {
@@ -358,6 +379,32 @@ export default function ClothesPage() {
 //       router.push(`/${locale}/catalog`);
 //     }, 3000); // ✅ редірект через 1.5 сек
 //   };
+
+//   const handleCommentAdded = () => {
+//     fetchClothes(); // Refresh the clothes data after comment is added
+//   };
+
+//   const handleLike = async (commentId: string, isLike: boolean) => {
+//     if (!userId) {
+//       // Користувач не авторизований, можна показати помилку або просто повернутись
+//       console.warn('User is not authenticated');
+//       return;
+//     }
+  
+//     try {
+//       await commentService.likeComment(
+//         clothesId,
+//         commentId,
+//         userId,  // тут тепер точно string
+//         locale,
+//         isLike
+//       );
+//       fetchClothes(); // або оновлення лише коментарів
+//     } catch (err) {
+//       console.error(err);
+//     }
+//   };
+  
 
 //   return (
 //     <main className={styles.container}>
@@ -474,6 +521,45 @@ export default function ClothesPage() {
 //       <button className={styles.addToBasketButton} onClick={handleAddToBasket}>
 //         {t("addToBasket")}
 //       </button>
+//       {/* Коментарі (відгуки) */}
+//       {clothes.reviews?.length > 0 && (
+//         <div className={styles.reviewsBlock}>
+//           <h2>{t("reviewsTitle")}</h2>
+//           <ul className={styles.reviewsList}>
+//             {clothes.reviews.map((review, index) => (
+//               <li
+//                 key={review.id ?? `${review.userName}-${index}`}
+//                 className={styles.reviewItem}
+//               >
+//                 <div className={styles.reviewHeader}>
+//                   <strong>{review.userName}</strong> – ⭐ {review.rating}/5
+//                 </div>
+//                 <p className={styles.reviewComment}>{review.comment}</p>
+//                 {(review.comments ?? []).map((comment: Comment) => (
+//                   <div key={comment._id}>
+//                     ❤️ {review.likes.length} {t("likes")}
+//                     <button onClick={() => handleLike(comment._id, true)}>
+//                       👍 {comment.likes.length}
+//                     </button>
+//                     <button onClick={() => handleLike(comment._id, false)}>
+//                       👎 {comment.dislikes.length}
+//                     </button>
+//                   </div>
+//                 ))}
+//               </li>
+//             ))}
+//           </ul>
+//         </div>
+//       )}
+//       <div>
+//         <CreateComment
+//           clothesId={id}
+//           locale={locale}
+//           userId={""} // Make sure to replace with actual user ID
+//           userName={""} // Replace with actual user name
+//           onCommentAdded={handleCommentAdded} // Use the implemented function here
+//         />
+//       </div>
 //     </main>
 //   );
 // }

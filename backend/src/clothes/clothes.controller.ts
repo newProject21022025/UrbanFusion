@@ -52,7 +52,7 @@ export class ClothesController {
       return await this.clothesService.addReview(id, createReviewDto);
     } catch (error) {
       console.error('❌ Error while creating review:', error);
-      throw error; // Щоб NestJS вивів stack trace
+      throw error;
     }
   }
 
@@ -64,5 +64,25 @@ export class ClothesController {
   @Delete(':id/reviews/:reviewId')
   deleteReview(@Param('id') id: string, @Param('reviewId') reviewId: string) {
     return this.clothesService.deleteReview(id, reviewId);
+  }
+
+  // Поставити лайк на відгук
+  @Post(':id/reviews/:reviewId/like')
+  async likeReview(
+    @Param('id') id: string,
+    @Param('reviewId') reviewId: string,
+    @Body('userId') userId: string,
+  ) {
+    return this.clothesService.likeReview(id, reviewId, userId);
+  }
+
+  // Поставити дизлайк на відгук
+  @Post(':id/reviews/:reviewId/dislike')
+  async dislikeReview(
+    @Param('id') id: string,
+    @Param('reviewId') reviewId: string,
+    @Body('userId') userId: string,
+  ) {
+    return this.clothesService.dislikeReview(id, reviewId, userId);
   }
 }

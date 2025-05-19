@@ -58,8 +58,9 @@ export interface Clothes {
       userId: string;
       userName: string;
       rating: number;
-      comment:string;      
+      comment: string;
       likes: string[];
+      dislikes: string[];
     }[];
     gender: 'male' | 'female';
   } 

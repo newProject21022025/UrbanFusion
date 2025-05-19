@@ -2,7 +2,7 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { IsString, IsIn } from 'class-validator';
+import { IsIn } from 'class-validator';
 import slugify from 'slugify';
 
 export enum Gender {
@@ -11,7 +11,7 @@ export enum Gender {
 }
 
 @Schema({ timestamps: true, collection: 'clothes' })
-export class Clothes extends Document { 
+export class Clothes extends Document {
 
   @Prop({ type: String, unique: true })
   slug!: string;
@@ -133,17 +133,18 @@ export class Clothes extends Document {
       rating: Number,
       comment: String,
       likes: [String],
+      dislikes: [String],
     },
   ])
   reviews!: {
-    _id?: string; // автоматично згенерується
+    _id?: string;
     userId: string;
     userName: string;
     rating: number;
     comment: string;
     likes: string[];
+    dislikes: string[];
   }[];
-  
 
   @Prop({ type: String, enum: Gender, required: true })
   @IsIn([Gender.Male, Gender.Female])
@@ -152,12 +153,10 @@ export class Clothes extends Document {
 
 export const ClothesSchema = SchemaFactory.createForClass(Clothes);
 
-// ✅ Хук на автогенерацію slug
+// Автоматична генерація slug
 ClothesSchema.pre('save', function (next) {
   if (!this.slug && this.name?.en) {
     this.slug = slugify(this.name.en, { lower: true, strict: true });
   }
   next();
 });
-
-
