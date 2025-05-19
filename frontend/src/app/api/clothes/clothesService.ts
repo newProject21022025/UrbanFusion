@@ -54,13 +54,13 @@ export interface Clothes {
       uk: string;
     }[];
     reviews: {
-      comments: any;
       id: string;
       userId: string;
       userName: string;
       rating: number;
-      comment:string;      
+      comment: string;
       likes: string[];
+      dislikes: string[];
     }[];
     gender: 'male' | 'female';
   } 
