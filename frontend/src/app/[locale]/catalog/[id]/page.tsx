@@ -26,7 +26,7 @@ export default function ClothesPage() {
 
   // Отримуємо userId і userName з Redux state
   const userId = useSelector((state: RootState) => state.user.userId);
-  const userName = useSelector((state: RootState) => state.user.userName);
+  // const userName = useSelector((state: RootState) => state.user.userName);
 
 
   const [clothes, setClothes] = useState<Clothes | null>(null);
