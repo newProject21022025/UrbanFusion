@@ -22,9 +22,19 @@ export class AuthController {
     return {
       success: true,
       user: {
-        login: user.login,
-        role: user.role,
         _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        login: user.login,
+        dateOfBirth: user.dateOfBirth,
+        phone: user.phone,
+        address: user.address,
+        orderHistory: user.orderHistory,
+        feedback: user.feedback,
+        postOfficeDetails: user.postOfficeDetails,
+        role: user.role,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
       },
     };
   }
@@ -37,4 +47,3 @@ export class AuthController {
     };
   }
 }
-
