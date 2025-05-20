@@ -54,32 +54,21 @@ export interface CommentData {
       }
     },
   
-    async likeComment(
-      clothesId: string,
-      commentId: string,
-      userId: string,
-      locale: string,
-      isLike: boolean // true = like, false = dislike
-    ): Promise<void> {
-      try {
-        const action = isLike ? "like" : "dislike";
-        const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes/${clothesId}/reviews/${commentId}/${action}`.replace(/([^:]\/)\/+/g, "$1");
+    likeComment: async (commentId: string, userId: string) => {
+      return fetch(`/api/comments/${commentId}/like`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
+      });
+    },
     
-        const response = await fetch(url, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userId }),
-        });
+    dislikeComment: async (commentId: string, userId: string) => {
+      return fetch(`/api/comments/${commentId}/dislike`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
+      });
+    },
     
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-      } catch (error) {
-        console.error(`Failed to ${isLike ? "like" : "dislike"} comment ${commentId}:`, error);
-        throw error;
-      }
-    },    
   };
   

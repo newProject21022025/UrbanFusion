@@ -124,7 +124,7 @@ export class Clothes extends Document {
   details!: {
     en: string;
     uk: string;
-  }[];
+  }[]; 
 
   @Prop([
     {
