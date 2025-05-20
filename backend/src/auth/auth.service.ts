@@ -4,6 +4,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
+import { RegisterUserDto } from './dto/register-user.dto';
+import bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
@@ -20,4 +22,21 @@ export class AuthService {
     }
     return null;
   }
+  async register(userDto: RegisterUserDto): Promise<any> {
+    const existing = await this.userModel.findOne({ login: userDto.login }).exec();
+    if (existing) {
+      throw new Error('User with this email already exists');
+    }
+  
+    const hashedPassword = await bcrypt.hash(userDto.password, 10);
+    const createdUser = new this.userModel({
+      ...userDto,
+      password: hashedPassword,
+    });
+  
+    const savedUser = await createdUser.save();
+    const { password, ...result } = savedUser.toObject();
+    return result;
+  }
+  
 }

@@ -2,6 +2,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserState {
+  userName: any;
   userId: string | null;
   email: string | null;
   firstName: string | null;
@@ -16,6 +17,7 @@ const initialState: UserState = {
   firstName: null,
   lastName: null,
   isLoggedIn: false,
+  userName: undefined
 };
 
 const userSlice = createSlice({
@@ -35,6 +37,7 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
+      state.userName = `${action.payload.firstName} ${action.payload.lastName}`;
       state.isLoggedIn = true;
     },
     clearUser: (state) => {

@@ -47,6 +47,8 @@ export default function CreateComment({
     }
   };
 
+  console.log("props:", { clothesId, locale, userId, userName });
+
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <h3>Залишити коментар</h3>
