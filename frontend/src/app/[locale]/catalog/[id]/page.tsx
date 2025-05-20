@@ -288,7 +288,7 @@ export default function ClothesPage() {
           clothesId={id}
           locale={locale}
           userId={""}
-          userName={userName}
+          userName={""}
           onCommentAdded={handleCommentAdded}
         />
       {/* )} */}
