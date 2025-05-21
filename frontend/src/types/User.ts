@@ -8,8 +8,8 @@ export interface User {
     address?: string | null;
     postOfficeDetails?: string | null;
     role?: string | null;
-    orderHistory?: any[]; // Уточни тип, якщо є
-    feedback?: any[];     // Уточни тип, якщо є
+    orderHistory?: unknown[]; // Уточни тип, якщо є
+    feedback?: unknown[];     // Уточни тип, якщо є
     createdAt: string;
     updatedAt: string;
   }
