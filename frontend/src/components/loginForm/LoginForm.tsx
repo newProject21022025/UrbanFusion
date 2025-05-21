@@ -12,12 +12,13 @@ import {
   setAdminLinks,
 } from "../../redux/slices/authSlice";
 import { setUser } from "../../redux/slices/userSlice";
+import { User } from "../../types/User";
 
 interface LoginFormProps {
   onSubmit: (values: {
     login: string;
     password: string;
-  }) => Promise<{ success: boolean; isAdmin: boolean; user?: any; }>;
+  }) => Promise<{ success: boolean; isAdmin: boolean; user?: User; }>;
 }
 
 export function LoginForm({ onSubmit }: LoginFormProps) {
@@ -50,14 +51,15 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
               userId: user._id,
               firstName: user.firstName,
               lastName: user.lastName,
-              email: user.login, // ← login з бекенду
-              phone: user.phone,
-              address: user.address,
-              postOfficeDetails: user.postOfficeDetails,
-              dateOfBirth: user.dateOfBirth,
-              role: user.role,
+              email: user.login,
+              phone: user.phone ?? undefined,
+              address: user.address ?? undefined,
+              postOfficeDetails: user.postOfficeDetails ?? undefined,
+              dateOfBirth: user.dateOfBirth ?? undefined,
+              role: user.role ?? undefined,
             })
           );
+          
           console.log("Dispatching user to Redux:", user);
         }
         router.push("/");

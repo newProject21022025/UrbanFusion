@@ -4,12 +4,13 @@
 
 import { LoginForm } from "../../../components/loginForm/LoginForm";
 import styles from "./page.module.css";
+import { User } from "../../../types/User";
 
 export default function LoginPage() {
   const handleSubmit = async (values: {
     login: string;
     password: string;
-  }): Promise<{ success: boolean; isAdmin: boolean; user?: any; }> => {
+  }): Promise<{ success: boolean; isAdmin: boolean; user?: User; }> => {
     try {
       console.log("Login attempt:", values.login);
 
