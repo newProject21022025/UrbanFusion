@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 import Header from '@/components/header/Header';
 import '../styles/globals.css';
 import { ReduxProvider } from '@/providers/ReduxProvider';
+import { UserLoader } from '../../redux/UserLoader';
 
 type Props = {
   children: ReactNode;
@@ -24,6 +25,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       </head>
       <body>
         <ReduxProvider>
+        <UserLoader />
           <NextIntlClientProvider locale={locale}>
             <Header locale={locale} />
             {children}

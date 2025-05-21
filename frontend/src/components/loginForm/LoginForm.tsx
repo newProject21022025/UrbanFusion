@@ -1,15 +1,24 @@
 // src/components/loginForm/LoginForm.tsx
-'use client';
+"use client";
 
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import styles from './LoginForm.module.css';
-import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
-import { loginAdmin, loginUser, setAdminLinks } from '../../redux/slices/authSlice';
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import styles from "./LoginForm.module.css";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import {
+  loginAdmin,
+  loginUser,
+  setAdminLinks,
+} from "../../redux/slices/authSlice";
+import { setUser } from "../../redux/slices/userSlice";
+import { User } from "../../types/User";
 
 interface LoginFormProps {
-  onSubmit: (values: { login: string; password: string }) => Promise<{ success: boolean; isAdmin: boolean }>;
+  onSubmit: (values: {
+    login: string;
+    password: string;
+  }) => Promise<{ success: boolean; isAdmin: boolean; user?: User; }>;
 }
 
 export function LoginForm({ onSubmit }: LoginFormProps) {
@@ -17,38 +26,52 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
   const dispatch = useDispatch();
 
   const validationSchema = Yup.object({
-    login: Yup.string().required('Логін обов\'язковий'),
-    password: Yup.string().required('Пароль обов\'язковий')
+    login: Yup.string().required("Логін обов'язковий"),
+    password: Yup.string().required("Пароль обов'язковий"),
   });
 
   const formik = useFormik({
     initialValues: {
-      login: '',
-      password: ''
+      login: "",
+      password: "",
     },
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
-      const { success, isAdmin } = await onSubmit(values);
+      const { success, isAdmin, user } = await onSubmit(values);
       if (success) {
         if (isAdmin) {
           dispatch(loginAdmin());
-          dispatch(setAdminLinks({
-            link: '/AUF/edit',
-            label: 'BOSS'
-          }));
+          dispatch(setAdminLinks({ link: "/AUF/edit", label: "BOSS" }));
         } else {
           dispatch(loginUser());
         }
-        router.push('/');
+        if (user) {
+          dispatch(
+            setUser({
+              userId: user._id,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.login,
+              phone: user.phone ?? undefined,
+              address: user.address ?? undefined,
+              postOfficeDetails: user.postOfficeDetails ?? undefined,
+              dateOfBirth: user.dateOfBirth ?? undefined,
+              role: user.role ?? undefined,
+            })
+          );
+          
+          console.log("Dispatching user to Redux:", user);
+        }
+        router.push("/");
       }
       setSubmitting(false);
-    }
+    },
   });
 
   return (
     <div className={styles.card}>
       <h1 className={styles.title}>Вхід</h1>
-      
+
       <form onSubmit={formik.handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
           <label htmlFor="login" className={styles.label}>
@@ -59,7 +82,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
             name="login"
             type="text"
             className={`${styles.input} ${
-              formik.touched.login && formik.errors.login ? styles.error : ''
+              formik.touched.login && formik.errors.login ? styles.error : ""
             }`}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -79,7 +102,9 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
             name="password"
             type="password"
             className={`${styles.input} ${
-              formik.touched.password && formik.errors.password ? styles.error : ''
+              formik.touched.password && formik.errors.password
+                ? styles.error
+                : ""
             }`}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -95,7 +120,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           className={styles.submitButton}
           disabled={formik.isSubmitting}
         >
-          {formik.isSubmitting ? 'Вхід...' : 'Увійти'}
+          {formik.isSubmitting ? "Вхід..." : "Увійти"}
         </button>
       </form>
     </div>

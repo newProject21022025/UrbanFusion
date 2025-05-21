@@ -1,0 +1,96 @@
+// src/components/likeDislike/LikeDislike.tsx:
+
+'use client';
+
+import { useState } from 'react';
+import { commentService } from '../../app/api/commentService';
+
+interface LikeDislikeProps {
+  clothesId: string;
+  reviewId: string;
+  userId: string | null;
+  initialLikes: number;
+  initialDislikes: number;
+  locale: string;
+  onChange: () => void;
+  userVote?: 'like' | 'dislike' | null; // Add this prop
+}
+
+const LikeDislike = ({
+  clothesId,
+  reviewId,
+  userId,
+  initialLikes,
+  initialDislikes,
+  locale,
+  onChange,
+  userVote = null,
+}: LikeDislikeProps) => {
+  const [likes, setLikes] = useState<number>(initialLikes);
+  const [dislikes, setDislikes] = useState<number>(initialDislikes);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [currentVote, setCurrentVote] = useState<'like' | 'dislike' | null>(userVote);
+
+  const handleVote = async (type: 'like' | 'dislike') => {
+    console.log({ clothesId, reviewId, locale, userId });
+    if (!userId) {
+      alert('Будь ласка, увійдіть в акаунт, щоб голосувати.');
+      return;
+    }
+
+    // Prevent duplicate votes
+    if (currentVote === type) {
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+
+      if (type === 'like') {
+        console.log({ clothesId, reviewId, locale, userId });
+        await commentService.likeComment(clothesId, reviewId, locale, userId);
+        setLikes((prev) => prev + 1);
+        // If user previously disliked, remove that dislike
+        if (currentVote === 'dislike') {
+          setDislikes((prev) => prev - 1);
+        }
+      } else {
+        await commentService.dislikeComment(clothesId, reviewId, locale, userId);
+        setDislikes((prev) => prev + 1);
+        // If user previously liked, remove that like
+        if (currentVote === 'like') {
+          setLikes((prev) => prev - 1);
+        }
+      }
+
+      setCurrentVote(type);
+      onChange(); // Refresh data from server
+    } catch (err) {
+      console.error('Vote failed:', err);
+      alert(err instanceof Error ? err.message : 'Помилка під час голосування.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+      <button 
+        onClick={() => handleVote('like')} 
+        disabled={isLoading}
+        style={{ opacity: currentVote === 'like' ? 1 : 0.6 }}
+      >
+        👍 {likes}
+      </button>
+      <button 
+        onClick={() => handleVote('dislike')} 
+        disabled={isLoading}
+        style={{ opacity: currentVote === 'dislike' ? 1 : 0.6 }}
+      >
+        👎 {dislikes}
+      </button>
+    </div>
+  );
+};
+
+export default LikeDislike;

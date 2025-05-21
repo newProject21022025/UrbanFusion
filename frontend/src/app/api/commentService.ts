@@ -5,8 +5,8 @@ export interface CommentData {
     userName: string;
     rating: number;
     comment: string;
-  }
-  
+  } 
+
   export const commentService = {
     async addComment(
       clothesId: string,
@@ -54,21 +54,32 @@ export interface CommentData {
       }
     },
   
-    likeComment: async (commentId: string, userId: string) => {
-      return fetch(`/api/comments/${commentId}/like`, {
-        method: "PATCH",
+    likeComment: async (clothesId: string, reviewId: string, locale: string, userId: string) => {
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes/${clothesId}/reviews/${reviewId}/like`;
+      console.log("Backend URL:", process.env.NEXT_PUBLIC_BACKEND_URL);
+      const response = await fetch(url, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId }),
       });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
     },
-    
-    dislikeComment: async (commentId: string, userId: string) => {
-      return fetch(`/api/comments/${commentId}/dislike`, {
-        method: "PATCH",
+  
+    dislikeComment: async (clothesId: string, reviewId: string, locale: string, userId: string) => {
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes/${clothesId}/reviews/${reviewId}/dislike`;
+  
+      const response = await fetch(url, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId }),
       });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
     },
-    
   };
   
