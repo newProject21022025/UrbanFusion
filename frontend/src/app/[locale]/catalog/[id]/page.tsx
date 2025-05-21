@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../../../redux/slices/basketSlice";
 import { useRouter } from "next/navigation";
 import CreateComment from "../../../../components/createComment/CreateComment";
-import { commentService } from "../../../api/commentService";
+import LikeDislike from "../../../../components/likeDislike/LikeDislike";
 import { RootState } from "../../../../redux/store";
 
 export default function ClothesPage() {
@@ -24,19 +24,17 @@ export default function ClothesPage() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // Отримуємо userId і userName з Redux state
   const userId = useSelector((state: RootState) => state.user.userId);
-  // const userName = useSelector((state: RootState) => state.user.userName);
-
-
   const [clothes, setClothes] = useState<Clothes | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | undefined>();
   const [selectedSize, setSelectedSize] = useState<string | undefined>();
   const [error, setError] = useState<string | null>(null);
   const [itemAdded, setItemAdded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchClothes = useCallback(async () => {
     try {
+      setIsLoading(true);
       const data = await clothesService.getClothesById(id, locale);
       setClothes(data);
     } catch (err: unknown) {
@@ -45,6 +43,8 @@ export default function ClothesPage() {
           message: err instanceof Error ? err.message : "Unknown error",
         })
       );
+    } finally {
+      setIsLoading(false);
     }
   }, [id, locale, t]);
 
@@ -52,20 +52,21 @@ export default function ClothesPage() {
     fetchClothes();
   }, [fetchClothes]);
 
-  if (error) return <div>{error}</div>;
-  if (!clothes) return <div>{t("loading")}</div>;
+  if (isLoading) return <div className={styles.loading}>{t("loading")}</div>;
+  if (error) return <div className={styles.error}>{error}</div>;
+  if (!clothes) return <div className={styles.loading}>{t("loading")}</div>;
 
   const discountedPrice =
     clothes.price.amount * (1 - clothes.price.discount / 100);
 
   const handleAddToBasket = () => {
     if (!selectedColor || !selectedSize) {
-      alert("Оберіть колір та розмір перед додаванням до кошика.");
+      alert(t("selectColorSize"));
       return;
     }
 
     if (!clothes._id) {
-      console.error("У товару відсутній _id:", clothes);
+      console.error("Product missing _id:", clothes);
       return;
     }
 
@@ -76,11 +77,12 @@ export default function ClothesPage() {
     );
 
     if (!selectedStockItem) {
-      console.warn("Не знайдено відповідний stockItem", {
+      console.warn("No matching stock item found", {
         selectedColor,
         selectedSize,
         stock: clothes.stock,
       });
+      alert(t("sizeNotAvailable"));
       return;
     }
 
@@ -90,7 +92,7 @@ export default function ClothesPage() {
     const availableStock = selectedSizeObj?.quantity || 0;
 
     if (availableStock < 1) {
-      alert("Цей розмір наразі відсутній на складі.");
+      alert(t("outOfStock"));
       return;
     }
 
@@ -114,34 +116,6 @@ export default function ClothesPage() {
     fetchClothes();
   };
 
-  const handleLike = async (commentId: string) => {
-    if (!userId) {
-      console.warn("User is not logged in");
-      return;
-    }
-    try {
-      await commentService.likeComment(commentId, userId);
-      fetchClothes();
-    } catch (err) {
-      console.error("Like failed", err);
-    }
-  };
-
-  const handleDislike = async (commentId: string) => {
-    if (!userId) {
-      console.warn("User is not logged in");
-      return;
-    }
-    try {
-      await commentService.dislikeComment(commentId, userId);
-      fetchClothes();
-    } catch (err) {
-      console.error("Dislike failed", err);
-    }
-  };
-
-  // console.log("props:", { clothes, locale, userId, userName });
-
   return (
     <main className={styles.container}>
       <h1 className={styles.title}>{clothes.name[locale]}</h1>
@@ -153,6 +127,7 @@ export default function ClothesPage() {
           width={600}
           height={600}
           className={styles.image}
+          loading="lazy"
         />
       )}
 
@@ -166,7 +141,9 @@ export default function ClothesPage() {
               instruction[locale]
                 .split(";")
                 .filter(Boolean)
-                .map((item, j) => <li key={`${i}-${j}`}>{item.trim()}</li>)
+                .map((item, j) => (
+                  <li key={`${i}-${j}`}>{item.trim()}</li>
+                ))
             )}
           </ul>
         </div>
@@ -180,7 +157,9 @@ export default function ClothesPage() {
               detail[locale]
                 .split(";")
                 .filter(Boolean)
-                .map((item, j) => <li key={`${i}-${j}`}>{item.trim()}</li>)
+                .map((item, j) => (
+                  <li key={`${i}-${j}`}>{item.trim()}</li>
+                ))
             )}
           </ul>
         </div>
@@ -208,7 +187,7 @@ export default function ClothesPage() {
           const shouldShowSizes = !hideSizesFor.includes(categoryName);
 
           return (
-            <div key={i}>
+            <div key={i} className={styles.stockItem}>
               <div
                 className={`${styles.label} ${
                   selectedColor === stock.color.code ? styles.selected : ""
@@ -225,9 +204,9 @@ export default function ClothesPage() {
               </div>
 
               {shouldShowSizes && (
-                <div style={{ marginLeft: "1rem" }}>
+                <div className={styles.sizesContainer}>
                   {stock.sizes.map((sizeObj, j) => (
-                    <div key={j}>
+                    <div key={j} className={styles.sizeOption}>
                       <label>
                         <input
                           type="radio"
@@ -235,6 +214,7 @@ export default function ClothesPage() {
                           value={sizeObj.size}
                           checked={selectedSize === sizeObj.size}
                           onChange={() => setSelectedSize(sizeObj.size)}
+                          disabled={sizeObj.quantity <= 0}
                         />
                         {t("selectSize")}: {sizeObj.size}, {t("quantity")}:{" "}
                         {sizeObj.quantity}
@@ -247,51 +227,72 @@ export default function ClothesPage() {
           );
         })}
       </div>
+
       {itemAdded && (
         <div className={styles.successMessage}>
           ✅ {t("addedToBasketMessage") || "Товар додано до кошика!"}
         </div>
       )}
-      <button className={styles.addToBasketButton} onClick={handleAddToBasket}>
+
+      <button
+        className={styles.addToBasketButton}
+        onClick={handleAddToBasket}
+        disabled={!selectedColor || !selectedSize}
+      >
         {t("addToBasket")}
       </button>
 
-      {clothes.reviews?.length > 0 && (
-        <div className={styles.reviewsBlock}>
-          <h2>{t("reviewsTitle")}</h2>
+      <div className={styles.reviewsSection}>
+        <h2>{t("reviewsTitle")}</h2>
+        
+        {clothes.reviews?.length > 0 ? (
           <ul className={styles.reviewsList}>
-            {clothes.reviews.map((review, index) => (
-              <li
-                key={review.id ?? `${review.userName}-${index}`}
-                className={styles.reviewItem}
-              >
-                <div className={styles.reviewHeader}>
-                  <strong>{review.userName}</strong> – ⭐ {review.rating}/5
-                </div>
-                <p className={styles.reviewComment}>{review.comment}</p>
-                <div className={styles.reviewActions}>
-                  <button onClick={() => handleLike(review.id)}>
-                    👍 {review.likes.length}
-                  </button>
-                  <button onClick={() => handleDislike(review.id)}>
-                    👎 {review.dislikes.length}
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+            {clothes.reviews.map((review, index) => {
+              const userVote = userId
+                ? review.likes.includes(userId)
+                  ? "like"
+                  : review.dislikes.includes(userId)
+                  ? "dislike"
+                  : null
+                : null;
 
-      {/* {userId && userName && ( */}
-        <CreateComment
-          clothesId={id}
-          locale={locale}
-          userId={""}
-          userName={""}
-          onCommentAdded={handleCommentAdded}
-        />
-      {/* )} */}
+              return (
+                <li key={`${review.id}-${index}`} className={styles.reviewItem}>
+                  <div className={styles.reviewHeader}>
+                    <strong>{review.userName}</strong>
+                    <span className={styles.reviewRating}>
+                      ⭐ {review.rating}/5
+                    </span>
+                  </div>
+                  <p className={styles.reviewComment}>{review.comment}</p>
+                  <div className={styles.reviewActions}>
+                    <LikeDislike
+                      reviewId={review._id}
+                      clothesId={clothes._id}
+                      initialLikes={review.likes.length}
+                      initialDislikes={review.dislikes.length}
+                      userId={userId}
+                      locale={locale}
+                      onChange={fetchClothes}
+                      userVote={userVote}
+                    />
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p className={styles.noReviews}>{t("noReviews")}</p>
+        )}
+
+        {userId && (
+          <CreateComment
+            clothesId={id}
+            locale={locale}
+            onCommentAdded={handleCommentAdded}
+          />
+        )}
+      </div>
     </main>
   );
 }

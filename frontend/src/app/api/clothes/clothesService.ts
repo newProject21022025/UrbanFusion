@@ -54,6 +54,7 @@ export interface Clothes {
       uk: string;
     }[];
     reviews: {
+      _id: string;
       id: string;
       userId: string;
       userName: string;
