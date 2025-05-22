@@ -3,7 +3,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { useTranslations } from 'next-intl';
 import { useDispatch } from 'react-redux';
@@ -34,10 +34,13 @@ const RegisterForm = () => {
       .required(t('errors.required')),
   });
 
-  const handleSubmit = async (values: typeof initialValues, { setSubmitting, resetForm }: any) => {
+  const handleSubmit = async (values: typeof initialValues,
+    { setSubmitting, resetForm }: FormikHelpers<typeof initialValues>
+  ) => {
     setError(null);
 
     try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { confirmPassword, ...registerData } = values;
 
       // Виклик реєстрації через API роут
