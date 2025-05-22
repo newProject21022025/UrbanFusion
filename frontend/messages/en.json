@@ -126,5 +126,21 @@
   "ClothesForm": {
     "create": "Create Clothes Item",
     "update": "Update Clothes Item"
-  }
+  },
+  "register": {
+    "title": "Sign up",
+    "firstName": "First name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "submit": "Register",
+    "submitSuccess": "Registration successful!",
+    "submitting": "Registering...",
+    "errors": {
+      "required": "Required field",
+      "invalidEmail": "Invalid email format",
+      "passwordMin": "Minimum {min} characters",
+      "passwordMismatch": "Passwords do not match"
+    }
+  }  
 }

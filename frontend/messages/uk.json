@@ -125,5 +125,21 @@
   "ClothesForm": {
     "create": "Створити одяг",
     "update": "Оновити одяг"
+  },
+  "register": {
+    "title": "Реєстрація",
+    "firstName": "Ім'я",
+    "email": "Електронна адреса",
+    "password": "Пароль",
+    "confirmPassword": "Підтвердіть пароль",
+    "submit": "Зареєструватися",
+    "submitSuccess": "Успішна реєстрація!",
+    "submitting": "Реєстрація...",
+    "errors": {
+      "required": "Обов'язкове поле",
+      "invalidEmail": "Невірний формат email",
+      "passwordMin": "Мінімум {min} символів",
+      "passwordMismatch": "Паролі не співпадають"
+    }
   }
 }
