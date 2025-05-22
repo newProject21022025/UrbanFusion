@@ -5,12 +5,16 @@
 import { LoginForm } from "../../../components/loginForm/LoginForm";
 import styles from "./page.module.css";
 import { User } from "../../../types/User";
+import RegisterForm from "../../../components/registerForm/RegisterForm";
+import { useState } from "react";
+
 
 export default function LoginPage() {
+  const [isRegistering, setIsRegistering] = useState(false);
   const handleSubmit = async (values: {
     login: string;
     password: string;
-  }): Promise<{ success: boolean; isAdmin: boolean; user?: User; }> => {
+  }): Promise<{ success: boolean; isAdmin: boolean; user?: User }> => {
     try {
       console.log("Login attempt:", values.login);
 
@@ -57,7 +61,10 @@ export default function LoginPage() {
 
   return (
     <div className={styles.container}>
-      <LoginForm onSubmit={handleSubmit} />
+      {isRegistering ? <RegisterForm /> : <LoginForm onSubmit={handleSubmit} />}
+      <button onClick={() => setIsRegistering(!isRegistering)}>
+        {isRegistering ? "Увійти" : "Зареєструватися"}
+      </button>
     </div>
   );
 }
