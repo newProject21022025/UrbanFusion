@@ -82,10 +82,12 @@ const RegisterForm = () => {
       router.push('/');
 
     } catch (err: unknown) {
-      setError('Something went wrong');
-    } finally {
-      setSubmitting(false);
-    }
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('Something went wrong');
+        }
+      }
   };
 
   return (
