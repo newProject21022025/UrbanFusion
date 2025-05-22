@@ -35,7 +35,7 @@ const RegisterForm = () => {
   });
 
   const handleSubmit = async (values: typeof initialValues,
-    { setSubmitting, resetForm }: FormikHelpers<typeof initialValues>
+    { resetForm }: FormikHelpers<typeof initialValues>
   ) => {
     setError(null);
 
