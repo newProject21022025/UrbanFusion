@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import styles from './page.module.css';
 import { Counter } from '../../components/counter/Counter';
+import  RandomClothes  from '../../components/randomClothes/RandomClothes';
 
 export default function Home() {
   const t = useTranslations('Home');
@@ -12,6 +13,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>{t('title')}</h1>
         <p className={styles.content}>{t('content')}</p>
+        <RandomClothes />
 
         <Counter />
       </main>

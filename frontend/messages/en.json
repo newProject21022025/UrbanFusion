@@ -28,7 +28,8 @@
     "selectColor": "Select Color",
     "addedToBasketMessage": "Item added to basket!",
     "reviewsTitle": "Reviews",
-    "likes": "Likes"
+    "likes": "Likes",
+    "noReviews": "No reviews yet"
   },
   "login": {
     "title": "Login",

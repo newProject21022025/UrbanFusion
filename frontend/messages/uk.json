@@ -28,7 +28,8 @@
     "selectColor": "Виберіть колір",
     "addedToBasketMessage": "Товар додано до кошика!",
     "reviewsTitle": "Відгуки",
-    "likes": "Лайки"
+    "likes": "Лайки",
+    "noReviews": "Ще немає відгуків"
   },
   "login": {
     "title": "Вхід",
