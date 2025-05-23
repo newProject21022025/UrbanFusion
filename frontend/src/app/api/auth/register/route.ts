@@ -1,49 +1,80 @@
 // src/app/api/auth/register/route.ts
+
+
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic'; // Важно для Vercel
+
 export async function POST(request: Request) {
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+
   try {
     const body = await request.json();
-    console.log('API Register request:', body);
+    
+    // Упрощенная валидация (основную делаем на фронтенде)
+    if (!body.firstName || !body.login || !body.password) {
+      return new NextResponse(
+        JSON.stringify({ success: false, message: 'Необхідні поля: firstName, login, password' }),
+        { status: 400, headers: corsHeaders }
+      );
+    }
 
-    const apiUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://urban-fusion-5fee.vercel.app';
-
-    const res = await fetch(`${apiUrl}/uk/auth/register`, {
+    const backendResponse = await fetch('https://urban-fusion-amber.vercel.app/uk/auth/register', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(body)
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstName: body.firstName,
+        login: body.login,
+        password: body.password,
+        lastName: body.lastName || null,
+        dateOfBirth: body.dateOfBirth || null,
+        phone: body.phone || null,
+        address: body.address || null,
+        postOfficeDetails: body.postOfficeDetails || null
+      })
     });
 
-    const contentType = res.headers.get('content-type') || '';
+    const responseData = await backendResponse.json();
 
-    if (!contentType.includes('application/json')) {
-      const text = await res.text();
-      console.error('Expected JSON, got:', text);
-      return NextResponse.json(
-        { success: false, message: 'Invalid response format from backend' },
-        { status: 500 }
+    if (!backendResponse.ok) {
+      return new NextResponse(
+        JSON.stringify({ 
+          success: false,
+          message: responseData.message || 'Помилка реєстрації',
+          details: responseData
+        }),
+        { status: backendResponse.status, headers: corsHeaders }
       );
     }
 
-    const responseData = await res.json();
+    return new NextResponse(
+      JSON.stringify(responseData),
+      { status: 200, headers: corsHeaders }
+    );
 
-    if (!res.ok) {
-      console.error('Backend register error:', responseData);
-      return NextResponse.json(
-        { success: false, message: responseData.message || 'Registration failed' },
-        { status: res.status }
-      );
-    }
-
-    return NextResponse.json(responseData);
   } catch (error) {
-    console.error('Register route error:', error);
-    return NextResponse.json(
-      { success: false, message: 'Internal server error' },
-      { status: 500 }
+    return new NextResponse(
+      JSON.stringify({ 
+        success: false,
+        message: 'Внутрішня помилка сервера',
+        error: error instanceof Error ? error.message : 'Невідома помилка'
+      }),
+      { status: 500, headers: corsHeaders }
     );
   }
+}
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    }
+  });
 }

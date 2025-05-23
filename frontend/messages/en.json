@@ -36,13 +36,12 @@
     "password": "Password",
     "forgot": "Forgot your password?",
     "noAccount": "No account? Sign up.",
-    "submitSuccess": "Login successful!",
-    "submitting": "Login...",
+    "submit": "Login",
+    "submitting": "Logging in...",
     "errors": {
       "required": "Required field",
-      "invalidEmail": "Invalid email format",
-      "passwordMin": "Minimum {min} characters"
-    }     
+      "invalidEmail": "Invalid email format"
+    }  
   },
   "Basket": {
     "title": "Basket",
@@ -130,17 +129,25 @@
   "register": {
     "title": "Sign up",
     "firstName": "First name",
+    "lastName": "Last name",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm password",
+    "phone": "Phone",
+    "address": "Address",
+    "postOfficeDetails": "Post office details",
+    "dateOfBirth": "Date of birth",
     "submit": "Register",
-    "submitSuccess": "Registration successful!",
     "submitting": "Registering...",
     "errors": {
       "required": "Required field",
       "invalidEmail": "Invalid email format",
       "passwordMin": "Minimum {min} characters",
-      "passwordMismatch": "Passwords do not match"
+      "passwordMismatch": "Passwords do not match",
+      "maxLength": "Maximum {max} characters",
+      "registrationFailed": "Registration failed",
+      "loginFailed": "Login failed",
+      "unknownError": "Unknown error occurred"
     }
-  }  
+  }
 }

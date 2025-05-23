@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { setUser } from '../../redux/slices/userSlice';
 import styles from './RegisterForm.module.css'; // переконайся, що такий файл існує
+import { loginUser } from '../../redux/slices/authSlice'; // Імпортуємо action creator для логіну
 
 
 const RegisterForm = () => {
@@ -40,7 +41,7 @@ const RegisterForm = () => {
     setError(null);
 
     try {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { confirmPassword, ...registerData } = values;
 
       // Виклик реєстрації через API роут
@@ -63,6 +64,7 @@ const RegisterForm = () => {
       const loginJson = await loginRes.json();
       if (!loginRes.ok) throw new Error(loginJson.message || 'Login failed');
 
+
       // Форматуємо user дані для redux
       const user = loginJson.user;
 
@@ -70,24 +72,27 @@ const RegisterForm = () => {
         userId: user._id,
         firstName: user.firstName,
         lastName: user.lastName || '',
-        email: user.login,  // login з бекенду → email у слайсі
+        email: user.login,  // login з бекенду ? email у слайсі
         phone: user.phone || '',
         address: user.address || '',
         postOfficeDetails: user.postOfficeDetails || '',
         dateOfBirth: user.dateOfBirth ? new Date(user.dateOfBirth).toISOString() : '',
         role: user.role || 'user',
       }));
-
+      // if (user) {
+        localStorage.setItem("userData", JSON.stringify(user)); // <--- ВАЖНО
+      // }
+      dispatch(loginUser());
       resetForm();
       router.push('/');
 
     } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError('Something went wrong');
-        }
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Something went wrong');
       }
+    }
   };
 
   return (
