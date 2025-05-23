@@ -36,6 +36,7 @@
     "password": "Пароль",
     "forgot": "Забули пароль?",
     "noAccount": "Немає облікового запису? Зареєструватися.",
+    "submit": "Увійти",
     "submitSuccess": "Успішний вхід!",
     "submitting": "Вхід...",
     "errors": {
@@ -129,17 +130,25 @@
   "register": {
     "title": "Реєстрація",
     "firstName": "Ім'я",
+    "lastName": "Прізвище",
     "email": "Електронна адреса",
     "password": "Пароль",
-    "confirmPassword": "Підтвердіть пароль",
+    "confirmPassword": "Підтвердження пароля",
+    "phone": "Телефон",
+    "address": "Адреса",
+    "postOfficeDetails": "Деталі поштового відділення",
+    "dateOfBirth": "Дата народження",
     "submit": "Зареєструватися",
-    "submitSuccess": "Успішна реєстрація!",
     "submitting": "Реєстрація...",
     "errors": {
       "required": "Обов'язкове поле",
-      "invalidEmail": "Невірний формат email",
+      "invalidEmail": "Невірний формат електронної адреси",
       "passwordMin": "Мінімум {min} символів",
-      "passwordMismatch": "Паролі не співпадають"
+      "passwordMismatch": "Паролі не співпадають",
+      "maxLength": "Максимум {max} символів",
+      "registrationFailed": "Реєстрація не вдалася",
+      "loginFailed": "Не вдалося увійти",
+      "unknownError": "Сталася невідома помилка"
     }
   }
 }

@@ -1,4 +1,5 @@
 // src/components/loginForm/LoginForm.tsx
+
 "use client";
 
 import { useFormik } from "formik";
@@ -6,6 +7,7 @@ import * as Yup from "yup";
 import styles from "./LoginForm.module.css";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
+import { useTranslations } from "next-intl";
 import {
   loginAdmin,
   loginUser,
@@ -13,21 +15,23 @@ import {
 } from "../../redux/slices/authSlice";
 import { setUser } from "../../redux/slices/userSlice";
 import { User } from "../../types/User";
+import Link from "next/link";
 
 interface LoginFormProps {
   onSubmit: (values: {
     login: string;
     password: string;
-  }) => Promise<{ success: boolean; isAdmin: boolean; user?: User; }>;
+  }) => Promise<{ success: boolean; isAdmin: boolean; user?: User }>;
 }
 
 export function LoginForm({ onSubmit }: LoginFormProps) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const t = useTranslations("login");
 
   const validationSchema = Yup.object({
-    login: Yup.string().required("Логін обов'язковий"),
-    password: Yup.string().required("Пароль обов'язковий"),
+    login: Yup.string().required(t("errors.required")),
+    password: Yup.string().required(t("errors.required")),
   });
 
   const formik = useFormik({
@@ -59,8 +63,6 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
               role: user.role ?? undefined,
             })
           );
-          
-          console.log("Dispatching user to Redux:", user);
         }
         router.push("/");
       }
@@ -70,17 +72,17 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
 
   return (
     <div className={styles.card}>
-      <h1 className={styles.title}>Вхід</h1>
+      <h1 className={styles.title}>{t("title")}</h1>
 
       <form onSubmit={formik.handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
           <label htmlFor="login" className={styles.label}>
-            Логін
+            {t("email")}
           </label>
           <input
             id="login"
             name="login"
-            type="text"
+            type="email"
             className={`${styles.input} ${
               formik.touched.login && formik.errors.login ? styles.error : ""
             }`}
@@ -95,7 +97,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
 
         <div className={styles.inputGroup}>
           <label htmlFor="password" className={styles.label}>
-            Пароль
+            {t("password")}
           </label>
           <input
             id="password"
@@ -115,12 +117,21 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           )}
         </div>
 
+        <div className={styles.links}>
+          <Link href="/forgot-password" className={styles.link}>
+            {t("forgot")}
+          </Link>
+          <Link href="/register" className={styles.link}>
+            {t("noAccount")}
+          </Link>
+        </div>
+
         <button
           type="submit"
           className={styles.submitButton}
           disabled={formik.isSubmitting}
         >
-          {formik.isSubmitting ? "Вхід..." : "Увійти"}
+          {formik.isSubmitting ? t("submitting") : t("submit")}
         </button>
       </form>
     </div>
