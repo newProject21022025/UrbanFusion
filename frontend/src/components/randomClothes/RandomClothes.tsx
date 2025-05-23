@@ -31,8 +31,7 @@ const RandomClothes = () => {
   const favoriteItems = useSelector(
     (state: RootState) => state.favorites.items
   );
-  const basketItems = useSelector((state: RootState) => state.basket.items);
-
+ 
   useEffect(() => {
     const fetchAndPickRandom = async () => {
       const allClothes = await clothesService.getAllClothes(locale);
