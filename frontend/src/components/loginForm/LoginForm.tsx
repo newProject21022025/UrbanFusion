@@ -1,6 +1,5 @@
 // src/components/loginForm/LoginForm.tsx
 
-
 "use client";
 
 import { useFormik } from "formik";
@@ -16,6 +15,7 @@ import {
 } from "../../redux/slices/authSlice";
 import { setUser } from "../../redux/slices/userSlice";
 import { User } from "../../types/User";
+import Link from "next/link";
 
 interface LoginFormProps {
   onSubmit: (values: {
@@ -27,11 +27,11 @@ interface LoginFormProps {
 export function LoginForm({ onSubmit }: LoginFormProps) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const t = useTranslations('login');
+  const t = useTranslations("login");
 
   const validationSchema = Yup.object({
-    login: Yup.string().required(t('errors.required')),
-    password: Yup.string().required(t('errors.required')),
+    login: Yup.string().required(t("errors.required")),
+    password: Yup.string().required(t("errors.required")),
   });
 
   const formik = useFormik({
@@ -72,12 +72,12 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
 
   return (
     <div className={styles.card}>
-      <h1 className={styles.title}>{t('title')}</h1>
+      <h1 className={styles.title}>{t("title")}</h1>
 
       <form onSubmit={formik.handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
           <label htmlFor="login" className={styles.label}>
-            {t('email')}
+            {t("email")}
           </label>
           <input
             id="login"
@@ -97,7 +97,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
 
         <div className={styles.inputGroup}>
           <label htmlFor="password" className={styles.label}>
-            {t('password')}
+            {t("password")}
           </label>
           <input
             id="password"
@@ -118,12 +118,12 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
         </div>
 
         <div className={styles.links}>
-          <a href="/forgot-password" className={styles.link}>
-            {t('forgot')}
-          </a>
-          <a href="/register" className={styles.link}>
-            {t('noAccount')}
-          </a>
+          <Link href="/forgot-password" className={styles.link}>
+            {t("forgot")}
+          </Link>
+          <Link href="/register" className={styles.link}>
+            {t("noAccount")}
+          </Link>
         </div>
 
         <button
@@ -131,7 +131,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           className={styles.submitButton}
           disabled={formik.isSubmitting}
         >
-          {formik.isSubmitting ? t('submitting') : t('submit')}
+          {formik.isSubmitting ? t("submitting") : t("submit")}
         </button>
       </form>
     </div>
