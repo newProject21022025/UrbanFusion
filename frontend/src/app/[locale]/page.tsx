@@ -14,6 +14,7 @@ export default function Home() {
         <h1 className={styles.title}>{t('title')}</h1>
         <p className={styles.content}>{t('content')}</p>
         <RandomClothes />
+        <div>12345</div>
 
         <Counter />
       </main>
