@@ -42,7 +42,7 @@
     "errors": {
       "required": "Required field",
       "invalidEmail": "Invalid email format"
-    }  
+    }
   },
   "Basket": {
     "title": "Basket",
@@ -54,7 +54,6 @@
     "color": "Color",
     "size": "Size"
   },
-
   "BasicInfoSection": {
     "nameEn": "Name (English)",
     "nameUk": "Name (Ukrainian)",
@@ -150,5 +149,11 @@
       "loginFailed": "Login failed",
       "unknownError": "Unknown error occurred"
     }
+  },
+  "PersonalData": {
+    "title": "Personal Data",
+    "content": "This is the personal data page content in English.",
+    "name": "Name",
+    "email": "Email"
   }
 }
