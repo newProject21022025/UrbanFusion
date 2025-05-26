@@ -6,6 +6,7 @@ import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
 import { RegisterUserDto } from './dto/register-user.dto';
 import * as bcrypt from 'bcryptjs';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -37,6 +38,21 @@ export class AuthService {
   
     const savedUser = await createdUser.save();
     const { password, ...result } = savedUser.toObject();
+    return result;
+  }
+
+  async updateUser(userId: string, updateData: Partial<User>): Promise<any> {
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      userId,
+      updateData,
+      { new: true } // повернути вже оновлений документ
+    );
+  
+    if (!updatedUser) {
+      throw new Error('User not found');
+    }
+  
+    const { password, ...result } = updatedUser.toObject();
     return result;
   }
   

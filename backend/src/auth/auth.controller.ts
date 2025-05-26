@@ -3,6 +3,9 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterUserDto } from './dto/register-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { Put, Param } from '@nestjs/common';
+import { User } from './schemas/user.schema';
 
 @Controller('auth')
 export class AuthController {
@@ -44,6 +47,15 @@ export class AuthController {
     return {
       success: true,
       user,
+    };
+  }
+
+  @Put('update/:id')
+  async updateUser(@Param('id') id: string, @Body() updateData: Partial<User>) {
+    const updatedUser = await this.authService.updateUser(id, updateData);
+    return {
+      success: true,
+      user: updatedUser,
     };
   }
 }
