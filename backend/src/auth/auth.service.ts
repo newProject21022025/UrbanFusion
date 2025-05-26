@@ -6,7 +6,7 @@ import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
 import { RegisterUserDto } from './dto/register-user.dto';
 import * as bcrypt from 'bcryptjs';
-import { UpdateUserDto } from './dto/update-user.dto';
+// import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class AuthService {
