@@ -15,6 +15,7 @@ import Search from "../../svg/Search/search";
 import LogoWhite from "../../svg/Logo/logoWhite";
 import HeartEmpty from "../../svg/Heart/heartEmpty";
 import HeartBlack from "../../svg/Heart/heartBlack";
+import PersonalData from "../../svg/PersonalData/personalData";
 
 type HeaderProps = {
   locale: "en" | "uk";
@@ -26,17 +27,22 @@ export default function Header({ locale }: HeaderProps) {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
-  
+
   const { isAdmin, isAuthenticated, adminLinks } = useSelector(
     (state: RootState) => state.auth
   );
   const dispatch = useDispatch();
 
-  const basketItems = useSelector((state: RootState) => state.basket.items); 
-    // Розрахунок кількості товарів у кошику
-  const basketCount = basketItems.reduce((total, item) => total + item.quantity, 0);
+  const basketItems = useSelector((state: RootState) => state.basket.items);
+  // Розрахунок кількості товарів у кошику
+  const basketCount = basketItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
   // Кількість товарів у вибраному
-  const favoriteItems = useSelector((state: RootState) => state.favorites.items);
+  const favoriteItems = useSelector(
+    (state: RootState) => state.favorites.items
+  );
   const favoriteCount = favoriteItems.length; // Кількість вибраних товарів
 
   useEffect(() => {
@@ -117,6 +123,11 @@ export default function Header({ locale }: HeaderProps) {
         </Link>
         <div className={styles.languageSwitcher}>
           <Search />
+          {isAuthenticated && (
+            <Link href="/personalData" className={styles.navLink}>
+              <PersonalData />
+            </Link>
+          )}
           {isAuthenticated ? (
             <button onClick={handleLogout} className={styles.navLink}>
               Вийти
@@ -164,5 +175,3 @@ export default function Header({ locale }: HeaderProps) {
     </header>
   );
 }
-
-

@@ -1,3 +1,5 @@
+// src/components/editProfile/EditProfile.tsx
+
 "use client";
 
 import { useEffect } from "react";
