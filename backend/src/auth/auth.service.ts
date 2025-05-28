@@ -6,7 +6,7 @@ import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
 import { RegisterUserDto } from './dto/register-user.dto';
 import * as bcrypt from 'bcryptjs';
-// import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -53,6 +53,26 @@ export class AuthService {
     }
   
     const { password, ...result } = updatedUser.toObject();
+    return result;
+  }
+
+  async updateUserPassword(userId: string, data: UpdatePasswordDto): Promise<any> {
+    const user = await this.userModel.findById(userId).exec();
+  
+    if (!user) {
+      throw new Error('User not found');
+    }
+  
+    const isMatch = await bcrypt.compare(data.currentPassword, user.password);
+    if (!isMatch) {
+      throw new Error('Current password is incorrect');
+    }
+  
+    const hashedNewPassword = await bcrypt.hash(data.newPassword, 10);
+    user.password = hashedNewPassword;
+  
+    const savedUser = await user.save();
+    const { password, ...result } = savedUser.toObject();
     return result;
   }
   
