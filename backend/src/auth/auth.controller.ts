@@ -6,6 +6,7 @@ import { RegisterUserDto } from './dto/register-user.dto';
 // import { UpdateUserDto } from './dto/update-user.dto';
 import { Put, Param } from '@nestjs/common';
 import { User } from './schemas/user.schema';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -58,4 +59,17 @@ export class AuthController {
       user: updatedUser,
     };
   }
+  
+  @Put('update-password/:id')
+async updatePassword(
+  @Param('id') id: string,
+  @Body() data: UpdatePasswordDto
+) {
+  const user = await this.authService.updateUserPassword(id, data);
+  return {
+    success: true,
+    user,
+  };
+}
+
 }
