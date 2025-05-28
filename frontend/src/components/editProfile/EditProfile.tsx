@@ -9,6 +9,7 @@ import { setUser } from '../../redux/slices/userSlice';
 import styles from './EditProfile.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import ChangePasswordForm from './ChangePasswordForm';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("Ім'я обов'язкове"),
@@ -112,14 +113,14 @@ export default function EditProfile() {
               <label htmlFor="postOfficeDetails" className={styles.label}>Нова пошта</label>
               <Field id="postOfficeDetails" name="postOfficeDetails" type="text" className={styles.input} />
               <ErrorMessage name="postOfficeDetails" component="div" className={styles.error} />
-            </div>
-
+            </div>     
             <button type="submit" className={styles.button} disabled={isSubmitting}>
               {isSubmitting ? 'Збереження...' : 'Зберегти'}
             </button>
           </Form>
         )}
       </Formik>
+      <ChangePasswordForm />
     </div>
   );
 }
