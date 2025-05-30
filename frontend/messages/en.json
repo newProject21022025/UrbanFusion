@@ -155,5 +155,29 @@
     "content": "This is the personal data page content in English.",
     "name": "Name",
     "email": "Email"
+  },
+  "Order": {
+    "emptyBasket": "Basket is empty",
+    "orderTitle": "Order Checkout",
+    "noName": "No name",
+    "noDescription": "No description",
+    "unknown": "Unknown",
+    "quantity": "Quantity",
+    "size": "Size",
+    "color": "Color",
+    "price": "Price"
+  },
+  "OrderForm": {
+  "orderTitle": "Place your order",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "phone": "Phone Number",
+  "email": "Email",
+  "address": "Delivery Address",
+  "submit": "Submit",
+  "required": "This field is required",
+  "invalidEmail": "Invalid email address",
+  "invalidPhone": "Invalid phone number, format: +1234567890",
+  "additionalInfo": "Additional Information"
   }
 }

@@ -219,7 +219,7 @@ export default function BasketClient() {
               >
                 {t("clearBasket")}
               </button>
-              <Link href={`/${locale}/checkout`} className={styles.checkout}>
+              <Link href={`/${locale}/order`} className={styles.order}>
                 {t("proceedToCheckout")}
               </Link>
             </div>
