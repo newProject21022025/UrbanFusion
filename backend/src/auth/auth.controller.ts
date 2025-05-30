@@ -1,5 +1,7 @@
 // src/auth/auth.controller.ts
 
+// src/auth/auth.controller.ts
+
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterUserDto } from './dto/register-user.dto';
@@ -70,6 +72,12 @@ async updatePassword(
     success: true,
     user,
   };
+}
+
+// auth.controller.ts
+@Post('forgot-password')
+async forgotPassword(@Body('email') email: string) {
+  return this.authService.sendNewPassword(email);
 }
 
 }

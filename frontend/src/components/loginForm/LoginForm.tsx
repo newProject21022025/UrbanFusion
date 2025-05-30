@@ -118,7 +118,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
         </div>
 
         <div className={styles.links}>
-          <Link href="/forgot-password" className={styles.link}>
+          <Link href="/forgotPassword" className={styles.link}>
             {t("forgot")}
           </Link>
           <Link href="/register" className={styles.link}>

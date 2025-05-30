@@ -1,3 +1,5 @@
+// src/auth/dto/update-password.dto.ts
+
 import { IsString, MinLength } from 'class-validator';
 
 export class UpdatePasswordDto {
