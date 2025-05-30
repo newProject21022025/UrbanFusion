@@ -141,11 +141,11 @@
     background-color: #e0e0e0;
 }
 
-.checkout {
+.order {
     background-color: #333;
     color: white;
 }
 
-.checkout:hover {
+.order:hover {
     background-color: #555;
 }
