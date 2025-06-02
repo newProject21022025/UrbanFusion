@@ -10,5 +10,7 @@ import { Clothes, ClothesSchema } from './schemas/clothes.schema';
   ],
   controllers: [ClothesController],
   providers: [ClothesService],
+  
 })
 export class ClothesModule {}
+
