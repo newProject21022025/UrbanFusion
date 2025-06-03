@@ -6,6 +6,7 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styles from './ForgotPasswordForm.module.css';
+import { FormikHelpers } from 'formik';
 
 interface ForgotPasswordFormValues {
   email: string;
@@ -22,30 +23,37 @@ const validationSchema = Yup.object({
 });
 
 export const ForgotPasswordForm: React.FC = () => {
-  const handleSubmit = async (values: ForgotPasswordFormValues, { setSubmitting, setStatus }: any) => {
-    try {
-        console.log('Sending email to backend:', values.email);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/auth/forgot-password`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: values.email }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Помилка надсилання запиту');
-      }
-
-      setStatus({ success: result.message });
-    } catch (error: any) {
-      setStatus({ error: error.message });
-    } finally {
-      setSubmitting(false);
-    }
-  };
+    const handleSubmit = async (
+        values: ForgotPasswordFormValues,
+        { setSubmitting, setStatus }: FormikHelpers<ForgotPasswordFormValues>
+      ) => {
+        try {
+          console.log('Sending email to backend:', values.email);
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/auth/forgot-password`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: values.email }),
+          });
+      
+          const result = await response.json();
+      
+          if (!response.ok) {
+            throw new Error(result.message || 'Помилка надсилання запиту');
+          }
+      
+          setStatus({ success: result.message });
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            setStatus({ error: error.message });
+          } else {
+            setStatus({ error: 'Невідома помилка' });
+          }
+        } finally {
+          setSubmitting(false);
+        }
+      };
 
   return (
     <div className={styles.container}>
