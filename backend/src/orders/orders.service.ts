@@ -16,13 +16,13 @@ export class OrdersService {
 
   async createOrder(dto: CreateOrderDto): Promise<Order> {
     const order = await this.orderModel.create(dto);
-
+  
     // Надіслати лист користувачу після створення
-    await this.mailerService.sendOrderShippedEmail(String(order._id));
-
-
+    await this.mailerService.sendOrderShippedEmail(order.userEmail); // <-- виправлено
+  
     return order;
   }
+  
 
   async confirmOrder(id: string): Promise<Order> {
     const order = await this.orderModel.findByIdAndUpdate(
