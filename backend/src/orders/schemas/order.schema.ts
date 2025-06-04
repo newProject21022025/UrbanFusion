@@ -82,8 +82,11 @@ export class Order extends Document {
   }[];
 
   @Prop({ type: String, enum: OrderStatus, default: OrderStatus.Pending })
-  status!: OrderStatus;
+  status!: OrderStatus; 
+  
 }
+export const OrderSchema = SchemaFactory.createForClass(Order);
+
 //   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
 //   userId!: Types.ObjectId;
 
