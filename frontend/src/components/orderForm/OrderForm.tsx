@@ -66,9 +66,16 @@ const OrderForm: React.FC = () => {
           quantity: item.quantity,
           size: item.selectedSize,
           color: item.selectedColor,
+          name: item.name,
+          description: item.description,
+          mainImage: item.mainImage,
+          price: item.price,
+          category: item.category,
+          gender: item.gender,
         })),
+        
       };
-
+      console.log(basketItems);
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders`,
         {
