@@ -1,24 +1,21 @@
-// src/components/orderForm/OrderForm.tsx
-
 "use client";
 
 import React, { useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import styles from "./OrderForm.module.css";
 import { useRouter } from "next/navigation";
 import { clearBasket } from "../../redux/slices/basketSlice";
-import { useDispatch } from "react-redux";
 
 const OrderForm: React.FC = () => {
   const t = useTranslations("OrderForm");
-  const { items: basketItems } = useSelector(
-    (state: RootState) => state.basket
-  );
+  const { items: basketItems } = useSelector((state: RootState) => state.basket);
   const user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const initialValues = useMemo(
     () => ({
@@ -66,16 +63,40 @@ const OrderForm: React.FC = () => {
           quantity: item.quantity,
           size: item.selectedSize,
           color: item.selectedColor,
-          name: item.name,
-          description: item.description,
-          mainImage: item.mainImage,
-          price: item.price,
-          category: item.category,
-          gender: item.gender,
+          name: {
+            en: item.name?.en || "",
+            uk: item.name?.uk || "",
+          },
+          description: {
+            en: item.description?.en || "",
+            uk: item.description?.uk || "",
+          },
+          mainImage: item.mainImage
+            ? {
+                url: item.mainImage.url || "",
+                alt: {
+                  en: item.mainImage.alt?.en || "",
+                  uk: item.mainImage.alt?.uk || "",
+                },
+              }
+            : null,
+          price: {
+            amount: item.price?.amount || 0,
+            currency: item.price?.currency || "USD",
+            discount: item.price?.discount || 0,
+          },
+          category: {
+            id: item.category?.id || "",
+            en: item.category?.en || "",
+            uk: item.category?.uk || "",
+          },
+          gender: item.gender === "female" ? "female" : "male",
         })),
-        
       };
-      console.log(basketItems);
+
+      console.log("корзина:", basketItems);
+      console.log("payload:", payload);
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders`,
         {
@@ -105,8 +126,6 @@ const OrderForm: React.FC = () => {
     onSubmit: handleSubmit,
     enableReinitialize: true,
   });
-  const dispatch = useDispatch();
-  const router = useRouter();
 
   const renderField = (
     id: keyof typeof initialValues,
