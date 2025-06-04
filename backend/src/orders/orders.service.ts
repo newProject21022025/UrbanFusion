@@ -18,7 +18,7 @@ export class OrdersService {
     const order = await this.orderModel.create(dto);
   
     // Надіслати лист користувачу після створення
-    await this.mailerService.sendOrderShippedEmail(order.userEmail); // <-- виправлено
+    await this.mailerService.sendOrderReceivedEmail(order.userEmail); // <-- виправлено
   
     return order;
   }
