@@ -1,131 +1,156 @@
 // src/components/orderForm/OrderForm.tsx
 
-'use client'
+"use client";
 
-import React from 'react'
-import { useTranslations } from 'next-intl'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
-import styles from './OrderForm.module.css'
+import React, { useMemo } from "react";
+import { useTranslations } from "next-intl";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import styles from "./OrderForm.module.css";
+import { useRouter } from "next/navigation";
+import { clearBasket } from "../../redux/slices/basketSlice";
+import { useDispatch } from "react-redux";
 
-export default function OrderForm() {
-  const t = useTranslations('OrderForm')
+const OrderForm: React.FC = () => {
+  const t = useTranslations("OrderForm");
+  const { items: basketItems } = useSelector(
+    (state: RootState) => state.basket
+  );
+  const user = useSelector((state: RootState) => state.user);
 
-  const user = useSelector((state: RootState) => state.user)
+  const initialValues = useMemo(
+    () => ({
+      userId: user.userId || "",
+      firstName: user.firstName || "",
+      lastName: user.lastName || "",
+      phone: user.phone || "",
+      email: user.email || "",
+      address: user.address || "",
+      additionalInfo: "",
+    }),
+    [user]
+  );
+
+  const validationSchema = useMemo(
+    () =>
+      Yup.object({
+        firstName: Yup.string().required(t("required")),
+        lastName: Yup.string().required(t("required")),
+        phone: Yup.string()
+          .matches(/^\+\d{9,15}$/, t("invalidPhone"))
+          .required(t("required")),
+        email: Yup.string().email(t("invalidEmail")).required(t("required")),
+        address: Yup.string().required(t("required")),
+        additionalInfo: Yup.string(),
+      }),
+    [t]
+  );
+
+  const handleSubmit = async (
+    values: typeof initialValues,
+    { resetForm }: { resetForm: () => void }
+  ) => {
+    try {
+      const payload = {
+        userId: user.userId,
+        userEmail: values.email,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        phone: values.phone,
+        deliveryAddress: values.address,
+        postOfficeDetails: values.additionalInfo,
+        items: basketItems.map((item) => ({
+          productId: item._id,
+          quantity: item.quantity,
+          size: item.selectedSize,
+          color: item.selectedColor,
+        })),
+      };
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!response.ok) throw new Error("Order failed");
+
+      const result = await response.json();
+      console.log("Order sent:", result);
+
+      resetForm();
+      dispatch(clearBasket());
+      router.push("/");
+    } catch (error) {
+      console.error("Error submitting order:", error);
+      alert(t("errorMessage"));
+    }
+  };
 
   const formik = useFormik({
-    initialValues: {
-      firstName: user.firstName || '',
-      lastName: user.lastName || '',
-      phone: user.phone || '',
-      email: user.email || '',
-      address: user.address || '',
-      additionalInfo: '', // нове поле
-    },
-    validationSchema: Yup.object({
-      firstName: Yup.string().required(t('required')),
-      lastName: Yup.string().required(t('required')),
-      phone: Yup.string()
-        .matches(/^\+\d{9,15}$/, t('invalidPhone'))
-        .required(t('required')),
-      email: Yup.string().email(t('invalidEmail')).required(t('required')),
-      address: Yup.string().required(t('required')),
-      additionalInfo: Yup.string(), // додаткову інформацію необов’язково вводити
-    }),
-    onSubmit: (values) => {
-      console.log('Order submitted:', values)
-      // тут твій код відправки замовлення
-    },
+    initialValues,
+    validationSchema,
+    onSubmit: handleSubmit,
     enableReinitialize: true,
-  })
+  });
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const renderField = (
+    id: keyof typeof initialValues,
+    type: string = "text",
+    isTextarea: boolean = false,
+    placeholder?: string
+  ) => {
+    const InputComponent = isTextarea ? "textarea" : "input";
+    const inputProps = {
+      id,
+      name: id,
+      type,
+      className: isTextarea ? styles.textarea : styles.input,
+      value: formik.values[id],
+      onChange: formik.handleChange,
+      onBlur: formik.handleBlur,
+      placeholder,
+      ...(isTextarea && { rows: 4 }),
+    };
+
+    return (
+      <>
+        <label htmlFor={id} className={styles.label}>
+          {t(id)}
+        </label>
+        <InputComponent {...inputProps} />
+        {formik.touched[id] && formik.errors[id] && (
+          <div className={styles.error}>{formik.errors[id]}</div>
+        )}
+      </>
+    );
+  };
 
   return (
     <form onSubmit={formik.handleSubmit} className={styles.orderForm}>
-      <label htmlFor="firstName" className={styles.label}>{t('firstName')}</label>
-      <input
-        id="firstName"
-        name="firstName"
-        type="text"
-        className={styles.input}
-        value={formik.values.firstName}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-      />
-      {formik.touched.firstName && formik.errors.firstName ? (
-        <div className={styles.error}>{formik.errors.firstName}</div>
-      ) : null}
+      {renderField("firstName")}
+      {renderField("lastName")}
+      {renderField("phone", "tel", false, "+1234567890")}
+      {renderField("email", "email")}
+      {renderField("address")}
+      {renderField("additionalInfo", "text", true)}
 
-      <label htmlFor="lastName" className={styles.label}>{t('lastName')}</label>
-      <input
-        id="lastName"
-        name="lastName"
-        type="text"
-        className={styles.input}
-        value={formik.values.lastName}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-      />
-      {formik.touched.lastName && formik.errors.lastName ? (
-        <div className={styles.error}>{formik.errors.lastName}</div>
-      ) : null}
-
-      <label htmlFor="phone" className={styles.label}>{t('phone')}</label>
-      <input
-        id="phone"
-        name="phone"
-        type="tel"
-        className={styles.input}
-        value={formik.values.phone}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        placeholder="+1234567890"
-      />
-      {formik.touched.phone && formik.errors.phone ? (
-        <div className={styles.error}>{formik.errors.phone}</div>
-      ) : null}
-
-      <label htmlFor="email" className={styles.label}>{t('email')}</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        className={styles.input}
-        value={formik.values.email}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-      />
-      {formik.touched.email && formik.errors.email ? (
-        <div className={styles.error}>{formik.errors.email}</div>
-      ) : null}
-
-      <label htmlFor="address" className={styles.label}>{t('address')}</label>
-      <input
-        id="address"
-        name="address"
-        type="text"
-        className={styles.input}
-        value={formik.values.address}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-      />
-      {formik.touched.address && formik.errors.address ? (
-        <div className={styles.error}>{formik.errors.address}</div>
-      ) : null}
-
-      <label htmlFor="additionalInfo" className={styles.label}>{t('additionalInfo')}</label>
-      <textarea
-        id="additionalInfo"
-        name="additionalInfo"
-        className={styles.textarea}
-        value={formik.values.additionalInfo}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        rows={4}
-      />
-
-      <button type="submit" className={styles.button}>{t('submit')}</button>
+      <button
+        type="submit"
+        className={styles.button}
+        disabled={formik.isSubmitting}
+      >
+        {formik.isSubmitting ? t("submitting") : t("submit")}
+      </button>
     </form>
-  )
-}
+  );
+};
+
+export default OrderForm;

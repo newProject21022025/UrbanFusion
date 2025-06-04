@@ -178,6 +178,9 @@
   "required": "This field is required",
   "invalidEmail": "Invalid email address",
   "invalidPhone": "Invalid phone number, format: +1234567890",
-  "additionalInfo": "Additional Information"
+  "additionalInfo": "Additional Information",
+  "successMessage": "Order successfully placed!",
+  "errorMessage": "An error occurred while placing the order.",
+  "submitting": "Placing order..."
   }
 }
