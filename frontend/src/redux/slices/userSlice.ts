@@ -1,8 +1,7 @@
 // src/redux/slices/userSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface UserState {
-  [x: string]: any;
+interface UserState { 
   userId: string | null;
   firstName: string | null;
   lastName: string | null;
