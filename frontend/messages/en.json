@@ -154,7 +154,8 @@
     "title": "Personal Data",
     "content": "This is the personal data page content in English.",
     "name": "Name",
-    "email": "Email"
+    "email": "Email",
+    "userOrders": "Your Orders"
   },
   "Order": {
     "emptyBasket": "Basket is empty",

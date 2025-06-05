@@ -38,5 +38,13 @@ export class OrdersService {
     await this.mailerService.sendOrderShippedEmail(order.userEmail);
     return order;
   }
+
+  async getAllOrders() {
+    return this.orderModel.find().sort({ createdAt: -1 }).exec();
+  }  
+
+  async getOrdersByUser(userId: string) {
+    return this.orderModel.find({ userId });
+  }
   
 }

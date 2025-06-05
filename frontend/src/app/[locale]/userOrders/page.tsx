@@ -1,46 +1,38 @@
-// src/app/[locale]/AUF/orders/page.tsx
-
 'use client';
 
 import { useEffect, useState } from 'react';
-import styles from './Orders.module.css';
+import styles from './UserOrders.module.css';
 
 interface Order {
   _id: string;
-  userEmail: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  deliveryAddress: string;
   status: string;
   createdAt: string;
   items: {
-    name: { en: string; uk: string };
+    name: { uk: string };
     quantity: number;
     size: string;
     color: string;
-    price: { amount: number; currency: string; discount: number };
+    price: { amount: number; currency: string };
   }[];
 }
 
-export default function AdminOrdersPage() {
+export default function UserOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
-    fetch('/api/AUF/orders') // Проксі до бекенду
+    const userId = localStorage.getItem('userId'); // або контекст, куки, auth token
+    if (!userId) return;
+
+    fetch(`/api/orders/user/${userId}`) // Проксі до бекенду
       .then(res => res.json())
       .then(setOrders);
   }, []);
 
   return (
     <div className={styles.container}>
-      <h1>Усі замовлення</h1>
+      <h1>Мої замовлення</h1>
       {orders.map(order => (
         <div key={order._id} className={styles.orderCard}>
-          <p><strong>Ім’я:</strong> {order.firstName} {order.lastName}</p>
-          <p><strong>Email:</strong> {order.userEmail}</p>
-          <p><strong>Телефон:</strong> {order.phone}</p>
-          <p><strong>Адреса:</strong> {order.deliveryAddress}</p>
           <p><strong>Статус:</strong> {order.status}</p>
           <p><strong>Дата:</strong> {new Date(order.createdAt).toLocaleDateString()}</p>
           <ul>
