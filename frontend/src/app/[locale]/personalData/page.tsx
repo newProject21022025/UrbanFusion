@@ -8,6 +8,7 @@ import styles from './PersonalData.module.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store'; // Шлях залежить від структури проекту
 import EditProfile from '../../../components/editProfile/EditProfile'; // Шлях залежить від структури проекту
+import Link from 'next/link';
 
 export default function PersonalData() {
   const t = useTranslations('PersonalData');
@@ -16,9 +17,9 @@ export default function PersonalData() {
 
   return (
     <main className={styles.main}>
-      <h1 className={styles.title}>{t('title')}</h1>
+      <h1 className={styles.title}>{t('title')}</h1>      
       <p className={styles.content}>{t('content')}</p>
-
+      <Link href="/userOrders">{t('userOrders')}</Link>
       <div className={styles.userInfo}>
         <p><strong>{t('name')}:</strong> {firstName}</p>
         <p><strong>{t('email')}:</strong> {email}</p>
