@@ -24,10 +24,25 @@ export class OrdersService {
   }
   
 
+  // async confirmOrder(id: string): Promise<Order> {
+  //   const order = await this.orderModel.findByIdAndUpdate(
+  //     id,
+  //     { status: OrderStatus.Shipped },
+  //     { new: true },
+  //   );
+  
+  //   if (!order) {
+  //     throw new NotFoundException(`Order with ID ${id} not found`);
+  //   }
+  
+  //   await this.mailerService.sendOrderShippedEmail(order.userEmail);
+  //   return order;
+  // }
+
   async confirmOrder(id: string): Promise<Order> {
     const order = await this.orderModel.findByIdAndUpdate(
       id,
-      { status: OrderStatus.Shipped },
+      { status: OrderStatus.Confirmed }, // <-- правильний статус
       { new: true },
     );
   
@@ -35,9 +50,10 @@ export class OrdersService {
       throw new NotFoundException(`Order with ID ${id} not found`);
     }
   
-    await this.mailerService.sendOrderShippedEmail(order.userEmail);
+    await this.mailerService.sendOrderConfirmedEmail(order.userEmail); // <-- новий метод
     return order;
   }
+  
 
   async getAllOrders() {
     return this.orderModel.find().sort({ createdAt: -1 }).exec();
