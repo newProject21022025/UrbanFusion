@@ -14,7 +14,11 @@
     margin: 0.3rem 0;
   }
   
-  .ul {
+  .noBullet  {
+    list-style-type: none;
+  }
+  
+  .orderItems {
     padding-left: 1rem;
   }
   

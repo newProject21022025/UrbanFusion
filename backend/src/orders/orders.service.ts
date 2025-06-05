@@ -46,5 +46,25 @@ export class OrdersService {
   async getOrdersByUser(userId: string) {
     return this.orderModel.find({ userId });
   }
+
+  async updateStatus(id: string, status: OrderStatus): Promise<Order> {
+    const order = await this.orderModel.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true },
+    );
+  
+    if (!order) {
+      throw new NotFoundException(`Order with ID ${id} not found`);
+    }
+  
+    // Відправка листа за потреби
+    if (status === OrderStatus.Shipped) {
+      await this.mailerService.sendOrderShippedEmail(order.userEmail);
+    }
+  
+    return order;
+  }
+  
   
 }
