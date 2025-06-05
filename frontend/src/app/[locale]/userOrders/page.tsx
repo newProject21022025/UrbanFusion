@@ -23,7 +23,7 @@ export default function UserOrders() {
     const userId = localStorage.getItem('userId'); // або контекст, куки, auth token
     if (!userId) return;
 
-    fetch(`/api/orders/user/${userId}`) // Проксі до бекенду
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders/user/${userId}`) // Проксі до бекенду
       .then(res => res.json())
       .then(setOrders);
   }, []);
@@ -35,9 +35,9 @@ export default function UserOrders() {
         <div key={order._id} className={styles.orderCard}>
           <p><strong>Статус:</strong> {order.status}</p>
           <p><strong>Дата:</strong> {new Date(order.createdAt).toLocaleDateString()}</p>
-          <ul>
+          <ul className={styles.orderItems}>
             {order.items.map((item, i) => (
-              <li key={i}>
+              <li key={i} className={styles.noBullet}>
                 {item.name.uk} – {item.quantity} шт., {item.size}, {item.color} – {item.price.amount} {item.price.currency}
               </li>
             ))}

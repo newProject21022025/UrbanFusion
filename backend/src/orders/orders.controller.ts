@@ -3,6 +3,7 @@ import { Controller, Post, Body, Param, Patch } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { Get, Query } from '@nestjs/common';
+import { UpdateStatusDto } from './dto/update-status.dto';
 
 @Controller('orders') //
 export class OrdersController {
@@ -26,5 +27,13 @@ export class OrdersController {
   @Get('user/:userId')
   getOrdersByUser(@Param('userId') userId: string) {
     return this.ordersService.getOrdersByUser(userId);
+  }
+
+  @Patch(':id/status')
+  updateOrderStatus(
+    @Param('id') id: string,
+    @Body() { status }: UpdateStatusDto,
+  ) {
+    return this.ordersService.updateStatus(id, status);
   }
 }

@@ -13,8 +13,65 @@
   .orderCard p {
     margin: 0.3rem 0;
   }
+
+  .noBullet  {
+    list-style-type: none;
+  }
   
-  .ul {
+  .orderItems {
     padding-left: 1rem;
+  }
+
+  .statusButtons {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .statusButtons button {
+    margin-right: 8px;
+    margin-top: 4px;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #2F4F4F;
+  }
+  
+  .statusButtons button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  
+  .statusBadge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: capitalize;
+    margin-top: 4px;
+  }
+  
+  .status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .status-confirmed {
+    background-color: #d1ecf1;
+    color: #0c5460;
+  }
+  
+  .status-shipped {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .status-canceled {
+    background-color: #f8d7da;
+    color: #721c24;
   }
   
