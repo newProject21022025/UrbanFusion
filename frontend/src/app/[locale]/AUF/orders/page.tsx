@@ -63,6 +63,28 @@ export default function AdminOrdersPage() {
     }
   };
 
+  const confirmOrder = async (orderId: string) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders/${orderId}/confirm`,
+        {
+          method: "PATCH",
+        }
+      );
+
+      if (!res.ok) throw new Error("Не вдалося підтвердити замовлення");
+
+      const updatedOrder = await res.json();
+
+      setOrders((prev) =>
+        prev.map((order) => (order._id === orderId ? updatedOrder : order))
+      );
+    } catch (err) {
+      console.error(err);
+      alert("Помилка підтвердження замовлення");
+    }
+  };
+
   return (
     <div className={styles.container}>
       <h1>Усі замовлення</h1>
@@ -127,9 +149,12 @@ export default function AdminOrdersPage() {
                   >
                     Очікує
                   </button>
-                  <button
+                  {/* <button
                     onClick={() => updateOrderStatus(order._id, "confirmed")}
                   >
+                    Підтверджено
+                  </button> */}
+                  <button onClick={() => confirmOrder(order._id)}>
                     Підтверджено
                   </button>
                   <button
