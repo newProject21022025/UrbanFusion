@@ -64,7 +64,12 @@ export default function Header({ locale }: HeaderProps) {
     } else {
       dispatch(logoutUser());
     }
+    localStorage.clear();
+    dispatch({ type: "basket/clearBasket" });
+    dispatch({ type: "favorites/clearFavorites" });
+
     router.push("/");
+    window.location.reload(); // ✅ перезавантаження для оновлення всього стану
   };
 
   if (!mounted) {

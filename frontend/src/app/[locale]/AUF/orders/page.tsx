@@ -7,6 +7,7 @@ import styles from "./Orders.module.css";
 
 interface Order {
   _id: string;
+  orderNumber: string; // Додано
   userEmail: string;
   firstName: string;
   lastName: string;
@@ -86,9 +87,11 @@ export default function AdminOrdersPage() {
   };
 
   const deleteOrder = async (orderId: string) => {
-    const confirmDelete = window.confirm("Ви дійсно хочете видалити це замовлення?");
+    const confirmDelete = window.confirm(
+      "Ви дійсно хочете видалити це замовлення?"
+    );
     if (!confirmDelete) return;
-  
+
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders/${orderId}`,
@@ -96,22 +99,24 @@ export default function AdminOrdersPage() {
           method: "DELETE",
         }
       );
-  
+
       if (!res.ok) throw new Error("Не вдалося видалити замовлення");
-  
+
       setOrders((prev) => prev.filter((order) => order._id !== orderId));
     } catch (err) {
       console.error(err);
       alert("Помилка видалення замовлення");
     }
   };
-  
 
   return (
     <div className={styles.container}>
       <h1>Усі замовлення</h1>
       {orders.map((order) => (
         <div key={order._id} className={styles.orderCard}>
+          <p>
+            <strong>Номер замовлення:</strong> {order.orderNumber}
+          </p>
           <p>
             <strong>Ім’я:</strong> {order.firstName} {order.lastName}
           </p>
@@ -170,7 +175,7 @@ export default function AdminOrdersPage() {
                     onClick={() => updateOrderStatus(order._id, "pending")}
                   >
                     Очікує
-                  </button>                 
+                  </button>
                   <button onClick={() => confirmOrder(order._id)}>
                     Підтверджено
                   </button>
@@ -184,8 +189,9 @@ export default function AdminOrdersPage() {
                   >
                     Скасовано
                   </button>
-                  <button 
-                  onClick={() => deleteOrder(order._id)} style={{ color: "red" }}                   
+                  <button
+                    onClick={() => deleteOrder(order._id)}
+                    style={{ color: "red" }}
                   >
                     Видалити
                   </button>
