@@ -85,6 +85,28 @@ export default function AdminOrdersPage() {
     }
   };
 
+  const deleteOrder = async (orderId: string) => {
+    const confirmDelete = window.confirm("Ви дійсно хочете видалити це замовлення?");
+    if (!confirmDelete) return;
+  
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders/${orderId}`,
+        {
+          method: "DELETE",
+        }
+      );
+  
+      if (!res.ok) throw new Error("Не вдалося видалити замовлення");
+  
+      setOrders((prev) => prev.filter((order) => order._id !== orderId));
+    } catch (err) {
+      console.error(err);
+      alert("Помилка видалення замовлення");
+    }
+  };
+  
+
   return (
     <div className={styles.container}>
       <h1>Усі замовлення</h1>
@@ -161,6 +183,11 @@ export default function AdminOrdersPage() {
                     onClick={() => updateOrderStatus(order._id, "canceled")}
                   >
                     Скасовано
+                  </button>
+                  <button 
+                  onClick={() => deleteOrder(order._id)} style={{ color: "red" }}                   
+                  >
+                    Видалити
                   </button>
                 </div>
               </li>

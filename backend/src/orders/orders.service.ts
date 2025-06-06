@@ -22,22 +22,6 @@ export class OrdersService {
   
     return order;
   }
-  
-
-  // async confirmOrder(id: string): Promise<Order> {
-  //   const order = await this.orderModel.findByIdAndUpdate(
-  //     id,
-  //     { status: OrderStatus.Shipped },
-  //     { new: true },
-  //   );
-  
-  //   if (!order) {
-  //     throw new NotFoundException(`Order with ID ${id} not found`);
-  //   }
-  
-  //   await this.mailerService.sendOrderShippedEmail(order.userEmail);
-  //   return order;
-  // }
 
   async confirmOrder(id: string): Promise<Order> {
     const order = await this.orderModel.findByIdAndUpdate(
@@ -81,6 +65,15 @@ export class OrdersService {
   
     return order;
   }
+
+  async deleteOrder(id: string): Promise<{ message: string }> {
+    const result = await this.orderModel.findByIdAndDelete(id);
   
+    if (!result) {
+      throw new NotFoundException(`Order with ID ${id} not found`);
+    }
+  
+    return { message: `Order with ID ${id} has been deleted` };
+  }  
   
 }

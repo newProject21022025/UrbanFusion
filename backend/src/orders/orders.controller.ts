@@ -4,6 +4,7 @@ import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { Get, Query } from '@nestjs/common';
 import { UpdateStatusDto } from './dto/update-status.dto';
+import { Delete } from '@nestjs/common';
 
 @Controller('orders') //
 export class OrdersController {
@@ -35,5 +36,10 @@ export class OrdersController {
     @Body() { status }: UpdateStatusDto,
   ) {
     return this.ordersService.updateStatus(id, status);
+  }
+
+  @Delete(':id')
+  deleteOrder(@Param('id') id: string) {
+    return this.ordersService.deleteOrder(id);
   }
 }
