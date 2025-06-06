@@ -9,6 +9,7 @@ import { RootState } from "../../../redux/store";
 
 interface Order {
   _id: string;
+  orderNumber: string; // Додано
   userEmail: string;
   firstName: string;
   lastName: string;
@@ -50,6 +51,9 @@ export default function UserOrders() {
       <h1 className={styles.title}>Мої замовлення</h1>
       {orders.map((order) => (
         <div key={order._id} className={styles.orderCard}>
+          <p>
+            <strong>Номер замовлення:</strong> {order.orderNumber}
+          </p>
           <p>
             <strong>Ім’я:</strong> {order.firstName} {order.lastName}
           </p>
