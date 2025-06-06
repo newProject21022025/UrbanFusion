@@ -3,6 +3,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { ReactNode } from 'react';
 import Header from '@/components/header/Header';
+import Footer from '@/components/footer/Footer';
 import '../styles/globals.css';
 import { ReduxProvider } from '@/providers/ReduxProvider';
 import { UserLoader } from '../../redux/UserLoader';
@@ -29,6 +30,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           <NextIntlClientProvider locale={locale}>         
             <Header locale={locale} />
             {children}
+            <Footer />
           </NextIntlClientProvider>
         </ReduxProvider>
       </body>

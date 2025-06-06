@@ -105,6 +105,10 @@ export class Order extends Document {
 
   @Prop({ type: String, enum: OrderStatus, default: OrderStatus.Pending })
   status!: OrderStatus;
+  
+  @Prop({ type: String, required: true, unique: true })
+  orderNumber!: string;
+
 }  
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
