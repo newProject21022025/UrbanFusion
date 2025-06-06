@@ -169,19 +169,27 @@
     "price": "Price"
   },
   "OrderForm": {
-  "orderTitle": "Place your order",
-  "firstName": "First Name",
-  "lastName": "Last Name",
-  "phone": "Phone Number",
-  "email": "Email",
-  "address": "Delivery Address",
-  "submit": "Submit",
-  "required": "This field is required",
-  "invalidEmail": "Invalid email address",
-  "invalidPhone": "Invalid phone number, format: +1234567890",
-  "additionalInfo": "Additional Information",
-  "successMessage": "Order successfully placed!",
-  "errorMessage": "An error occurred while placing the order.",
-  "submitting": "Placing order..."
+    "orderTitle": "Place your order",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone Number",
+    "email": "Email",
+    "address": "Delivery Address",
+    "submit": "Submit",
+    "required": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "invalidPhone": "Invalid phone number, format: +1234567890",
+    "additionalInfo": "Additional Information",
+    "successMessage": "Order successfully placed!",
+    "errorMessage": "An error occurred while placing the order.",
+    "submitting": "Placing order..."
+  },
+  "Footer": {
+    "aboutUs": "About Us",
+    "contactUs": "Contact Us",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "followUs": "Follow Us",
+    "callback": "Callback"
   }
 }
