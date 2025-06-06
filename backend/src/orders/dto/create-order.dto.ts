@@ -44,6 +44,8 @@ export class CreateOrderDto {
     };
     gender: 'male' | 'female';
   }[];
+
+  orderNumber?: string;
 }
 
 
