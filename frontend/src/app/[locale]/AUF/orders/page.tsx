@@ -148,12 +148,7 @@ export default function AdminOrdersPage() {
                     onClick={() => updateOrderStatus(order._id, "pending")}
                   >
                     Очікує
-                  </button>
-                  {/* <button
-                    onClick={() => updateOrderStatus(order._id, "confirmed")}
-                  >
-                    Підтверджено
-                  </button> */}
+                  </button>                 
                   <button onClick={() => confirmOrder(order._id)}>
                     Підтверджено
                   </button>
