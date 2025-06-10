@@ -18,7 +18,7 @@ export default function OrderContent() {
   const basketItems = useSelector(
     (state: RootState) => state.basket.items
   ) as (Clothes & { quantity: number })[];
-
+ 
   const [hasMounted, setHasMounted] = React.useState(false);
 
   React.useEffect(() => {
@@ -37,7 +37,8 @@ export default function OrderContent() {
   return (
     <div className={styles.container}>
       <h1>{t("orderTitle") /* "Оформлення замовлення" */}</h1>
-      {basketItems.map((item) => {
+      {basketItems.map((item) => {    
+        
         const name = item.name?.[locale] ?? t("noName"); // "Без назви"
         const description = item.description?.[locale] ?? t("noDescription"); // "Опис відсутній"
         const imageUrl = item.mainImage?.url ?? "/no-image.jpg";
@@ -87,7 +88,7 @@ export default function OrderContent() {
                 ) : (
                   `${price} ₴`
                 )}
-              </p>
+              </p>              
             </div>
           </div>
         );

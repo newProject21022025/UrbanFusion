@@ -1,3 +1,5 @@
+// src/components/orderForm/OrderForm.tsx
+
 "use client";
 
 import React, { useMemo } from "react";
@@ -17,9 +19,21 @@ const OrderForm: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const getOrCreateGuestId = () => {
+    if (typeof window === "undefined") return null;
+  
+    let guestId = localStorage.getItem("guestUserId");
+    if (!guestId) {
+      guestId = crypto.randomUUID();
+      localStorage.setItem("guestUserId", guestId);
+    }
+    return guestId;
+  };
+  
+
   const initialValues = useMemo(
     () => ({
-      userId: user.userId || "",
+      userId: user.userId || getOrCreateGuestId() || "",
       firstName: user.firstName || "",
       lastName: user.lastName || "",
       phone: user.phone || "",
@@ -51,7 +65,7 @@ const OrderForm: React.FC = () => {
   ) => {
     try {
       const payload = {
-        userId: user.userId,
+        userId: user.userId || getOrCreateGuestId(),
         userEmail: values.email,
         firstName: values.firstName,
         lastName: values.lastName,

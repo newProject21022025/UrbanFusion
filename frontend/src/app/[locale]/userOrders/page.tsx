@@ -1,9 +1,9 @@
 // src/app/[locale]/userOrders/page.tsx
 
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import styles from './UserOrders.module.css';
+import { useEffect, useState } from "react";
+import styles from "./UserOrders.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 
@@ -31,14 +31,14 @@ interface Order {
 }
 
 export default function UserOrders() {
-  const [orders, setOrders] = useState<Order[]>([]);  
+  const [orders, setOrders] = useState<Order[]>([]);
   const userId = useSelector((state: RootState) => state.user.userId);
 
   useEffect(() => {
     if (!userId) return;
 
     fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders/user/${userId}`)
-      .then(res => {
+      .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch orders");
         return res.json();
       })
@@ -85,7 +85,25 @@ export default function UserOrders() {
                   />
                 )}
                 {item.name.uk} – {item.quantity} шт., {item.size}, {item.color}{" "}
-                – {item.price.amount} {item.price.currency}
+                –{" "}
+                <span style={{ textDecoration: "line-through", color: "gray" }}>
+                  {item.price.amount} {item.price.currency}
+                </span>{" "}
+                →{" "}
+                <span style={{ fontWeight: "bold", color: "green" }}>
+                  {(
+                    item.price.amount *
+                    (1 - item.price.discount / 100)
+                  ).toFixed(2)}{" "}
+                  {item.price.currency}
+                </span>{" "}
+                ={" "}
+                {(
+                  item.quantity *
+                  item.price.amount *
+                  (1 - item.price.discount / 100)
+                ).toFixed(2)}{" "}
+                {item.price.currency}
                 <div className={styles.statusButtons}>
                   <p>
                     <strong>Статус: </strong>
@@ -104,11 +122,24 @@ export default function UserOrders() {
                       }
                     </span>
                   </p>
-                                
                 </div>
               </li>
             ))}
           </ul>
+          <p>
+            <strong>Сума замовлення:</strong>{" "}
+            {order.items
+              .reduce(
+                (total, item) =>
+                  total +
+                  item.quantity *
+                    item.price.amount *
+                    (1 - item.price.discount / 100),
+                0
+              )
+              .toFixed(2)}{" "}
+            {order.items[0]?.price.currency || "UAH"}
+          </p>
         </div>
       ))}
     </div>

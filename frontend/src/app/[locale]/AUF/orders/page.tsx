@@ -148,7 +148,25 @@ export default function AdminOrdersPage() {
                   />
                 )}
                 {item.name.uk} – {item.quantity} шт., {item.size}, {item.color}{" "}
-                – {item.price.amount} {item.price.currency}
+                –{" "}
+                <span style={{ textDecoration: "line-through", color: "gray" }}>
+                  {item.price.amount} {item.price.currency}
+                </span>{" "}
+                →{" "}
+                <span style={{ fontWeight: "bold", color: "green" }}>
+                  {(
+                    item.price.amount *
+                    (1 - item.price.discount / 100)
+                  ).toFixed(2)}{" "}
+                  {item.price.currency}
+                </span>{" "}
+                ={" "}
+                {(
+                  item.quantity *
+                  item.price.amount *
+                  (1 - item.price.discount / 100)
+                ).toFixed(2)}{" "}
+                {item.price.currency}
                 <div className={styles.statusButtons}>
                   <p>
                     <strong>Статус: </strong>
@@ -199,6 +217,20 @@ export default function AdminOrdersPage() {
               </li>
             ))}
           </ul>
+          <p>
+            <strong>Сума замовлення:</strong>{" "}
+            {order.items
+              .reduce(
+                (total, item) =>
+                  total +
+                  item.quantity *
+                    item.price.amount *
+                    (1 - item.price.discount / 100),
+                0
+              )
+              .toFixed(2)}{" "}
+            {order.items[0]?.price.currency || "UAH"}
+          </p>
         </div>
       ))}
     </div>
