@@ -191,5 +191,26 @@
     "termsOfService": "Terms of Service",
     "followUs": "Follow Us",
     "callback": "Callback"
+  },
+  "CallbackForm": {
+    "title": "Contact Us",
+    "orderNumber": "Order Number",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone Number",
+    "email": "Email Address",
+    "description": "Your Message",
+    "submit": "Submit",
+    "submitSuccess": "Thank you! Your message has been submitted successfully.",
+    "errors": {
+      "orderNumberRequired": "Order number is required",
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "phoneRequired": "Phone number is required",
+      "phoneInvalid": "Please enter a valid phone number",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address",
+      "descriptionRequired": "Message is required"
+    }
   }
 }

@@ -9,6 +9,7 @@ import { LocaleMiddleware } from './common/middleware/locale.middleware';
 import { RequestMethod } from '@nestjs/common';
 import { OrdersModule } from './orders/orders.module';
 import { MailerModule } from './mailer/mailer.module';
+import { CallbackModule } from './callback/callback.module'; 
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { MailerModule } from './mailer/mailer.module';
     ClothesModule,
     OrdersModule,
     MailerModule,
+    CallbackModule
   ],
 })
 export class AppModule implements NestModule {

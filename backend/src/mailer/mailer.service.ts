@@ -12,15 +12,7 @@ export class MailerService {
       pass: process.env.MAIL_PASS,
     },
   });
-
-  // async sendOrderReceivedEmail(to: string) {
-  //   await this.transporter.sendMail({
-  //     from: `"Urban Fusion" <${process.env.MAIL_USER}>`,
-  //     to,
-  //     subject: 'Ваше замовлення прийнято',
-  //     html: `<h3>Дякуємо за замовлення!</h3><p>Ваше замовлення успішно отримано. Очікуйте підтвердження.</p>`,
-  //   });
-  // }
+  
   private formatOrderItems(items: Order['items']) {
     return items.map(item => `
       <div style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
@@ -84,6 +76,29 @@ export class MailerService {
       to,
       subject: 'Ваше замовлення підтверджено',
       html: `<h3>Замовлення підтверджено!</h3><p>Ми підтвердили ваше замовлення та готуємо його до відправлення.</p>`,
+    });
+  }
+
+  async sendCallbackReceivedEmail(callbackData: {
+    email: string;
+    firstName: string;
+    lastName: string;
+    orderNumber: string;
+  }) {
+    await this.transporter.sendMail({
+      from: `"Urban Fusion" <${process.env.MAIL_USER}>`,
+      to: callbackData.email,
+      subject: 'Ваше звернення прийнято',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #333;">Дякуємо за звернення!</h2>
+          <p>Шановний(а) ${callbackData.firstName} ${callbackData.lastName},</p>
+          <p>Ваше звернення щодо замовлення <strong>№${callbackData.orderNumber}</strong> успішно отримано.</p>
+          <p>Наші фахівці розглянуть його у найближчий час та зв'яжуться з вами.</p>
+          
+          <p style="margin-top: 30px;">З повагою,<br/>Команда Urban Fusion</p>
+        </div>
+      `,
     });
   }
 }
