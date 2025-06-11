@@ -119,9 +119,9 @@ export default function Header({ locale }: HeaderProps) {
           onMouseEnter={() => setCatalogOpen(true)}
           className={styles.catalogWrapper}
         >
-          <a href="/catalog" className={styles.navLink}>
+          <Link href="/catalog" className={styles.navLink}>
             {t("catalog")}
-          </a>
+          </Link>
           {catalogOpen && <CatalogDropdown />}
         </div>
         <Link href="/" className={styles.navLink}>
