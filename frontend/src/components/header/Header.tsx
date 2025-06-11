@@ -181,6 +181,11 @@ export default function Header({ locale }: HeaderProps) {
               )}
             </Link>
           </div>
+          {isAdmin && (
+            <Link href={adminLinks.link} className={styles.navLink}>
+              {adminLinks.label}
+            </Link>
+          )}
         </div>
       </nav>
     </header>
