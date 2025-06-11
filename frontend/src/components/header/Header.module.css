@@ -48,21 +48,6 @@
   color: #000;
 }
 
-/* .navLink::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: currentColor;
-  transition: width 0.3s ease;
-}
-
-.navLink:hover::before {
-  width: 100%;
-} */
-
 .logo {
   display: flex;
   align-items: flex-end;
@@ -157,3 +142,35 @@
 .catalogDropdown .column li:hover {
   background-color: #f0f0f0;
 }
+
+.searchWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; 
+  position: relative;
+}
+
+.searchForm {
+  display: flex;
+}
+
+.searchInput {
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  width: 200px;
+  transition: width 0.3s ease;
+
+  @media (max-width: 768px) {
+    width: 120px;
+  }
+}
+
+.searchIcon {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+

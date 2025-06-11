@@ -17,6 +17,7 @@ import HeartEmpty from "../../svg/Heart/heartEmpty";
 import HeartBlack from "../../svg/Heart/heartBlack";
 import PersonalData from "../../svg/PersonalData/personalData";
 import CatalogDropdown from "./CatalogDropdown";
+import { Formik, Form } from "formik";
 
 type HeaderProps = {
   locale: "en" | "uk";
@@ -29,6 +30,7 @@ export default function Header({ locale }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);  
 
   const { isAdmin, isAuthenticated, adminLinks } = useSelector(
     (state: RootState) => state.auth
@@ -107,6 +109,12 @@ export default function Header({ locale }: HeaderProps) {
     );
   }
 
+  const handleSearchSubmit = (values: { query: string }) => {
+    // приклад: редірект на сторінку з результатами
+    router.push(`/catalog?search=${encodeURIComponent(values.query)}`);
+    setShowSearch(false);
+  };
+
   return (
     <header
       className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${
@@ -133,7 +141,34 @@ export default function Header({ locale }: HeaderProps) {
           </div>
         </Link>
         <div className={styles.languageSwitcher}>
-          <Search />
+          <div className={styles.searchWrapper}>
+            {showSearch && (
+              <Formik
+                initialValues={{ query: "" }}
+                onSubmit={handleSearchSubmit}
+              >
+                {({ values, handleChange, handleSubmit }) => (
+                  <Form className={styles.searchForm} onSubmit={handleSubmit}>
+                    <input
+                      name="query"
+                      type="text"
+                      placeholder="Пошук товарів..."
+                      className={styles.searchInput}
+                      autoFocus
+                      value={values.query}
+                      onChange={handleChange}
+                    />
+                  </Form>
+                )}
+              </Formik>
+            )}
+            <div
+              onClick={() => setShowSearch((prev) => !prev)}
+              className={styles.searchIcon}
+            >
+              <Search />
+            </div>
+          </div>
           {isAuthenticated && (
             <Link href="/personalData" className={styles.navLink}>
               <PersonalData />
