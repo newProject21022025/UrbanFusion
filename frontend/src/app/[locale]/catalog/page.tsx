@@ -15,6 +15,7 @@ import HeartBlack from "../../../svg/Heart/heartBlack";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { addToFavorites, removeFromFavorites } from "../../../redux/slices/favoritesSlice"; 
+import { useSearchParams } from "next/navigation";
 
 export default function Catalog() {
   const locale = useLocale();
@@ -27,10 +28,33 @@ export default function Catalog() {
   const favoriteItems = useSelector(
     (state: RootState) => state.favorites.items
   );
+  const searchParams = useSearchParams();
 
-  useEffect(() => {
-    fetchClothes();
-  }, [locale]);
+  const selectedGender = searchParams.get("gender"); // male | female
+  const selectedCategory = searchParams.get("category"); // локалізована назва категорії
+
+  const [filteredClothes, setFilteredClothes] = useState<Clothes[]>([]); 
+
+
+useEffect(() => {
+  fetchClothes();
+}, [locale]);
+
+useEffect(() => {
+  if (!clothes.length) return;
+
+  const filtered = clothes.filter((item) => {
+    const matchGender = selectedGender ? item.gender === selectedGender : true;
+    const matchCategory = selectedCategory
+      ? item.category?.[locale as "en" | "uk"] === selectedCategory
+      : true;
+
+    return matchGender && matchCategory;
+  });
+
+  setFilteredClothes(filtered);
+}, [clothes, selectedGender, selectedCategory, locale]);
+ 
 
   const fetchClothes = async () => {
     try {
@@ -99,7 +123,7 @@ export default function Catalog() {
       {error && <div className={styles.error}>{error}</div>}
 
       <div className={styles.clothesContainer}>
-        {clothes.map((item) => {
+        {filteredClothes.map((item) => {
           const categoryKey = getCategoryKey(
             item.category?.[locale as "en" | "uk"]
           );

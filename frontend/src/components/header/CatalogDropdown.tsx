@@ -2,9 +2,16 @@
 
 import { useTranslations } from "next-intl";
 import styles from "./CatalogDropdown.module.css";
+import { useRouter } from "next/navigation"; // або 'next/router' для App Router
 
 export default function CatalogDropdown() {
   const t = useTranslations("CatalogDropdown");
+  const router = useRouter();
+
+  const handleSelect = (gender: "male" | "female", category: string) => {
+    router.push(`/catalog?gender=${gender}&category=${encodeURIComponent(category)}`);
+  };
+
 
   const menItems = [
     t("men.tShirt"),
@@ -33,7 +40,7 @@ export default function CatalogDropdown() {
         <h4 className={styles.title}>{t("men.title")}</h4>
         <ul>
           {menItems.map((item, i) => (
-            <li key={i}>{item}</li>
+            <li key={i} onClick={() => handleSelect("male", item)}>{item}</li>
           ))}
         </ul>
       </div>
@@ -41,7 +48,7 @@ export default function CatalogDropdown() {
         <h4 className={styles.title}>{t("women.title")}</h4>
         <ul>
           {womenItems.map((item, i) => (
-            <li key={i}>{item}</li>
+            <li key={i} onClick={() => handleSelect("female", item)}>{item}</li>
           ))}
         </ul>
       </div>
