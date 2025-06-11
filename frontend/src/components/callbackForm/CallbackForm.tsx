@@ -45,11 +45,28 @@ export default function CallbackForm() {
     description: Yup.string().required(t("errors.descriptionRequired")),
   });
 
-  const onSubmit = (values: CallbackFormValues) => {
-    console.log("Form submitted:", values);
-    // Here you would typically send the data to your backend
-    alert(t("submitSuccess"));
+  const onSubmit = async (values: CallbackFormValues) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/callback`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+  
+      alert(t("submitSuccess"));
+      formik.resetForm(); // Очистити форму після успішної відправки
+    } catch (error) {
+      console.error("Error submitting callback form:", error);
+      alert(t("submitError")); // додай такий переклад у файл i18n
+    }
   };
+  
 
   const formik = useFormik({
     initialValues,
