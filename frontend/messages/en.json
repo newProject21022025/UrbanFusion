@@ -233,5 +233,28 @@
     "loading": "Loading...",
     "error": "Failed to load feedback.",
     "toggleError": "Error while changing status."
-  }  
+  },
+  "CatalogDropdown": {
+    "women": {
+      "title": "Women's Clothing",
+      "tShirt": "T-shirts",
+      "top": "Tops",
+      "shirt": "Shirts",
+      "jeans": "Jeans",
+      "jacket": "Jackets",
+      "glass": "Glasses",
+      "hat": "Hats",
+      "bag": "Bags"
+    },
+    "men": {
+      "title": "Men's Clothing",
+      "tShirt": "T-shirts",
+      "shirt": "Shirts",
+      "jeans": "Jeans",
+      "jacket": "Jackets",
+      "glass": "Glasses",
+      "hat": "Hats",
+      "bag": "Bags"
+    }
+  }
 }

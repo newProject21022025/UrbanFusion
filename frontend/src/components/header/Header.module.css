@@ -11,20 +11,28 @@
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 60px; /* Початкова висота хедера */
+  overflow: hidden; /* Щоб меню не визирало поза межі */
 }
 
-.scrolled {
+.header.scrolled {
   padding: 0.75rem 2rem;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+}
+
+.header.expanded {
+  min-height: 350px; /* Висота при відкритому каталозі */
 }
 
 .nav {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  }
+  
+  /* flex-direction: column;  */
+}
 
 .navLink {
   position: relative; 
@@ -33,13 +41,14 @@
   padding: 0.5rem 0;
   transition: color 0.2s ease;
   color: rgba(237, 231, 220, 1);
+  cursor: pointer;
 }
 
 .navLink:hover {
   color: #000;
 }
 
-.navLink::before {
+/* .navLink::before {
   content: '';
   position: absolute;
   bottom: 0;
@@ -52,9 +61,9 @@
 
 .navLink:hover::before {
   width: 100%;
-}
+} */
 
-.logo{
+.logo {
   display: flex;
   align-items: flex-end;
   gap: 5px;
@@ -88,7 +97,7 @@
   position: relative;
 }
 
-.basketCount,.favoritesCount {
+.basketCount, .favoritesCount {
   position: absolute;
   top: -15px;
   right: -15px;
@@ -105,5 +114,46 @@
   margin-right: 15px;  
 }
 
+.catalogWrapper {
+  position: relative;
+  display: inline-block;
+}
 
+/* Стилі для каталогу (з двома колонками) */
+.catalogDropdown {
+  display: flex;
+  padding: 1rem 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: rgba(237, 231, 220, 1);
+  color: #2F4F4F;
+  box-shadow: inset 0 1px 0 #eee;
+  flex: 1; /* щоб зайняти доступний простір */
+}
 
+.catalogDropdown .column {
+  flex: 1;
+  padding: 0 1rem;
+}
+
+.catalogDropdown .column h4 {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.25rem;
+}
+
+.catalogDropdown .column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.catalogDropdown .column li {
+  padding: 0.25rem 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.catalogDropdown .column li:hover {
+  background-color: #f0f0f0;
+}
