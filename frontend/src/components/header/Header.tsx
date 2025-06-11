@@ -17,7 +17,7 @@ import HeartEmpty from "../../svg/Heart/heartEmpty";
 import HeartBlack from "../../svg/Heart/heartBlack";
 import PersonalData from "../../svg/PersonalData/personalData";
 import CatalogDropdown from "./CatalogDropdown";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 
 type HeaderProps = {
   locale: "en" | "uk";
@@ -30,8 +30,7 @@ export default function Header({ locale }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
-  const [query, setQuery] = useState("");
+  const [showSearch, setShowSearch] = useState(false);  
 
   const { isAdmin, isAuthenticated, adminLinks } = useSelector(
     (state: RootState) => state.auth
