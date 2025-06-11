@@ -34,6 +34,7 @@ export default function Catalog() {
   const selectedCategory = searchParams.get("category"); // локалізована назва категорії
 
   const [filteredClothes, setFilteredClothes] = useState<Clothes[]>([]); 
+  const searchQuery = searchParams.get("search")?.toLowerCase().trim();
 
 
 useEffect(() => {
@@ -49,11 +50,37 @@ useEffect(() => {
       ? item.category?.[locale as "en" | "uk"] === selectedCategory
       : true;
 
-    return matchGender && matchCategory;
+    const nameMatch = searchQuery
+      ? item.name[locale as "en" | "uk"].toLowerCase().includes(searchQuery)
+      : true;
+
+    const categoryMatch = searchQuery
+      ? item.category?.[locale as "en" | "uk"].toLowerCase().includes(searchQuery)
+      : true;
+
+    const matchSearch = searchQuery ? nameMatch || categoryMatch : true;
+
+    return matchGender && matchCategory && matchSearch;
   });
 
   setFilteredClothes(filtered);
-}, [clothes, selectedGender, selectedCategory, locale]);
+}, [clothes, selectedGender, selectedCategory, searchQuery, locale]);
+
+
+// useEffect(() => {
+//   if (!clothes.length) return;
+
+//   const filtered = clothes.filter((item) => {
+//     const matchGender = selectedGender ? item.gender === selectedGender : true;
+//     const matchCategory = selectedCategory
+//       ? item.category?.[locale as "en" | "uk"] === selectedCategory
+//       : true;
+
+//     return matchGender && matchCategory;
+//   });
+
+//   setFilteredClothes(filtered);
+// }, [clothes, selectedGender, selectedCategory, locale]);
  
 
   const fetchClothes = async () => {
