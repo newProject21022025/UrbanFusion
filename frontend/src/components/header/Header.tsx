@@ -16,6 +16,7 @@ import LogoWhite from "../../svg/Logo/logoWhite";
 import HeartEmpty from "../../svg/Heart/heartEmpty";
 import HeartBlack from "../../svg/Heart/heartBlack";
 import PersonalData from "../../svg/PersonalData/personalData";
+import CatalogDropdown from "./CatalogDropdown";
 
 type HeaderProps = {
   locale: "en" | "uk";
@@ -27,6 +28,7 @@ export default function Header({ locale }: HeaderProps) {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [catalogOpen, setCatalogOpen] = useState(false);
 
   const { isAdmin, isAuthenticated, adminLinks } = useSelector(
     (state: RootState) => state.auth
@@ -106,17 +108,21 @@ export default function Header({ locale }: HeaderProps) {
   }
 
   return (
-    <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
+    <header
+      className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${
+        catalogOpen ? styles.expanded : ""
+      }`}
+      onMouseLeave={() => setCatalogOpen(false)}
+    >
       <nav className={styles.nav}>
-        <div>
-          <Link href="/catalog" className={styles.navLink}>
+        <div
+          onMouseEnter={() => setCatalogOpen(true)}
+          className={styles.catalogWrapper}
+        >
+          <a href="/catalog" className={styles.navLink}>
             {t("catalog")}
-          </Link>
-          {isAdmin && (
-            <Link href={adminLinks.link} className={styles.navLink}>
-              {adminLinks.label}
-            </Link>
-          )}
+          </a>
+          {catalogOpen && <CatalogDropdown />}
         </div>
         <Link href="/" className={styles.navLink}>
           <div className={styles.logo}>
