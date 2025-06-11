@@ -212,5 +212,26 @@
       "emailInvalid": "Please enter a valid email address",
       "descriptionRequired": "Message is required"
     }
-  }
+  },
+  "Feedback": {
+    "title": "All User Feedback",
+    "filterLabel": "Filter by status:",
+    "all": "All",
+    "processed": "Processed",
+    "unprocessed": "Unprocessed",
+    "orderNumber": "Order No.",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone",
+    "email": "Email",
+    "description": "Description",
+    "status": "Status",
+    "date": "Date",
+    "action": "Action",
+    "markAsProcessed": "Mark as Processed",
+    "unmark": "Processed",
+    "loading": "Loading...",
+    "error": "Failed to load feedback.",
+    "toggleError": "Error while changing status."
+  }  
 }
