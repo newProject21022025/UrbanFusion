@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { Callback } from './schemas/callback.schema';
 import { CreateCallbackDto } from './dto/create-callback.dto';
 import { MailerService } from '../mailer/mailer.service';
+import { PaginationQueryDto } from '../callback/dto/pagination-query.dto';
 
 @Injectable()
 export class CallbackService {
@@ -32,9 +33,9 @@ export class CallbackService {
     
     return savedCallback;
   }
-  async findAll(): Promise<Callback[]> {
-    return this.callbackModel.find().exec();
-  }
+  // async findAll(): Promise<Callback[]> {
+  //   return this.callbackModel.find().exec();
+  // }
 
   async findById(id: string): Promise<Callback> {
     const callback = await this.callbackModel.findById(id).exec();
@@ -61,5 +62,28 @@ export class CallbackService {
       throw new NotFoundException(`Callback with ID ${id} not found`);
     }
     return deletedCallback;
+  }
+
+  async findAll(paginationQuery: PaginationQueryDto): Promise<any> {
+    const { page = 1, limit = 10 } = paginationQuery;
+    const skip = (page - 1) * limit;
+  
+    const [items, total] = await Promise.all([
+      this.callbackModel
+        .find()
+        .sort({ createdAt: -1 }) // опціонально: новіші спочатку
+        .skip(skip)
+        .limit(limit)
+        .exec(),
+  
+      this.callbackModel.countDocuments(),
+    ]);
+  
+    return {
+      data: items,
+      total,
+      page,
+      lastPage: Math.ceil(total / limit),
+    };
   }
 }
