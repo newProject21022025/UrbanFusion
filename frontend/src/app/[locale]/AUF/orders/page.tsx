@@ -2,12 +2,12 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import styles from "./Orders.module.css";
 
 interface Order {
   _id: string;
-  orderNumber: string; // Додано
+  orderNumber: string;
   userEmail: string;
   firstName: string;
   lastName: string;
@@ -28,14 +28,63 @@ interface Order {
   }[];
 }
 
+interface PaginatedOrders {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+  data: Order[];
+}
+
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
+  const loadOrders = useCallback(async () => {
+    if (loading || page > totalPages) return;
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders?page=${page}&limit=5`
+      );
+      const data: PaginatedOrders = await res.json();
+
+      setOrders((prev) => [...prev, ...data.data]);
+      setTotalPages(data.totalPages);
+      setPage((prev) => prev + 1);
+    } catch (err) {
+      console.error("Помилка при завантаженні замовлень:", err);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, loading, totalPages]);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders`) // Проксі до бекенду
-      .then((res) => res.json())
-      .then(setOrders);
-  }, []);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loading) {
+          loadOrders();
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [loadOrders]);
 
   const updateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
@@ -52,7 +101,6 @@ export default function AdminOrdersPage() {
 
       if (!res.ok) throw new Error("Не вдалося оновити статус");
 
-      // Оновити локальний стан після зміни статусу
       setOrders((prev) =>
         prev.map((order) =>
           order._id === orderId ? { ...order, status: newStatus } : order
@@ -68,9 +116,7 @@ export default function AdminOrdersPage() {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders/${orderId}/confirm`,
-        {
-          method: "PATCH",
-        }
+        { method: "PATCH" }
       );
 
       if (!res.ok) throw new Error("Не вдалося підтвердити замовлення");
@@ -95,9 +141,7 @@ export default function AdminOrdersPage() {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders/${orderId}`,
-        {
-          method: "DELETE",
-        }
+        { method: "DELETE" }
       );
 
       if (!res.ok) throw new Error("Не вдалося видалити замовлення");
@@ -112,6 +156,7 @@ export default function AdminOrdersPage() {
   return (
     <div className={styles.container}>
       <h1>Усі замовлення</h1>
+  
       {orders.map((order) => (
         <div key={order._id} className={styles.orderCard}>
           <p>
@@ -133,9 +178,9 @@ export default function AdminOrdersPage() {
             <strong>Статус:</strong> {order.status}
           </p>
           <p>
-            <strong>Дата:</strong>{" "}
-            {new Date(order.createdAt).toLocaleDateString()}
+            <strong>Дата:</strong> {new Date(order.createdAt).toLocaleDateString()}
           </p>
+  
           <ul className={styles.orderItems}>
             {order.items.map((item, i) => (
               <li key={i} className={styles.noBullet}>
@@ -145,10 +190,10 @@ export default function AdminOrdersPage() {
                     width={80}
                     height={80}
                     style={{ objectFit: "cover", borderRadius: "8px" }}
+                    alt={item.mainImage.alt?.uk || "Фото товару"}
                   />
                 )}
-                {item.name.uk} – {item.quantity} шт., {item.size}, {item.color}{" "}
-                –{" "}
+                {item.name.uk} – {item.quantity} шт., {item.size}, {item.color} –{" "}
                 <span style={{ textDecoration: "line-through", color: "gray" }}>
                   {item.price.amount} {item.price.currency}
                 </span>{" "}
@@ -167,56 +212,10 @@ export default function AdminOrdersPage() {
                   (1 - item.price.discount / 100)
                 ).toFixed(2)}{" "}
                 {item.price.currency}
-                <div className={styles.statusButtons}>
-                  <p>
-                    <strong>Статус: </strong>
-                    <span
-                      className={`${styles.statusBadge} ${
-                        styles["status-" + order.status]
-                      }`}
-                    >
-                      {
-                        {
-                          pending: "Очікує",
-                          confirmed: "Підтверджено",
-                          shipped: "Відправлено",
-                          canceled: "Скасовано",
-                        }[order.status]
-                      }
-                    </span>
-                  </p>
-
-                  <p>
-                    <strong>Оновити статус:</strong>
-                  </p>
-                  <button
-                    onClick={() => updateOrderStatus(order._id, "pending")}
-                  >
-                    Очікує
-                  </button>
-                  <button onClick={() => confirmOrder(order._id)}>
-                    Підтверджено
-                  </button>
-                  <button
-                    onClick={() => updateOrderStatus(order._id, "shipped")}
-                  >
-                    Відправлено
-                  </button>
-                  <button
-                    onClick={() => updateOrderStatus(order._id, "canceled")}
-                  >
-                    Скасовано
-                  </button>
-                  <button
-                    onClick={() => deleteOrder(order._id)}
-                    style={{ color: "red" }}
-                  >
-                    Видалити
-                  </button>
-                </div>
               </li>
             ))}
           </ul>
+  
           <p>
             <strong>Сума замовлення:</strong>{" "}
             {order.items
@@ -231,8 +230,56 @@ export default function AdminOrdersPage() {
               .toFixed(2)}{" "}
             {order.items[0]?.price.currency || "UAH"}
           </p>
+  
+          <div className={styles.statusButtons}>
+            <p>
+              <strong>Статус: </strong>
+              <span
+                className={`${styles.statusBadge} ${
+                  styles["status-" + order.status]
+                }`}
+              >
+                {
+                  {
+                    pending: "Очікує",
+                    confirmed: "Підтверджено",
+                    shipped: "Відправлено",
+                    canceled: "Скасовано",
+                  }[order.status]
+                }
+              </span>
+            </p>
+  
+            <p>
+              <strong>Оновити статус:</strong>
+            </p>
+            <button onClick={() => updateOrderStatus(order._id, "pending")}>
+              Очікує
+            </button>
+            <button onClick={() => confirmOrder(order._id)}>
+              Підтверджено
+            </button>
+            <button onClick={() => updateOrderStatus(order._id, "shipped")}>
+              Відправлено
+            </button>
+            <button onClick={() => updateOrderStatus(order._id, "canceled")}>
+              Скасовано
+            </button>
+            <button
+              onClick={() => deleteOrder(order._id)}
+              style={{ color: "red" }}
+            >
+              Видалити
+            </button>
+          </div>
         </div>
       ))}
+  
+      {/* Спостерігач для Infinite Scroll */}
+      <div ref={observerRef} style={{ height: "1px" }}></div>
+  
+      {/* Інформер про завантаження */}
+      {loading && <p style={{ textAlign: "center" }}>Завантаження...</p>}
     </div>
   );
-}
+}  
