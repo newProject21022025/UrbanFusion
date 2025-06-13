@@ -13,6 +13,8 @@ import { ClothesService } from './clothes.service';
 import { CreateClothesDto } from './dto/create-clothes.dto';
 import { UpdateClothesDto } from './dto/update-clothes.dto';
 import { CreateReviewDto } from './dto/create-review.dto';
+import { PaginationQueryDto } from '../clothes/dto/pagination-query.dto';
+import { Query } from '@nestjs/common';
 
 @Controller('clothes')
 export class ClothesController {
@@ -84,5 +86,13 @@ export class ClothesController {
     @Body('userId') userId: string,
   ) {
     return this.clothesService.dislikeReview(id, reviewId, userId);
+  }
+
+  @Get()
+  async findPaginated(@Query() query: PaginationQueryDto) {
+    const page = query.page ?? 1;
+    const limit = query.limit ?? 10;
+
+    return this.clothesService.findPaginated(page, limit);
   }
 }
