@@ -14,7 +14,10 @@ import HeartWhite from "../../../svg/Heart/heartWhite";
 import HeartBlack from "../../../svg/Heart/heartBlack";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
-import { addToFavorites, removeFromFavorites } from "../../../redux/slices/favoritesSlice"; 
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from "../../../redux/slices/favoritesSlice";
 import { useSearchParams } from "next/navigation";
 
 export default function Catalog() {
@@ -25,64 +28,71 @@ export default function Catalog() {
   const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
   const basketItems = useSelector((state: RootState) => state.basket.items);
   const dispatch = useDispatch();
-  const favoriteItems = useSelector(
-    (state: RootState) => state.favorites.items
-  );
+  const favoriteItems = useSelector((state: RootState) => state.favorites.items);
   const searchParams = useSearchParams();
 
-  const selectedGender = searchParams.get("gender"); // male | female
-  const selectedCategory = searchParams.get("category"); // локалізована назва категорії
-
-  const [filteredClothes, setFilteredClothes] = useState<Clothes[]>([]); 
+  const selectedGender = searchParams.get("gender");
+  const selectedCategory = searchParams.get("category");
   const searchQuery = searchParams.get("search")?.toLowerCase().trim();
 
+  const [filteredClothes, setFilteredClothes] = useState<Clothes[]>([]);
+  const [visibleCount, setVisibleCount] = useState(10);
+  const [paginatedClothes, setPaginatedClothes] = useState<Clothes[]>([]);
 
-useEffect(() => {
-  fetchClothes();
-}, [locale]);
+  useEffect(() => {
+    fetchClothes();
+  }, [locale]);
 
-useEffect(() => {
-  if (!clothes.length) return;
+  useEffect(() => {
+    if (!clothes?.length) return;
 
-  const filtered = clothes.filter((item) => {
-    const matchGender = selectedGender ? item.gender === selectedGender : true;
-    const matchCategory = selectedCategory
-      ? item.category?.[locale as "en" | "uk"] === selectedCategory
-      : true;
+    const filtered = clothes.filter((item) => {
+      const matchGender = selectedGender
+        ? item.gender === selectedGender
+        : true;
+      const matchCategory = selectedCategory
+        ? item.category?.[locale as "en" | "uk"] === selectedCategory
+        : true;
 
-    const nameMatch = searchQuery
-      ? item.name[locale as "en" | "uk"].toLowerCase().includes(searchQuery)
-      : true;
+      const nameMatch = searchQuery
+        ? item.name[locale as "en" | "uk"].toLowerCase().includes(searchQuery)
+        : true;
 
-    const categoryMatch = searchQuery
-      ? item.category?.[locale as "en" | "uk"].toLowerCase().includes(searchQuery)
-      : true;
+      const categoryMatch = searchQuery
+        ? item.category?.[locale as "en" | "uk"]
+            .toLowerCase()
+            .includes(searchQuery)
+        : true;
 
-    const matchSearch = searchQuery ? nameMatch || categoryMatch : true;
+      const matchSearch = searchQuery ? nameMatch || categoryMatch : true;
 
-    return matchGender && matchCategory && matchSearch;
-  });
+      return matchGender && matchCategory && matchSearch;
+    });
 
-  setFilteredClothes(filtered);
-}, [clothes, selectedGender, selectedCategory, searchQuery, locale]);
+    setFilteredClothes(filtered);
+    setVisibleCount(10); // скидаємо при новій фільтрації
+  }, [clothes, selectedGender, selectedCategory, searchQuery, locale]);
 
+  useEffect(() => {
+    setPaginatedClothes(filteredClothes.slice(0, visibleCount));
+  }, [filteredClothes, visibleCount]);
 
-// useEffect(() => {
-//   if (!clothes.length) return;
-
-//   const filtered = clothes.filter((item) => {
-//     const matchGender = selectedGender ? item.gender === selectedGender : true;
-//     const matchCategory = selectedCategory
-//       ? item.category?.[locale as "en" | "uk"] === selectedCategory
-//       : true;
-
-//     return matchGender && matchCategory;
-//   });
-
-//   setFilteredClothes(filtered);
-// }, [clothes, selectedGender, selectedCategory, locale]);
- 
-
+  useEffect(() => {
+    const handleScroll = () => {
+      // Використовуємо window.innerHeight замість clientHeight
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+      
+      if (scrollTop + window.innerHeight >= scrollHeight - 200 && 
+          visibleCount < filteredClothes.length) {
+        setVisibleCount(prev => Math.min(prev + 10, filteredClothes.length));
+      }
+    };
+  
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [filteredClothes.length, visibleCount]); // Додаємо visibleCount до залежностей
+  
   const fetchClothes = async () => {
     try {
       setLoading(true);
@@ -128,12 +138,11 @@ useEffect(() => {
   const isItemInBasket = (id: string) => {
     return basketItems.some((item) => item._id === id);
   };
-  // Функція для перевірки, чи є товар у вибраному
+
   const isItemInFavorites = (id: string) => {
     return favoriteItems.some((item) => item._id === id);
   };
 
-  // Функція для обробки кліку на серце
   const handleFavoriteClick = (item: Clothes) => {
     if (isItemInFavorites(item._id)) {
       dispatch(removeFromFavorites(item._id));
@@ -150,7 +159,7 @@ useEffect(() => {
       {error && <div className={styles.error}>{error}</div>}
 
       <div className={styles.clothesContainer}>
-        {filteredClothes.map((item) => {
+        {paginatedClothes.map((item) => {
           const categoryKey = getCategoryKey(
             item.category?.[locale as "en" | "uk"]
           );
@@ -165,20 +174,16 @@ useEffect(() => {
               }`}
             >
               <div className={styles.cardInner}>
-                {/* Передня сторона */}
                 <div className={styles.cardFront}>
                   <Link href={`/${locale}/catalog/${item._id}`} passHref>
                     <div className={styles.imageContainer}>
                       {item.mainImage?.url ? (
                         <img
                           src={item.mainImage.url}
-                          alt={
-                            item.mainImage?.alt?.[locale as "en" | "uk"] || ""
-                          }
+                          alt={item.mainImage?.alt?.[locale as "en" | "uk"] || ""}
                           className={styles.clothesImage}
                           onError={(e) =>
-                            ((e.target as HTMLImageElement).style.display =
-                              "none")
+                            ((e.target as HTMLImageElement).style.display = "none")
                           }
                         />
                       ) : (
@@ -274,7 +279,6 @@ useEffect(() => {
                   </div>
                 </div>
 
-                {/* Зворотна сторона */}
                 <div className={styles.cardBack}>
                   <div className={styles.cardBackContent}>
                     <h3>{ecoInfo.title}</h3>
@@ -319,6 +323,8 @@ useEffect(() => {
           );
         })}
       </div>
+
+      {loading && <div className={styles.loading}>Завантаження...</div>}
     </main>
   );
 }

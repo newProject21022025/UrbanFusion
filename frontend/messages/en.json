@@ -232,7 +232,10 @@
     "unmark": "Processed",
     "loading": "Loading...",
     "error": "Failed to load feedback.",
-    "toggleError": "Error while changing status."
+    "toggleError": "Error while changing status.",
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page"
   },
   "CatalogDropdown": {
     "women": {

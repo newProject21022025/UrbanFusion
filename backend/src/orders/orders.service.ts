@@ -7,6 +7,7 @@ import { Model } from 'mongoose';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { MailerService } from '../mailer/mailer.service';
 import { CounterService } from '../counters/counter.service';
+import { PaginationDto } from '../orders/dto/pagination.dto';
 
 @Injectable()
 export class OrdersService {
@@ -35,22 +36,7 @@ export class OrdersService {
 
     return order;
   }
-
-  // async createOrder(dto: CreateOrderDto): Promise<Order> {
-  //   const nextSeq = await this.counterService.getNextSequence('order');
-  //   const orderNumber = `ORD-${String(nextSeq).padStart(6, '0')}`;
-
-  //   const order = await this.orderModel.create({
-  //     ...dto,
-  //     orderNumber,
-  //   });
-
-  //   this.logger.log(`Створено замовлення ${orderNumber} для email: ${dto.userEmail}`);
-
-  //   await this.mailerService.sendOrderReceivedEmail(order.userEmail);
-
-  //   return order;
-  // }
+  
 
   // Підтвердження замовлення
   async confirmOrder(id: string): Promise<Order> {
@@ -111,6 +97,24 @@ export class OrdersService {
 
     this.logger.warn(`Видалено замовлення з ID ${id} (номер: ${result.orderNumber})`);
     return { message: `Замовлення з ID ${id} було видалено` };
+  }
+
+  async getPaginatedOrders(paginationDto: PaginationDto) {
+    const { page = 1, limit = 10 } = paginationDto;
+  
+    const skip = (page - 1) * limit;
+    const [items, total] = await Promise.all([
+      this.orderModel.find().sort({ createdAt: -1 }).skip(skip).limit(limit).exec(),
+      this.orderModel.countDocuments().exec(),
+    ]);
+  
+    return {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+      data: items,
+    };
   }
 }
 

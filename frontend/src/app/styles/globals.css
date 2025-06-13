@@ -47,6 +47,11 @@ h4 {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: stretch;
+  justify-content: space-between;
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   font-size: 16px;
