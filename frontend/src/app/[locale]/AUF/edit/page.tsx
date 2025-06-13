@@ -3,7 +3,7 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styles from "./Edit.module.css";
 import { useRouter } from "next/navigation";
 import { clothesService, Clothes } from "../../../api/clothes/clothesService";
@@ -15,22 +15,47 @@ export default function Edit() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [visibleCount, setVisibleCount] = useState(10);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
+  // Завантаження всіх товарів
   useEffect(() => {
+    const fetchClothes = async () => {
+      try {
+        setLoading(true);
+        const data = await clothesService.getAllClothes(locale);
+        setClothes(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error");
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchClothes();
   }, [locale]);
 
-  const fetchClothes = async () => {
-    try {
-      setLoading(true);
-      const data = await clothesService.getAllClothes(locale);
-      setClothes(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
-    } finally {
-      setLoading(false);
+  // Infinite scroll (IntersectionObserver)
+  const hasMore = visibleCount < clothes.length;
+  useEffect(() => {
+    if (!hasMore) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisibleCount((prev) => prev + 10);
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
     }
-  };
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [hasMore]);
 
   const handleDelete = async (id: string) => {
     if (
@@ -44,7 +69,7 @@ export default function Edit() {
     try {
       setDeletingId(id);
       await clothesService.deleteClothes(id, locale);
-      setClothes(clothes.filter((item) => item._id !== id));
+      setClothes((prev) => prev.filter((item) => item._id !== id));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete item");
     } finally {
@@ -59,11 +84,13 @@ export default function Edit() {
   if (loading) return <div className={styles.loading}>Loading...</div>;
   if (error) return <div className={styles.error}>{error}</div>;
 
+  const visibleClothes = clothes.slice(0, visibleCount);
+
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>Clothes Management</h1>
       <div className={styles.clothesContainer}>
-        {clothes.map((item) => (
+        {visibleClothes.map((item) => (
           <div key={item._id} className={styles.clothesCard}>
             {item.mainImage && item.mainImage.url ? (
               <img
@@ -77,6 +104,7 @@ export default function Edit() {
             ) : (
               <div className={styles.noImage}>No image available</div>
             )}
+
             <div className={styles.cardContent}>
               <h2 className={styles.itemName}>
                 {item.name[locale as "en" | "uk"]}
@@ -90,9 +118,7 @@ export default function Edit() {
                   {item.price.amount} {item.price.currency}
                 </span>
                 {item.price.discount > 0 && (
-                  <span className={styles.discount}>
-                    -{item.price.discount}%
-                  </span>
+                  <span className={styles.discount}>-{item.price.discount}%</span>
                 )}
               </div>
 
@@ -105,8 +131,7 @@ export default function Edit() {
               </div>
 
               <div className={styles.category}>
-                Category:{" "}
-                <strong>{item.category[locale as "en" | "uk"]}</strong>
+                Category: <strong>{item.category[locale as "en" | "uk"]}</strong>
               </div>
 
               <div className={styles.section}>
@@ -114,8 +139,7 @@ export default function Edit() {
                 {item.stock.map((stockItem, index) => (
                   <div key={index} className={styles.stockItem}>
                     <div className={styles.stockColor}>
-                      Color: {stockItem.color[locale as "en" | "uk"]} (Code:{" "}
-                      {stockItem.color.code})
+                      Color: {stockItem.color[locale as "en" | "uk"]} (Code: {stockItem.color.code})
                     </div>
                     <div className={styles.stockSizes}>
                       Sizes:
@@ -152,20 +176,23 @@ export default function Edit() {
                   onClick={() => handleEdit(item._id)}
                   className={styles.editButton}
                 >
-                  editButton
+                  Edit
                 </button>
                 <button
                   onClick={() => handleDelete(item._id)}
                   className={styles.deleteButton}
                   disabled={deletingId === item._id}
                 >
-                  {deletingId === item._id ? 'Deleting...' : 'Delete Item'}
+                  {deletingId === item._id ? "Deleting..." : "Delete Item"}
                 </button>
               </div>
             </div>
           </div>
         ))}
       </div>
+
+      {hasMore && <div ref={loadMoreRef} style={{ height: 1 }} />}
+      {loading && <div className={styles.loading}>Loading...</div>}
     </main>
   );
 }

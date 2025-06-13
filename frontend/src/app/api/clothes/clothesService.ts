@@ -68,6 +68,21 @@ export interface Clothes {
 
   
   export const clothesService = {
+
+    async getPaginatedClothes(locale: string, page = 1, limit = 10) {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes?page=${page}&limit=${limit}`
+      );
+      if (!response.ok) throw new Error("Failed to fetch paginated clothes");
+      const json = await response.json();
+
+  // 👇 Ось тут важливо — переконайся, що бекенд повертає { data: [], total: number }
+  return {
+    data: json.data || [],   // захист від undefined
+    total: json.total || 0,  // захист від undefined
+  };
+    },
+
     // Fetch all clothes items
     async getAllClothes(locale: string): Promise<Clothes[]> {
       try {
