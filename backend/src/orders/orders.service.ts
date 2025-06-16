@@ -116,5 +116,29 @@ export class OrdersService {
       data: items,
     };
   }
+
+  async getPaginatedOrdersByUser(userId: string, paginationDto: PaginationDto) {
+    const { page = 1, limit = 10 } = paginationDto;
+  
+    const skip = (page - 1) * limit;
+    const [items, total] = await Promise.all([
+      this.orderModel
+        .find({ userId })
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .exec(),
+      this.orderModel.countDocuments({ userId }).exec(),
+    ]);
+  
+    return {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+      data: items,
+    };
+  }
+  
 }
 
