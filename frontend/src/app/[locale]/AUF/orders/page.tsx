@@ -156,7 +156,7 @@ export default function AdminOrdersPage() {
   return (
     <div className={styles.container}>
       <h1>Усі замовлення</h1>
-  
+
       {orders.map((order) => (
         <div key={order._id} className={styles.orderCard}>
           <p>
@@ -178,12 +178,13 @@ export default function AdminOrdersPage() {
             <strong>Статус:</strong> {order.status}
           </p>
           <p>
-            <strong>Дата:</strong> {new Date(order.createdAt).toLocaleDateString()}
+            <strong>Дата:</strong>{" "}
+            {new Date(order.createdAt).toLocaleDateString()}
           </p>
-  
+
           <ul className={styles.orderItems}>
             {order.items.map((item, i) => (
-              <li key={i} className={styles.noBullet}>
+              <li key={`${order._id}-${i}`} className={styles.noBullet}>
                 {item.mainImage?.url && (
                   <img
                     src={item.mainImage.url}
@@ -193,7 +194,8 @@ export default function AdminOrdersPage() {
                     alt={item.mainImage.alt?.uk || "Фото товару"}
                   />
                 )}
-                {item.name.uk} – {item.quantity} шт., {item.size}, {item.color} –{" "}
+                {item.name.uk} – {item.quantity} шт., {item.size}, {item.color}{" "}
+                –{" "}
                 <span style={{ textDecoration: "line-through", color: "gray" }}>
                   {item.price.amount} {item.price.currency}
                 </span>{" "}
@@ -215,7 +217,7 @@ export default function AdminOrdersPage() {
               </li>
             ))}
           </ul>
-  
+
           <p>
             <strong>Сума замовлення:</strong>{" "}
             {order.items
@@ -230,7 +232,7 @@ export default function AdminOrdersPage() {
               .toFixed(2)}{" "}
             {order.items[0]?.price.currency || "UAH"}
           </p>
-  
+
           <div className={styles.statusButtons}>
             <p>
               <strong>Статус: </strong>
@@ -249,7 +251,7 @@ export default function AdminOrdersPage() {
                 }
               </span>
             </p>
-  
+
             <p>
               <strong>Оновити статус:</strong>
             </p>
@@ -274,12 +276,12 @@ export default function AdminOrdersPage() {
           </div>
         </div>
       ))}
-  
+
       {/* Спостерігач для Infinite Scroll */}
       <div ref={observerRef} style={{ height: "1px" }}></div>
-  
+
       {/* Інформер про завантаження */}
       {loading && <p style={{ textAlign: "center" }}>Завантаження...</p>}
     </div>
   );
-}  
+}

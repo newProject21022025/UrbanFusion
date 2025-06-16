@@ -121,9 +121,9 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           <Link href="/forgotPassword" className={styles.link}>
             {t("forgot")}
           </Link>
-          <Link href="/register" className={styles.link}>
+          {/* <Link href="/register" className={styles.link}>
             {t("noAccount")}
-          </Link>
+          </Link> */}
         </div>
 
         <button
