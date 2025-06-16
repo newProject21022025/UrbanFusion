@@ -26,9 +26,18 @@ export class OrdersController {
   }
 
   @Get('user/:userId')
-  getOrdersByUser(@Param('userId') userId: string) {
-    return this.ordersService.getOrdersByUser(userId);
-  }
+getPaginatedOrdersByUser(
+  @Param('userId') userId: string,
+  @Query() pagination: PaginationDto
+) {
+  return this.ordersService.getPaginatedOrdersByUser(userId, pagination);
+}
+
+
+  // @Get('user/:userId')
+  // getOrdersByUser(@Param('userId') userId: string) {
+  //   return this.ordersService.getOrdersByUser(userId);
+  // }
 
   @Patch(':id/status')
   updateOrderStatus(@Param('id') id: string, @Body() { status }: UpdateStatusDto) {
