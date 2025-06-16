@@ -89,7 +89,7 @@ class ItemDto {
 }
 
 export class CreateOrderDto {
-  @IsMongoId()
+  @IsString() 
   userId!: string;
 
   @IsString()
