@@ -1,7 +1,7 @@
 // src/orders/schemas/order.schema.ts
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Types, Schema as MongooseSchema } from 'mongoose';
+import { Document, Types} from 'mongoose';
 
 export enum OrderStatus {
   Pending = 'pending',
@@ -14,8 +14,8 @@ export enum OrderStatus {
 export class Order extends Document {
   // @Prop({ type: Types.ObjectId, required: true })
   // userId!: Types.ObjectId;
-  @Prop({ type: MongooseSchema.Types.Mixed, required: true })
-  userId!: Types.ObjectId | string;
+  @Prop({ type: String, required: true })
+userId!: string;  // Авторизовані: ObjectId.toString(), гості: "guest_XXX"
 
   @Prop({ type: String, required: true })
   userEmail!: string;
