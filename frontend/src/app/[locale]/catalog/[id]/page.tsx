@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import CreateComment from "../../../../components/createComment/CreateComment";
 import LikeDislike from "../../../../components/likeDislike/LikeDislike";
 import { RootState } from "../../../../redux/store";
+import ShareLink from "../../../../components/shareLink/ShareLink";
 
 export default function ClothesPage() {
   const t = useTranslations("Catalog");
@@ -226,7 +227,9 @@ export default function ClothesPage() {
             </div>
           );
         })}
+        <ShareLink />
       </div>
+
 
       {itemAdded && (
         <div className={styles.successMessage}>
