@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";  // або шлях до твого store
+import { RootState } from "../../redux/store"; 
 import styles from "./CreateComment.module.css";
 import { commentService } from "../../app/api/commentService";
 
@@ -18,15 +18,14 @@ export default function CreateComment({
   onCommentAdded,
 }: CreateCommentProps) {
   const [comment, setComment] = useState("");
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(0); // rating по дефолту 0
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Витягуємо дані користувача зі слайса
   const user = useSelector((state: RootState) => state.user);
   const userId = user.userId;
   const userName = user.firstName
-  ? `${user.firstName}${user.lastName ? ' ' + user.lastName : ''}`
-  : "Користувач";
+    ? `${user.firstName}${user.lastName ? " " + user.lastName : ""}`
+    : "Користувач";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,12 +36,12 @@ export default function CreateComment({
       await commentService.addComment(clothesId, locale, {
         userId,
         userName,
-        rating,
+        rating,  // відправляємо rating навіть якщо 0
         comment,
       });
 
       setComment("");
-      setRating(5);
+      setRating(0); // скидаємо рейтинг назад у 0
       onCommentAdded();
     } catch (error) {
       console.error("Error posting comment:", error);
@@ -50,8 +49,6 @@ export default function CreateComment({
       setIsSubmitting(false);
     }
   };
-
-  console.log("Компонент CreateComment, userId:", userId, "userName:", userName);
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
@@ -62,6 +59,7 @@ export default function CreateComment({
           value={rating}
           onChange={(e) => setRating(Number(e.target.value))}
         >
+          <option value={0}>Без оцінки</option> {/* Додана опція 0 */}
           {[1, 2, 3, 4, 5].map((num) => (
             <option key={num} value={num}>
               {num} ⭐
@@ -87,4 +85,3 @@ export default function CreateComment({
     </form>
   );
 }
-
