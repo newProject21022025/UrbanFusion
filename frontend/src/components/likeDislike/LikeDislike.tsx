@@ -1,9 +1,9 @@
 // src/components/likeDislike/LikeDislike.tsx:
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { commentService } from '../../app/api/commentService';
+import { useState } from "react";
+import { commentService } from "../../app/api/commentService";
 
 interface LikeDislikeProps {
   clothesId: string;
@@ -13,7 +13,7 @@ interface LikeDislikeProps {
   initialDislikes: number;
   locale: string;
   onChange: () => void;
-  userVote?: 'like' | 'dislike' | null; // Add this prop
+  userVote?: "like" | "dislike" | null; // Add this prop
 }
 
 const LikeDislike = ({
@@ -29,12 +29,14 @@ const LikeDislike = ({
   const [likes, setLikes] = useState<number>(initialLikes);
   const [dislikes, setDislikes] = useState<number>(initialDislikes);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [currentVote, setCurrentVote] = useState<'like' | 'dislike' | null>(userVote);
+  const [currentVote, setCurrentVote] = useState<"like" | "dislike" | null>(
+    userVote
+  );
 
-  const handleVote = async (type: 'like' | 'dislike') => {
+  const handleVote = async (type: "like" | "dislike") => {
     console.log({ clothesId, reviewId, locale, userId });
     if (!userId) {
-      alert('Будь ласка, увійдіть в акаунт, щоб голосувати.');
+      alert("Будь ласка, увійдіть в акаунт, щоб голосувати.");
       return;
     }
 
@@ -46,19 +48,24 @@ const LikeDislike = ({
     try {
       setIsLoading(true);
 
-      if (type === 'like') {
+      if (type === "like") {
         console.log({ clothesId, reviewId, locale, userId });
         await commentService.likeComment(clothesId, reviewId, locale, userId);
         setLikes((prev) => prev + 1);
         // If user previously disliked, remove that dislike
-        if (currentVote === 'dislike') {
+        if (currentVote === "dislike") {
           setDislikes((prev) => prev - 1);
         }
       } else {
-        await commentService.dislikeComment(clothesId, reviewId, locale, userId);
+        await commentService.dislikeComment(
+          clothesId,
+          reviewId,
+          locale,
+          userId
+        );
         setDislikes((prev) => prev + 1);
         // If user previously liked, remove that like
-        if (currentVote === 'like') {
+        if (currentVote === "like") {
           setLikes((prev) => prev - 1);
         }
       }
@@ -66,26 +73,37 @@ const LikeDislike = ({
       setCurrentVote(type);
       onChange(); // Refresh data from server
     } catch (err) {
-      console.error('Vote failed:', err);
-      alert(err instanceof Error ? err.message : 'Помилка під час голосування.');
+      console.error("Vote failed:", err);
+      alert(
+        err instanceof Error ? err.message : "Помилка під час голосування."
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-      <button 
-        onClick={() => handleVote('like')} 
+    <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          handleVote("like");
+        }}
         disabled={isLoading}
-        style={{ opacity: currentVote === 'like' ? 1 : 0.6 }}
+        style={{ opacity: currentVote === "like" ? 1 : 0.6 }}
       >
         👍 {likes}
       </button>
-      <button 
-        onClick={() => handleVote('dislike')} 
+
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          handleVote("dislike");
+        }}
         disabled={isLoading}
-        style={{ opacity: currentVote === 'dislike' ? 1 : 0.6 }}
+        style={{ opacity: currentVote === "dislike" ? 1 : 0.6 }}
       >
         👎 {dislikes}
       </button>
