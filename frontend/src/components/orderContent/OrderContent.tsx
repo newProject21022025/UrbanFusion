@@ -48,11 +48,23 @@ export default function OrderContent() {
         const quantity = item.quantity || 1;
 
         const matchedStock = item.stock.find(
-          (s) => s.color.code === selectedColor && s.size === selectedSize
+          (s) =>
+            s.color.code === selectedColor &&
+            s.sizes.some((sz) => sz.size === selectedSize)
         );
+        
+        const matchedSize = matchedStock?.sizes.find((sz) => sz.size === selectedSize);
+        
+        const colorName = matchedStock?.color?.[locale] ?? selectedColor ?? t("unknown");
+        const size = matchedSize?.size ?? selectedSize ?? t("unknown");
+        
 
-        const colorName = matchedStock?.color?.[locale] ?? selectedColor ?? t("unknown"); // "Невідомий"
-        const size = matchedStock?.size ?? selectedSize ?? t("unknown");
+        // const matchedStock = item.stock.find(
+        //   (s) => s.color.code === selectedColor && s.size === selectedSize
+        // );
+
+        // const colorName = matchedStock?.color?.[locale] ?? selectedColor ?? t("unknown"); // "Невідомий"
+        // const size = matchedStock?.size ?? selectedSize ?? t("unknown");
 
         const price = item.price.amount;
         const discount = item.price.discount;
