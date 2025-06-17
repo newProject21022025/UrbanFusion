@@ -75,18 +75,9 @@ export const clothesService = {
   },
 
   async createClothes(data: ClothesFormData, locale: string): Promise<Clothes> {
-    // Виключаємо поля, які не потрібні бекенду
-    const {
-      selectedSize, // виключаємо
-      selectedColor, // виключаємо
-      slug, // виключаємо
-      reviews, // виключаємо
-      ...rest
-    } = data as any;
-
     const payloadToSend = {
-      ...rest,
-      reviews: [], // Ініціалізуємо пустий масив
+      ...data,
+      reviews: [],
       mainImage: {
         url: data.mainImage?.url || "",
         alt: {
@@ -114,17 +105,17 @@ export const clothesService = {
         sizes: item.sizes.map(({ size, quantity }) => ({ size, quantity })),
       })),
     };
-
+  
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payloadToSend),
     });
-
+  
     if (!res.ok) throw new Error(`HTTP помилка! статус: ${res.status}`);
     return await res.json();
   },
-
+  
   async updateClothes(id: string, data: ClothesFormData, locale: string): Promise<Clothes> {
     const payloadToSend = {
       name: data.name,
