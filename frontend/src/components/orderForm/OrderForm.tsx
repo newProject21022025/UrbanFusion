@@ -98,7 +98,7 @@ const OrderForm = () => {
               discount: item.price?.discount || 0,
             },
             category: {
-              id: item.category?.id || "",
+              // id: item.category?.id || "",
               en: item.category?.en || "",
               uk: item.category?.uk || "",
             },
