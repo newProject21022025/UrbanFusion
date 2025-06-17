@@ -119,183 +119,193 @@ export default function ClothesPage() {
 
   return (
     <main className={styles.container}>
-      <h1 className={styles.title}>{clothes.name[locale]}</h1>
-
-      {clothes.mainImage?.url && (
-        <img
-          src={clothes.mainImage.url}
-          alt={clothes.mainImage.alt[locale] || ""}
-          width={600}
-          height={600}
-          className={styles.image}
-          loading="lazy"
-        />
-      )}
-
-      <div className={styles.description}>{clothes.description[locale]}</div>
-
-      {clothes.careInstructions?.length > 0 && (
-        <div className={styles.infoBlock}>
-          <h2>{t("careTitle")}</h2>
-          <ul className={styles.list}>
-            {clothes.careInstructions.map((instruction, i) =>
-              instruction[locale]
-                .split(";")
-                .filter(Boolean)
-                .map((item, j) => (
-                  <li key={`${i}-${j}`}>{item.trim()}</li>
-                ))
-            )}
-          </ul>
-        </div>
-      )}
-
-      {clothes.details?.length > 0 && (
-        <div className={styles.infoBlock}>
-          <h2>{t("detailsTitle")}</h2>
-          <ul className={styles.list}>
-            {clothes.details.map((detail, i) =>
-              detail[locale]
-                .split(";")
-                .filter(Boolean)
-                .map((item, j) => (
-                  <li key={`${i}-${j}`}>{item.trim()}</li>
-                ))
-            )}
-          </ul>
-        </div>
-      )}
-
-      <div className={styles.priceBlock}>
-        {clothes.price.discount > 0 && (
-          <>
-            <span className={styles.oldPrice}>
-              {clothes.price.amount} {clothes.price.currency}
-            </span>
-            <span className={styles.discount}>-{clothes.price.discount}%</span>
-          </>
-        )}
-        <span className={styles.newPrice}>
-          {discountedPrice.toFixed(2)} {clothes.price.currency}
-        </span>
-      </div>
-
-      <div className={styles.stockBlock}>
-        <h2>{t("title")}:</h2>
-        {clothes.stock.map((stock, i) => {
-          const hideSizesFor = ["Окуляри", "Сумки", "Glasses", "Bags"];
-          const categoryName = clothes.category[locale];
-          const shouldShowSizes = !hideSizesFor.includes(categoryName);
-
-          return (
-            <div key={i} className={styles.stockItem}>
-              <div
-                className={`${styles.label} ${
-                  selectedColor === stock.color.code ? styles.selected : ""
-                }`}
-                onClick={() => setSelectedColor(stock.color.code)}
-                style={{ cursor: "pointer" }}
-              >
-                <span
-                  className={styles.colorDot}
-                  style={{ backgroundColor: stock.color.code }}
-                  title={stock.color[locale]}
-                />
-                {stock.color[locale]}
-              </div>
-
-              {shouldShowSizes && (
-                <div className={styles.sizesContainer}>
-                  {stock.sizes.map((sizeObj, j) => (
-                    <div key={j} className={styles.sizeOption}>
-                      <label>
-                        <input
-                          type="radio"
-                          name="size"
-                          value={sizeObj.size}
-                          checked={selectedSize === sizeObj.size}
-                          onChange={() => setSelectedSize(sizeObj.size)}
-                          disabled={sizeObj.quantity <= 0}
-                        />
-                        {t("selectSize")}: {sizeObj.size}, {t("quantity")}:{" "}
-                        {sizeObj.quantity}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          );
-        })}
-        <ShareLink />
-      </div>
-
-
-      {itemAdded && (
-        <div className={styles.successMessage}>
-          ✅ {t("addedToBasketMessage") || "Товар додано до кошика!"}
-        </div>
-      )}
-
-      <button
-        className={styles.addToBasketButton}
-        onClick={handleAddToBasket}
-        disabled={!selectedColor || !selectedSize}
-      >
-        {t("addToBasket")}
-      </button>
-
-      <div className={styles.reviewsSection}>
-        <h2>{t("reviewsTitle")}</h2>
-        
-        {clothes.reviews?.length > 0 ? (
-          <ul className={styles.reviewsList}>
-            {clothes.reviews.map((review, index) => {
-              const userVote = userId
-                ? review.likes.includes(userId)
-                  ? "like"
-                  : review.dislikes.includes(userId)
-                  ? "dislike"
-                  : null
-                : null;
-
-              return (
-                <li key={`${review.id}-${index}`} className={styles.reviewItem}>
-                  <div className={styles.reviewHeader}>
-                    <strong>{review.userName}</strong>
-                    <span className={styles.reviewRating}>
-                      ⭐ {review.rating}/5
-                    </span>
-                  </div>
-                  <p className={styles.reviewComment}>{review.comment}</p>
-                  <div className={styles.reviewActions}>
-                    <LikeDislike
-                      reviewId={review._id}
-                      clothesId={clothes._id}
-                      initialLikes={review.likes.length}
-                      initialDislikes={review.dislikes.length}
-                      userId={userId}
-                      locale={locale}
-                      onChange={fetchClothes}
-                      userVote={userVote}
-                    />
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p className={styles.noReviews}>{t("noReviews")}</p>
-        )}
-
-        {userId && (
-          <CreateComment
-            clothesId={id}
-            locale={locale}
-            onCommentAdded={handleCommentAdded}
+      <div className={styles.leftColumn}>
+        <h1 className={styles.title}>{clothes.name[locale]}</h1>
+  
+        {clothes.mainImage?.url && (
+          <img
+            src={clothes.mainImage.url}
+            alt={clothes.mainImage.alt[locale] || ""}
+            width={600}
+            height={600}
+            className={styles.image}
+            loading="lazy"
           />
         )}
+  
+        <div className={styles.description}>{clothes.description[locale]}</div>
+  
+        {clothes.careInstructions?.length > 0 && (
+          <div className={styles.infoBlock}>
+            <h2>{t("careTitle")}</h2>
+            <ul className={styles.list}>
+              {clothes.careInstructions.map((instruction, i) =>
+                instruction[locale]
+                  .split(";")
+                  .filter(Boolean)
+                  .map((item, j) => <li key={`${i}-${j}`}>{item.trim()}</li>)
+              )}
+            </ul>
+          </div>
+        )}
+  
+        {clothes.details?.length > 0 && (
+          <div className={styles.infoBlock}>
+            <h2>{t("detailsTitle")}</h2>
+            <ul className={styles.list}>
+              {clothes.details.map((detail, i) =>
+                detail[locale]
+                  .split(";")
+                  .filter(Boolean)
+                  .map((item, j) => <li key={`${i}-${j}`}>{item.trim()}</li>)
+              )}
+            </ul>
+          </div>
+        )}
+  
+        <div className={styles.priceBlock}>
+          {clothes.price.discount > 0 && (
+            <>
+              <span className={styles.oldPrice}>
+                {clothes.price.amount} {clothes.price.currency}
+              </span>
+              <span className={styles.discount}>-{clothes.price.discount}%</span>
+            </>
+          )}
+          <span className={styles.newPrice}>
+            {discountedPrice.toFixed(2)} {clothes.price.currency}
+          </span>
+        </div>
+  
+        <div className={styles.stockBlock}>
+          <h2>{t("title")}:</h2>
+          {clothes.stock.map((stock, i) => {
+            const hideSizesFor = ["Окуляри", "Сумки", "Glasses", "Bags"];
+            const categoryName = clothes.category[locale];
+            const shouldShowSizes = !hideSizesFor.includes(categoryName);
+  
+            return (
+              <div key={i} className={styles.stockItem}>
+                <div
+                  className={`${styles.label} ${
+                    selectedColor === stock.color.code ? styles.selected : ""
+                  }`}
+                  onClick={() => setSelectedColor(stock.color.code)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <span
+                    className={styles.colorDot}
+                    style={{ backgroundColor: stock.color.code }}
+                    title={stock.color[locale]}
+                  />
+                  {stock.color[locale]}
+                </div>
+  
+                {shouldShowSizes && selectedColor === stock.color.code && (
+                  <div className={styles.sizesContainer}>
+                    {stock.sizes.map((sizeObj, j) => (
+                      <div key={j} className={styles.sizeOption}>
+                        <label>
+                          <input
+                            type="radio"
+                            name="size"
+                            value={sizeObj.size}
+                            checked={selectedSize === sizeObj.size}
+                            onChange={() => setSelectedSize(sizeObj.size)}
+                            disabled={sizeObj.quantity <= 0}
+                          />
+                          {t("selectSize")}: {sizeObj.size}, {t("quantity")}:{" "}
+                          {sizeObj.quantity}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+          <ShareLink />
+        </div>
+  
+        {itemAdded && (
+          <div className={styles.successMessage}>
+            ✅ {t("addedToBasketMessage") || "Товар додано до кошика!"}
+          </div>
+        )}
+  
+        <button
+          className={styles.addToBasketButton}
+          onClick={handleAddToBasket}
+          disabled={!selectedColor || !selectedSize}
+        >
+          {t("addToBasket")}
+        </button>
+      </div>
+  
+      <div className={styles.rightColumn}>
+        <div className={styles.reviewsSection}>
+          <h2>{t("reviewsTitle")}</h2>
+  
+          {clothes.reviews?.length > 0 ? (
+            <ul className={styles.reviewsList}>
+              {[...clothes.reviews].reverse().map((review, index) => {
+                const userVote = userId
+                  ? review.likes.includes(userId)
+                    ? "like"
+                    : review.dislikes.includes(userId)
+                    ? "dislike"
+                    : null
+                  : null;
+  
+                return (
+                  <li key={`${review.id}-${index}`} className={styles.reviewItem}>
+                    <div className={styles.reviewHeader}>
+                      <strong>{review.userName}</strong>
+                      <span className={styles.reviewRating}>
+                        {review.rating > 0
+                          ? Array(review.rating)
+                              .fill(0)
+                              .map((_, i) => (
+                                <span key={i} aria-label="star" role="img">
+                                  ⭐
+                                </span>
+                              ))
+                          : null}
+                      </span>
+                    </div>
+                    <p className={styles.reviewComment}>{review.comment}</p>
+                    <div className={styles.reviewActions}>
+                      <LikeDislike
+                        reviewId={review._id}
+                        clothesId={clothes._id}
+                        initialLikes={review.likes.length}
+                        initialDislikes={review.dislikes.length}
+                        userId={userId}
+                        locale={locale}
+                        onChange={fetchClothes}
+                        userVote={userVote}
+                      />
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p className={styles.noReviews}>{t("noReviews")}</p>
+          )}
+  
+          {userId && (
+            <div className={styles.createCommentWrapper}>
+        <CreateComment
+          clothesId={id}
+          locale={locale}
+          onCommentAdded={handleCommentAdded}
+        />
+      </div>
+          )}
+        </div>
       </div>
     </main>
-  );
+  ); 
+  
 }
