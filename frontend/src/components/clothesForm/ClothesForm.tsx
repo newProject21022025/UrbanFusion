@@ -11,6 +11,7 @@ import CareInstructionsSection from "./CareInstructionsSection";
 import DetailsSection from "./DetailsSection";
 import { useTranslations } from "next-intl";
 
+
 interface Name {
   en: string;
   uk: string;
