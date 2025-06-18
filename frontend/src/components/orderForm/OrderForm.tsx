@@ -14,7 +14,9 @@ import { clearBasket } from "../../redux/slices/basketSlice";
 
 const OrderForm = () => {
   const t = useTranslations("OrderForm");
-  const { items: basketItems } = useSelector((state: RootState) => state.basket);
+  const { items: basketItems } = useSelector(
+    (state: RootState) => state.basket
+  );
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -49,7 +51,7 @@ const OrderForm = () => {
       address: user.address || "",
       additionalInfo: "",
     },
-    
+
     validationSchema: Yup.object({
       firstName: Yup.string().required(t("required")),
       lastName: Yup.string().required(t("required")),
@@ -102,10 +104,13 @@ const OrderForm = () => {
               en: item.category?.en || "",
               uk: item.category?.uk || "",
             },
-            gender: item.gender || "unisex",
+            gender:
+              item.gender === "male" || item.gender === "female"
+                ? item.gender
+                : "male", // ✅ без "unisex"
           })),
         };
-
+        console.log("Final payload", JSON.stringify(payload, null, 2));
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders`,
           {
@@ -184,9 +189,6 @@ const OrderForm = () => {
 
 export default OrderForm;
 
-
-
-
 // "use client";
 
 // import React, { useMemo } from "react";
@@ -208,7 +210,7 @@ export default OrderForm;
 
 //   const getOrCreateGuestId = () => {
 //     if (typeof window === "undefined") return null;
-  
+
 //     let guestId = localStorage.getItem("guestUserId");
 //     if (!guestId) {
 //       guestId = crypto.randomUUID();
@@ -216,7 +218,6 @@ export default OrderForm;
 //     }
 //     return guestId;
 //   };
-  
 
 //   const initialValues = useMemo(
 //     () => ({
