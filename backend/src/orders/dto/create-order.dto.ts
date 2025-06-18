@@ -40,8 +40,8 @@ class PriceDto {
 }
 
 class CategoryDto {
-  @IsString()
-  id!: string;
+  // @IsString()
+  // id!: string;
 
   @IsString()
   en!: string;
