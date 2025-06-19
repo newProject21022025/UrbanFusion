@@ -53,6 +53,12 @@ export default function ClothesPage() {
     fetchClothes();
   }, [fetchClothes]);
 
+  useEffect(() => {
+    if (clothes && clothes.stock.length > 0) {
+      setSelectedColor(clothes.stock[0].color.code);
+    }
+  }, [clothes]);
+
   if (isLoading) return <div className={styles.loading}>{t("loading")}</div>;
   if (error) return <div className={styles.error}>{error}</div>;
   if (!clothes) return <div className={styles.loading}>{t("loading")}</div>;
@@ -116,6 +122,9 @@ export default function ClothesPage() {
   const handleCommentAdded = () => {
     fetchClothes();
   };
+
+  console.log(clothes);
+  
 
   return (
     <main className={styles.container}>
