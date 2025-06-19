@@ -11,6 +11,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Gender } from '../schemas/clothes.schema';
+import { Transform } from 'class-transformer';
 
 class LocalizedStringDto {
   @IsString()
@@ -54,9 +55,18 @@ class SizeQuantityDto {
   @IsString()
   size!: string;
 
+  @Transform(({ value }) => Number(value))
   @IsNumber()
   quantity!: number;
 }
+
+// class SizeQuantityDto {
+//   @IsString()
+//   size!: string;
+
+//   @IsNumber()
+//   quantity!: number;
+// }
 
 class StockDto {
   @ValidateNested()
