@@ -1,15 +1,23 @@
+// src/components/clothesForm/CategorySection.tsx
+
+"use client";
+
 import { FormData } from "./ClothesForm";
 import styles from './ClothesForm.module.css';
 import { useTranslations } from 'next-intl';
+import { categoryMetadata } from './categoryMetadata';
+
+type CategoryId = keyof typeof categoryMetadata;
 
 interface CategorySectionProps {
   formData: FormData;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => void;
+  setDetails: (details: { en: string; uk: string }[]) => void;
 }
 
-const categories = [
+const categories: { id: CategoryId; en: string; uk: string }[] = [
   { id: 't-shirts', en: 'T-shirts', uk: 'Футболки' },
   { id: 'shirts', en: 'Shirts', uk: 'Сорочки' },
   { id: 'tops', en: 'Tops', uk: 'Топи' },
@@ -20,7 +28,7 @@ const categories = [
   { id: 'bags', en: 'Bags', uk: 'Сумки' }
 ];
 
-export default function CategorySection({ formData, handleChange }: CategorySectionProps) {
+export default function CategorySection({ formData, handleChange, setDetails }: CategorySectionProps) {
   const t = useTranslations('CategorySection');
 
   return (
@@ -35,6 +43,7 @@ export default function CategorySection({ formData, handleChange }: CategorySect
           value={formData.category.en}
           onChange={(e) => {
             const selectedCategory = categories.find(cat => cat.en === e.target.value);
+            
             if (selectedCategory) {
               handleChange({
                 target: {
@@ -42,7 +51,13 @@ export default function CategorySection({ formData, handleChange }: CategorySect
                   value: selectedCategory.uk
                 }
               } as React.ChangeEvent<HTMLInputElement>);
+
+              const metadata = categoryMetadata[selectedCategory.id];
+              if (metadata?.details) {
+                setDetails(metadata.details);
+              }
             }
+
             handleChange(e);
           }}
           required

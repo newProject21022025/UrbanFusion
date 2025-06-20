@@ -1,3 +1,7 @@
+// src/components/clothesForm/ClothesForm.tsx
+
+"use client";
+
 import { FormData } from "./ClothesForm";
 import styles from './ClothesForm.module.css';
 import { useTranslations } from 'next-intl';
