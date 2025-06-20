@@ -34,7 +34,7 @@ export default function DetailsSection({
 
     if (currentEn && currentEn !== prevCategory.current) {
       const metadataEntry = Object.entries(categoryMetadata).find(
-  ([key, meta]) => meta.instructions.en.toLowerCase().includes(currentEn.toLowerCase())
+  ([_key, meta]) => meta.instructions.en.toLowerCase().includes(currentEn.toLowerCase())
 );
 
 
@@ -48,7 +48,7 @@ export default function DetailsSection({
           }
 
           // Додати нові
-          meta.details.forEach((_) => addArrayItem("details"));
+          meta.details.forEach(() => addArrayItem("details"));
 
           // Встановити нові значення
           meta.details.forEach((detail, index) => {
