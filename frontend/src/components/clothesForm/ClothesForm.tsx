@@ -1,5 +1,7 @@
 //frontend/src/components/clothesForm/ClothesForm.tsx
 
+"use client";
+
 import { useState, useEffect } from "react";
 import styles from "./ClothesForm.module.css";
 import BasicInfoSection from "./BasicInfoSection";
@@ -10,7 +12,7 @@ import StockSection from "./StockSection";
 import CareInstructionsSection from "./CareInstructionsSection";
 import DetailsSection from "./DetailsSection";
 import { useTranslations } from "next-intl";
-
+import { categoryMetadata } from "./categoryMetadata";
 
 interface Name {
   en: string;
@@ -191,6 +193,7 @@ export default function ClothesForm({
     }
   };
 
+  
   const handleStockChange = (
     index: number,
     field: string, // Змінити на string
@@ -332,7 +335,17 @@ export default function ClothesForm({
         handleChange={handleChange}
         setFormData={setFormData}
       />
-      <CategorySection formData={formData} handleChange={handleChange} />
+      <CategorySection
+        formData={formData}
+        handleChange={handleChange}
+        setDetails={(details) =>
+          setFormData((prev) => ({
+            ...prev,
+            details: details,
+          }))
+        }
+      />
+
       <StockSection
         formData={formData}
         handleStockChange={handleStockChange}

@@ -1,6 +1,12 @@
+// src/components/clothesForm/DetailsSection.tsx
+
+"use client";
+
+import { useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { FormData } from "./ClothesForm";
 import styles from './ClothesForm.module.css';
+import { categoryMetadata } from './categoryMetadata';
 
 interface DetailsSectionProps {
   formData: FormData;
@@ -21,6 +27,39 @@ export default function DetailsSection({
   addArrayItem
 }: DetailsSectionProps) {
   const t = useTranslations('DetailsSection');
+  const prevCategory = useRef<string>("");
+
+  useEffect(() => {
+    const currentEn = formData.category.en;
+
+    if (currentEn && currentEn !== prevCategory.current) {
+      const metadataEntry = Object.entries(categoryMetadata).find(
+        ([, meta]) => meta.instructions.en.toLowerCase().includes(currentEn.toLowerCase())
+      );
+
+      if (metadataEntry) {
+        const [, meta] = metadataEntry;
+
+        if (meta.details && Array.isArray(meta.details)) {
+          // Очистити всі попередні
+          for (let i = formData.details.length - 1; i >= 0; i--) {
+            removeArrayItem("details", i);
+          }
+
+          // Додати нові
+          meta.details.forEach((detail) => addArrayItem("details"));
+
+          // Встановити нові значення
+          meta.details.forEach((detail, index) => {
+            handleArrayChange("details", index, "en", detail.en);
+            handleArrayChange("details", index, "uk", detail.uk);
+          });
+        }
+      }
+
+      prevCategory.current = currentEn;
+    }
+  }, [formData.category.en]);
 
   return (
     <div className={styles.formSection}>
