@@ -12,7 +12,6 @@ import StockSection from "./StockSection";
 import CareInstructionsSection from "./CareInstructionsSection";
 import DetailsSection from "./DetailsSection";
 import { useTranslations } from "next-intl";
-import { categoryMetadata } from "./categoryMetadata";
 
 interface Name {
   en: string;

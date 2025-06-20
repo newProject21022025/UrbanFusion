@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { FormData } from "./ClothesForm";
 import styles from './ClothesForm.module.css';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { categoryMetadata } from './categoryMetadata';
 
 interface DetailsSectionProps {
@@ -34,7 +35,7 @@ export default function DetailsSection({
 
     if (currentEn && currentEn !== prevCategory.current) {
       const metadataEntry = Object.entries(categoryMetadata).find(
-  ([_key, meta]) => meta.instructions.en.toLowerCase().includes(currentEn.toLowerCase())
+  ([, meta]) => meta.instructions.en.toLowerCase().includes(currentEn.toLowerCase())
 );
 
 
