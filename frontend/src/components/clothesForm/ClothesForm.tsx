@@ -105,7 +105,7 @@ export default function ClothesForm({
     },
     price: {
       amount: 0,
-      currency: "USD",
+      currency: "грн",
       discount: 0,
     },
     availability: true,

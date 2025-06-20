@@ -46,7 +46,7 @@ const OrderForm = () => {
       userId: user.userId || guestId || defaultGuestId,
       firstName: user.firstName || "",
       lastName: user.lastName || "",
-      phone: user.phone || "",
+      phone: user.phone || "+380",
       email: user.email || "",
       address: user.address || "",
       additionalInfo: "",

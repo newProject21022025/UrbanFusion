@@ -26,7 +26,7 @@ export default function EditProfile() {
   const initialValues = {
     firstName: user.firstName || '',
     lastName: user.lastName || '',
-    phone: user.phone || '',
+    phone: user.phone || '+380',
     address: user.address || '',
     postOfficeDetails: user.postOfficeDetails || '',
   };

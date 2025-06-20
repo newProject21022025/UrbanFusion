@@ -113,8 +113,8 @@ export default function Catalog() {
         minimumFractionDigits: 0,
       })
         .format(amount)
-        .replace("₴", "")
-        .trim() + " ₴"
+        .replace("", "")
+        .trim() + " "
     );
   };
 
