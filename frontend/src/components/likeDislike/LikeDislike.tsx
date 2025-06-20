@@ -13,7 +13,8 @@ interface LikeDislikeProps {
   initialDislikes: number;
   locale: string;
   onChange: () => void;
-  userVote?: "like" | "dislike" | null; // Add this prop
+  userVote?: "like" | "dislike" | null;
+  authorId: string; // ← додано
 }
 
 const LikeDislike = ({
@@ -25,6 +26,7 @@ const LikeDislike = ({
   locale,
   onChange,
   userVote = null,
+  authorId, // ← додано
 }: LikeDislikeProps) => {
   const [likes, setLikes] = useState<number>(initialLikes);
   const [dislikes, setDislikes] = useState<number>(initialDislikes);
@@ -34,13 +36,16 @@ const LikeDislike = ({
   );
 
   const handleVote = async (type: "like" | "dislike") => {
-    console.log({ clothesId, reviewId, locale, userId });
     if (!userId) {
       alert("Будь ласка, увійдіть в акаунт, щоб голосувати.");
       return;
     }
 
-    // Prevent duplicate votes
+    if (userId === authorId) {
+      alert("Ви не можете голосувати за власний коментар.");
+      return;
+    }
+
     if (currentVote === type) {
       return;
     }
@@ -49,34 +54,24 @@ const LikeDislike = ({
       setIsLoading(true);
 
       if (type === "like") {
-        console.log({ clothesId, reviewId, locale, userId });
         await commentService.likeComment(clothesId, reviewId, locale, userId);
         setLikes((prev) => prev + 1);
-        // If user previously disliked, remove that dislike
         if (currentVote === "dislike") {
           setDislikes((prev) => prev - 1);
         }
       } else {
-        await commentService.dislikeComment(
-          clothesId,
-          reviewId,
-          locale,
-          userId
-        );
+        await commentService.dislikeComment(clothesId, reviewId, locale, userId);
         setDislikes((prev) => prev + 1);
-        // If user previously liked, remove that like
         if (currentVote === "like") {
           setLikes((prev) => prev - 1);
         }
       }
 
       setCurrentVote(type);
-      onChange(); // Refresh data from server
+      onChange();
     } catch (err) {
       console.error("Vote failed:", err);
-      alert(
-        err instanceof Error ? err.message : "Помилка під час голосування."
-      );
+      alert(err instanceof Error ? err.message : "Помилка під час голосування.");
     } finally {
       setIsLoading(false);
     }

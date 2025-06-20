@@ -49,8 +49,8 @@ export default function BasketClient() {
         minimumFractionDigits: 0,
       })
         .format(amount)
-        .replace("₴", "")
-        .trim() + " ₴"
+        .replace("", "")
+        .trim() + ""
     );
   };
 

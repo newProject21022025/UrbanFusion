@@ -94,11 +94,11 @@ export default function OrderContent() {
                 <strong>{t("price")}:</strong>{" "}
                 {discount ? (
                   <>
-                    <span className={styles.oldPrice}>{price} ₴</span>{" "}
-                    <span className={styles.discountPrice}>{finalPrice} ₴</span>
+                    <span className={styles.oldPrice}>{price} грн</span>{" "}
+                    <span className={styles.discountPrice}>{finalPrice} грн</span>
                   </>
                 ) : (
-                  `${price} ₴`
+                  `${price} грн`
                 )}
               </p>              
             </div>

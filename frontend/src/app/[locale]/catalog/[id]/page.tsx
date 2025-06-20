@@ -124,13 +124,12 @@ export default function ClothesPage() {
   };
 
   console.log(clothes);
-  
 
   return (
     <main className={styles.container}>
       <div className={styles.leftColumn}>
         <h1 className={styles.title}>{clothes.name[locale]}</h1>
-  
+
         {clothes.mainImage?.url && (
           <img
             src={clothes.mainImage.url}
@@ -141,9 +140,9 @@ export default function ClothesPage() {
             loading="lazy"
           />
         )}
-  
+
         <div className={styles.description}>{clothes.description[locale]}</div>
-  
+
         {clothes.careInstructions?.length > 0 && (
           <div className={styles.infoBlock}>
             <h2>{t("careTitle")}</h2>
@@ -157,7 +156,7 @@ export default function ClothesPage() {
             </ul>
           </div>
         )}
-  
+
         {clothes.details?.length > 0 && (
           <div className={styles.infoBlock}>
             <h2>{t("detailsTitle")}</h2>
@@ -171,28 +170,30 @@ export default function ClothesPage() {
             </ul>
           </div>
         )}
-  
+
         <div className={styles.priceBlock}>
           {clothes.price.discount > 0 && (
             <>
               <span className={styles.oldPrice}>
                 {clothes.price.amount} {clothes.price.currency}
               </span>
-              <span className={styles.discount}>-{clothes.price.discount}%</span>
+              <span className={styles.discount}>
+                -{clothes.price.discount}%
+              </span>
             </>
           )}
           <span className={styles.newPrice}>
             {discountedPrice.toFixed(2)} {clothes.price.currency}
           </span>
         </div>
-  
+
         <div className={styles.stockBlock}>
           <h2>{t("title")}:</h2>
           {clothes.stock.map((stock, i) => {
             const hideSizesFor = ["Окуляри", "Сумки", "Glasses", "Bags"];
             const categoryName = clothes.category[locale];
             const shouldShowSizes = !hideSizesFor.includes(categoryName);
-  
+
             return (
               <div key={i} className={styles.stockItem}>
                 <div
@@ -209,7 +210,7 @@ export default function ClothesPage() {
                   />
                   {stock.color[locale]}
                 </div>
-  
+
                 {shouldShowSizes && selectedColor === stock.color.code && (
                   <div className={styles.sizesContainer}>
                     {stock.sizes.map((sizeObj, j) => (
@@ -235,13 +236,13 @@ export default function ClothesPage() {
           })}
           <ShareLink />
         </div>
-  
+
         {itemAdded && (
           <div className={styles.successMessage}>
             ✅ {t("addedToBasketMessage") || "Товар додано до кошика!"}
           </div>
         )}
-  
+
         <button
           className={styles.addToBasketButton}
           onClick={handleAddToBasket}
@@ -250,11 +251,11 @@ export default function ClothesPage() {
           {t("addToBasket")}
         </button>
       </div>
-  
+
       <div className={styles.rightColumn}>
         <div className={styles.reviewsSection}>
           <h2>{t("reviewsTitle")}</h2>
-  
+
           {clothes.reviews?.length > 0 ? (
             <ul className={styles.reviewsList}>
               {[...clothes.reviews].reverse().map((review, index) => {
@@ -265,9 +266,12 @@ export default function ClothesPage() {
                     ? "dislike"
                     : null
                   : null;
-  
+
                 return (
-                  <li key={`${review.id}-${index}`} className={styles.reviewItem}>
+                  <li
+                    key={`${review.id}-${index}`}
+                    className={styles.reviewItem}
+                  >
                     <div className={styles.reviewHeader}>
                       <strong>{review.userName}</strong>
                       <span className={styles.reviewRating}>
@@ -293,6 +297,7 @@ export default function ClothesPage() {
                         locale={locale}
                         onChange={fetchClothes}
                         userVote={userVote}
+                        authorId={review.userId} // ← додано
                       />
                     </div>
                   </li>
@@ -302,19 +307,18 @@ export default function ClothesPage() {
           ) : (
             <p className={styles.noReviews}>{t("noReviews")}</p>
           )}
-  
+
           {userId && (
             <div className={styles.createCommentWrapper}>
-        <CreateComment
-          clothesId={id}
-          locale={locale}
-          onCommentAdded={handleCommentAdded}
-        />
-      </div>
+              <CreateComment
+                clothesId={id}
+                locale={locale}
+                onCommentAdded={handleCommentAdded}
+              />
+            </div>
           )}
         </div>
       </div>
     </main>
-  ); 
-  
+  );
 }
