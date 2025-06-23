@@ -17,6 +17,7 @@ interface Order {
   deliveryAddress: string;
   status: string;
   createdAt: string;
+  article: string;
   items: {
     name: { en: string; uk: string };
     quantity: number;
@@ -26,7 +27,7 @@ interface Order {
     mainImage?: {
       url: string;
       alt: { en?: string; uk?: string };
-    };
+    };    
   }[];
 }
 
@@ -97,6 +98,7 @@ export default function UserOrders() {
       {orders.map((order) => (
         <div key={order._id} className={styles.orderCard}>
           <p><strong>Номер замовлення:</strong> {order.orderNumber}</p>
+          <div className={styles.article}>{order.article}</div>
           <p><strong>Ім’я:</strong> {order.firstName} {order.lastName}</p>
           <p><strong>Email:</strong> {order.userEmail}</p>
           <p><strong>Телефон:</strong> {order.phone}</p>

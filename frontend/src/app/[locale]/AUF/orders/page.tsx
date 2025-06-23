@@ -25,6 +25,7 @@ interface Order {
       url: string;
       alt: { en?: string; uk?: string };
     };
+    article?: string;
   }[];
 }
 
@@ -194,6 +195,7 @@ export default function AdminOrdersPage() {
                     alt={item.mainImage.alt?.uk || "Фото товару"}
                   />
                 )}
+                <div className={styles.article}>{item.article}</div>
                 {item.name.uk} – {item.quantity} шт., {item.size}, {item.color}{" "}
                 –{" "}
                 <span style={{ textDecoration: "line-through", color: "gray" }}>

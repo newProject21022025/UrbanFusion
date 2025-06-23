@@ -111,6 +111,9 @@ userId!: string;  // Авторизовані: ObjectId.toString(), гості: 
   @Prop({ type: String, required: true, unique: true })
   orderNumber!: string;
 
+  @Prop({ required: true, unique: true })
+  article!: string;
+
 }  
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
