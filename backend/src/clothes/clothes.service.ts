@@ -7,6 +7,7 @@ import { Clothes } from './schemas/clothes.schema';
 import { CreateClothesDto } from './dto/create-clothes.dto';
 import { UpdateClothesDto } from './dto/update-clothes.dto';
 import { CreateReviewDto } from './dto/create-review.dto';
+import moment from 'moment';
 
 @Injectable()
 export class ClothesService {
@@ -14,8 +15,33 @@ export class ClothesService {
     @InjectModel(Clothes.name) private readonly clothesModel: Model<Clothes>,
   ) {}
 
+  // async create(createClothesDto: CreateClothesDto): Promise<Clothes> {
+  //   const newClothes = new this.clothesModel(createClothesDto);
+  //    return await newClothes.save();
+  // } 
+
   async create(createClothesDto: CreateClothesDto): Promise<Clothes> {
-    const newClothes = new this.clothesModel(createClothesDto);
+    // 1. Отримати префікс категорії англійською
+    const categoryPrefix = (createClothesDto.category.en || 'CAT')
+      .substring(0, 3)
+      .toUpperCase();
+  
+    // 2. Поточна дата
+    const today = moment().format('YYYYMMDD');
+  
+    // 3. Знайти кількість товарів, створених сьогодні з цим префіксом
+    const regex = new RegExp(`^${categoryPrefix}-${today}`);
+    const count = await this.clothesModel.countDocuments({ article: { $regex: regex } });
+  
+    // 4. Згенерувати артикул
+    const article = `${categoryPrefix}-${today}-${String(count + 1).padStart(3, '0')}`;
+  
+    // 5. Створити товар
+    const newClothes = new this.clothesModel({
+      ...createClothesDto,
+      article,
+    });
+  
     return await newClothes.save();
   }
 
@@ -162,6 +188,16 @@ export class ClothesService {
       totalPages: Math.ceil(total / limit),
     };
   }
+
+  async findByArticle(article: string): Promise<Clothes> {
+    const item = await this.clothesModel.findOne({ article }).exec();
+    if (!item) {
+      throw new NotFoundException(`Item with article '${article}' not found`);
+    }
+    return item;
+  }
+  
+  
 }
 
 

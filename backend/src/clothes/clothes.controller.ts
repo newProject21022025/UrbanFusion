@@ -95,4 +95,9 @@ export class ClothesController {
 
     return this.clothesService.findPaginated(page, limit);
   }
+
+  @Get('article/:article')
+  findByArticle(@Param('article') article: string) {
+    return this.clothesService.findByArticle(article);
+  }
 }

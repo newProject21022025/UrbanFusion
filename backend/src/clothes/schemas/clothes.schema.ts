@@ -12,7 +12,6 @@ export enum Gender {
 
 @Schema({ timestamps: true, collection: 'clothes' })
 export class Clothes extends Document {
-
   @Prop({ type: String, unique: true })
   slug!: string;
 
@@ -124,7 +123,7 @@ export class Clothes extends Document {
   details!: {
     en: string;
     uk: string;
-  }[]; 
+  }[];
 
   @Prop([
     {
@@ -149,6 +148,9 @@ export class Clothes extends Document {
   @Prop({ type: String, enum: Gender, required: true })
   @IsIn([Gender.Male, Gender.Female])
   gender!: Gender;
+
+  @Prop({ required: true, unique: true })
+  article!: string;
 }
 
 export const ClothesSchema = SchemaFactory.createForClass(Clothes);
