@@ -42,6 +42,7 @@ userId!: string;  // Авторизовані: ObjectId.toString(), гості: 
         quantity: Number,
         size: String,
         color: String,
+        article: String,
         name: {
           en: String,
           uk: String,
