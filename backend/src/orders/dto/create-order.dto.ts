@@ -120,8 +120,8 @@ export class CreateOrderDto {
   @IsString()
   orderNumber?: string;
 
-  @IsString()
-  article!: string;
+  // @IsString()
+  // article!: string;
 }
 
 

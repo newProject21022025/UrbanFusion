@@ -77,6 +77,7 @@ userId!: string;  // Авторизовані: ObjectId.toString(), гості: 
     quantity: number;
     size: string;
     color: string;
+    article: string; // Optional field for article number
     name: {
       en: string;
       uk: string;
@@ -111,8 +112,8 @@ userId!: string;  // Авторизовані: ObjectId.toString(), гості: 
   @Prop({ type: String, required: true, unique: true })
   orderNumber!: string;
 
-  @Prop({ required: true, unique: true })
-  article!: string;
+  // @Prop({ required: true, unique: true })
+  // article!: string;
 
 }  
 
