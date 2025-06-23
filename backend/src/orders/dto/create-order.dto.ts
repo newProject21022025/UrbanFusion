@@ -63,6 +63,9 @@ class ItemDto {
   @IsString()
   color!: string;
 
+  @IsString()
+  article!: string;
+
   @ValidateNested()
   @Type(() => LocalizedTextDto)
   name!: LocalizedTextDto;
@@ -119,9 +122,7 @@ export class CreateOrderDto {
   @IsOptional()
   @IsString()
   orderNumber?: string;
-
-  // @IsString()
-  // article!: string;
+  
 }
 
 
