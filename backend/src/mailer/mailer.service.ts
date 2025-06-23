@@ -17,6 +17,7 @@ export class MailerService {
     return items.map(item => `
       <div style="margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
         ${item.mainImage?.url ? `<img src="${item.mainImage.url}" alt="${item.mainImage.alt?.uk || 'Product image'}" style="max-width: 200px;"/>` : ''}
+        <h4>${item.article}</h4>
         <h4>${item.name.uk}</h4>
         <p>${item.description.uk}</p>
         <p>Кількість: ${item.quantity}</p>
