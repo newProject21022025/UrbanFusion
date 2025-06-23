@@ -144,6 +144,7 @@ export default function BasketClient() {
                     )}
                   </div>
                   <div className={styles.itemDetails}>
+                  <div className={styles.article}>{item.article}</div>
                     <h3>{item.name[locale as "en" | "uk"]}</h3>
                     <p>{item.category?.[locale as "en" | "uk"]}</p>
                     {item.selectedColor && (

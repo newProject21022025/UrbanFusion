@@ -108,6 +108,7 @@ const OrderForm = () => {
               item.gender === "male" || item.gender === "female"
                 ? item.gender
                 : "male", // ✅ без "unisex"
+            article: item.article || "", // Додано поле article    
           })),
         };
         console.log("Final payload", JSON.stringify(payload, null, 2));

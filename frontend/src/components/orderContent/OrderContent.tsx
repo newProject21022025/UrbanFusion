@@ -56,15 +56,7 @@ export default function OrderContent() {
         const matchedSize = matchedStock?.sizes.find((sz) => sz.size === selectedSize);
         
         const colorName = matchedStock?.color?.[locale] ?? selectedColor ?? t("unknown");
-        const size = matchedSize?.size ?? selectedSize ?? t("unknown");
-        
-
-        // const matchedStock = item.stock.find(
-        //   (s) => s.color.code === selectedColor && s.size === selectedSize
-        // );
-
-        // const colorName = matchedStock?.color?.[locale] ?? selectedColor ?? t("unknown"); // "Невідомий"
-        // const size = matchedStock?.size ?? selectedSize ?? t("unknown");
+        const size = matchedSize?.size ?? selectedSize ?? t("unknown");        
 
         const price = item.price.amount;
         const discount = item.price.discount;
@@ -79,6 +71,7 @@ export default function OrderContent() {
           >
             <img src={imageUrl} alt={imageAlt} width={100} height={100} />
             <div className={styles.details}>
+            <div className={styles.article}>{item.article}</div>
               <h2>{name}</h2>
               <p>{description}</p>
               <p>

@@ -47,6 +47,9 @@ export interface Clothes {
     dislikes: string[];
   }[];
   gender: "male" | "female";
+
+
+  article: string;
 }
 
 export const clothesService = {

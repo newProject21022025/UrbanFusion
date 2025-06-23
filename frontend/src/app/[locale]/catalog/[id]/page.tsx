@@ -141,6 +141,7 @@ export default function ClothesPage() {
           />
         )}
 
+        <div className={styles.article}>{clothes.article}</div>
         <div className={styles.description}>{clothes.description[locale]}</div>
 
         {clothes.careInstructions?.length > 0 && (
