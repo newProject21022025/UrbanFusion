@@ -77,6 +77,7 @@ const OrderForm = () => {
             quantity: item.quantity,
             size: item.selectedSize,
             color: item.selectedColor,
+            article: item.article || "", // Додано поле article  
             name: {
               en: item.name?.en || "",
               uk: item.name?.uk || "",
@@ -107,8 +108,7 @@ const OrderForm = () => {
             gender:
               item.gender === "male" || item.gender === "female"
                 ? item.gender
-                : "male", // ✅ без "unisex"
-            article: item.article || "", // Додано поле article    
+                : "male", // ✅ без "unisex"              
           })),
         };
         console.log("Final payload", JSON.stringify(payload, null, 2));
