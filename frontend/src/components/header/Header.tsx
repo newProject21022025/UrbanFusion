@@ -29,8 +29,7 @@ export default function Header({ locale }: HeaderProps) {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [catalogOpen, setCatalogOpen] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);  
+  const [catalogOpen, setCatalogOpen] = useState(false); 
 
   const { isAdmin, isAuthenticated, adminLinks } = useSelector(
     (state: RootState) => state.auth
@@ -108,12 +107,6 @@ export default function Header({ locale }: HeaderProps) {
       </header>
     );
   }
-
-  const handleSearchSubmit = (values: { query: string }) => {
-    // приклад: редірект на сторінку з результатами
-    router.push(`/catalog?search=${encodeURIComponent(values.query)}`);
-    setShowSearch(false);
-  };
 
   return (
     <header
