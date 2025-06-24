@@ -143,7 +143,7 @@
   background-color: #f0f0f0;
 }
 
-.searchWrapper {
+/* .searchWrapper {
   display: flex;
   align-items: center;
   gap: 0.5rem; 
@@ -166,11 +166,7 @@
   @media (max-width: 768px) {
     width: 120px;
   }
-}
+} */
 
-.searchIcon {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
+
 

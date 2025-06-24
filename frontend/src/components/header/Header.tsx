@@ -17,7 +17,7 @@ import HeartEmpty from "../../svg/Heart/heartEmpty";
 import HeartBlack from "../../svg/Heart/heartBlack";
 import PersonalData from "../../svg/PersonalData/personalData";
 import CatalogDropdown from "./CatalogDropdown";
-import { Formik, Form } from "formik";
+import SearchBarHeader from "../searchBarHeader/SearchBarHeader";
 
 type HeaderProps = {
   locale: "en" | "uk";
@@ -141,34 +141,7 @@ export default function Header({ locale }: HeaderProps) {
           </div>
         </Link>
         <div className={styles.languageSwitcher}>
-          <div className={styles.searchWrapper}>
-            {showSearch && (
-              <Formik
-                initialValues={{ query: "" }}
-                onSubmit={handleSearchSubmit}
-              >
-                {({ values, handleChange, handleSubmit }) => (
-                  <Form className={styles.searchForm} onSubmit={handleSubmit}>
-                    <input
-                      name="query"
-                      type="text"
-                      placeholder="Пошук товарів..."
-                      className={styles.searchInput}
-                      autoFocus
-                      value={values.query}
-                      onChange={handleChange}
-                    />
-                  </Form>
-                )}
-              </Formik>
-            )}
-            <div
-              onClick={() => setShowSearch((prev) => !prev)}
-              className={styles.searchIcon}
-            >
-              <Search />
-            </div>
-          </div>
+        <SearchBarHeader />          
           {isAuthenticated && (
             <Link href="/personalData" className={styles.navLink}>
               <PersonalData />

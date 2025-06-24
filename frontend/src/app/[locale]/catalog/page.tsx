@@ -45,33 +45,34 @@ export default function Catalog() {
 
   useEffect(() => {
     if (!clothes?.length) return;
-
+  
     const filtered = clothes.filter((item) => {
-      const matchGender = selectedGender
-        ? item.gender === selectedGender
-        : true;
+      const matchGender = selectedGender ? item.gender === selectedGender : true;
       const matchCategory = selectedCategory
         ? item.category?.[locale as "en" | "uk"] === selectedCategory
         : true;
-
-      const nameMatch = searchQuery
-        ? item.name[locale as "en" | "uk"].toLowerCase().includes(searchQuery)
+  
+      const nameMatch = item.name[locale as "en" | "uk"]
+        .toLowerCase()
+        .includes(searchQuery || "");
+  
+      const categoryMatch = item.category?.[locale as "en" | "uk"]
+        .toLowerCase()
+        .includes(searchQuery || "");
+  
+      const articleMatch = item.article?.toLowerCase().includes(searchQuery || "");
+  
+      const matchSearch = searchQuery
+        ? nameMatch || categoryMatch || articleMatch
         : true;
-
-      const categoryMatch = searchQuery
-        ? item.category?.[locale as "en" | "uk"]
-            .toLowerCase()
-            .includes(searchQuery)
-        : true;
-
-      const matchSearch = searchQuery ? nameMatch || categoryMatch : true;
-
+  
       return matchGender && matchCategory && matchSearch;
     });
-
+  
     setFilteredClothes(filtered);
     setVisibleCount(10); // скидаємо при новій фільтрації
   }, [clothes, selectedGender, selectedCategory, searchQuery, locale]);
+  
 
   useEffect(() => {
     setPaginatedClothes(filteredClothes.slice(0, visibleCount));

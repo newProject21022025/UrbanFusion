@@ -7,24 +7,26 @@ import { useEffect, useState, useRef } from "react";
 import styles from "./Edit.module.css";
 import { useRouter } from "next/navigation";
 import { clothesService, Clothes } from "../../../api/clothes/clothesService";
+import SearchBar from "../../../../components/searchBar/SearchBar";
 
 export default function Edit() {
   const router = useRouter();
   const locale = useLocale();
   const [clothes, setClothes] = useState<Clothes[]>([]);
+  const [filteredClothes, setFilteredClothes] = useState<Clothes[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [visibleCount, setVisibleCount] = useState(10);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-  // Завантаження всіх товарів
   useEffect(() => {
     const fetchClothes = async () => {
       try {
         setLoading(true);
         const data = await clothesService.getAllClothes(locale);
         setClothes(data);
+        setFilteredClothes(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Unknown error");
       } finally {
@@ -34,8 +36,7 @@ export default function Edit() {
     fetchClothes();
   }, [locale]);
 
-  // Infinite scroll (IntersectionObserver)
-  const hasMore = visibleCount < clothes.length;
+  const hasMore = visibleCount < filteredClothes.length;
   useEffect(() => {
     if (!hasMore) return;
 
@@ -70,6 +71,7 @@ export default function Edit() {
       setDeletingId(id);
       await clothesService.deleteClothes(id, locale);
       setClothes((prev) => prev.filter((item) => item._id !== id));
+      setFilteredClothes((prev) => prev.filter((item) => item._id !== id));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete item");
     } finally {
@@ -84,11 +86,14 @@ export default function Edit() {
   if (loading) return <div className={styles.loading}>Loading...</div>;
   if (error) return <div className={styles.error}>{error}</div>;
 
-  const visibleClothes = clothes.slice(0, visibleCount);
+  const visibleClothes = filteredClothes.slice(0, visibleCount);
 
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>Clothes Management</h1>
+
+      <SearchBar clothes={clothes} onResults={setFilteredClothes} />
+
       <div className={styles.clothesContainer}>
         {visibleClothes.map((item) => (
           <div key={item._id} className={styles.clothesCard}>
@@ -196,3 +201,4 @@ export default function Edit() {
     </main>
   );
 }
+
