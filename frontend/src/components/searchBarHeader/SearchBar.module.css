@@ -1,0 +1,31 @@
+.searchWrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; 
+    position: relative;
+  }
+  
+  .searchForm {
+    display: flex;
+  }
+  
+  .searchInput {
+    padding: 0.4rem 0.8rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+    width: 200px;
+    transition: width 0.3s ease;
+  
+    @media (max-width: 768px) {
+      width: 120px;
+    }
+  }
+  .searchIcon {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  
