@@ -185,12 +185,19 @@
     "submitting": "Placing order..."
   },
   "Footer": {
-    "aboutUs": "About Us",
-    "contactUs": "Contact Us",
-    "privacyPolicy": "Privacy Policy",
-    "termsOfService": "Terms of Service",
-    "followUs": "Follow Us",
-    "callback": "Callback"
+    "contacts": "Contacts",
+    "postcode": "01054",
+    "metro": "Zoloti Vorota metro station",
+    "address": "41 Bohdan Khmelnytskyi St.",
+    "phoneTitle": "Phone",
+    "phoneNumber": "+3801234567",
+    "followUs": "Follow us",
+    "callback": "Callback",
+    "aboutUs": "About us",
+    "rights": "All rights reserved.",
+    "developedWithLove": "Developed with ❤️",
+    "recycling": "Clothing recycling",
+    "returnClothes": "How to return clothes for recycling?"
   },
   "CallbackForm": {
     "title": "Contact Us",
