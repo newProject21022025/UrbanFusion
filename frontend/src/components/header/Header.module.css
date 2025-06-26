@@ -42,6 +42,7 @@
   transition: color 0.2s ease;
   color: rgba(237, 231, 220, 1);
   cursor: pointer;
+  background-color: var(--color-bg-dark);
 }
 
 .navLink:hover {

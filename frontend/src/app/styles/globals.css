@@ -1,11 +1,52 @@
-@media (prefers-color-scheme: dark) {
+:root {
+  /* Background colors */
+  --color-bg-dark: #2F4F4F;
+  --color-bg-light: #EDE7DC;
+
+  /* Text colors */
+  --color-text-dark: #202020;
+  --color-text-light: #EDE7DC;
+  --color-text-white: #FFFFFF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;  
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--color-bg-light);
+  color: var(--color-text-dark);
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+h1 {
+  width: 100%;
+  font-size: clamp(40px, 15vw, 212px);
+  font-weight: 500; 
+  line-height: 120%;  
+  /* letter-spacing: 2px; */
+  color: var(--color-text-light);
+  font-family:'Lora', serif;
+}
+
+
+
+
+/* ------------------------------------------------------------------------------------Importing Google Fonts */
+/* @media (prefers-color-scheme: dark) {
   html, body {
     background: #F2F2F2 !important;
     color: #202020 !important;
   }
-}
+} */
 
-* {
+
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -100,7 +141,6 @@ textarea {
   font-family: 'Poppins', sans-serif;
 }
 
-/* Цвета */
 .bg-light {
   background-color: #EDE7DC;
 }
@@ -128,7 +168,7 @@ button {
 
 button:hover {
   background-color: #202020;
-}
+} */
 
 
 

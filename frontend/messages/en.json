@@ -4,8 +4,15 @@
     "logo": "UrbanFusion"
   },
   "Home": {
-    "title": "Welcome to our website",
-    "content": "This is the home page content in English."
+    "title": "New Collection",
+    "content": "This is the home page content in English.",
+    "buy": "Buy",
+    "eco": {
+      "materials": "Eco-friendly materials",
+      "production": "Sustainable production",
+      "labor": "Ethical labor conditions",
+      "sustainability": "Durability and usage"
+    }
   },
   "About": {
     "title": "About Us",

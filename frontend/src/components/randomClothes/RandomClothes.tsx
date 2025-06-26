@@ -1,4 +1,6 @@
+// src/components/RandomClothes/RandomClothes.tsx
 "use client";
+
 import React, { useEffect, useState } from "react";
 import styles from "./RandomClothes.module.css";
 import { useLocale } from "next-intl";
@@ -28,10 +30,8 @@ const RandomClothes = () => {
   const dispatch = useDispatch();
   const t = useTranslations("BasicInfoSection");
 
-  const favoriteItems = useSelector(
-    (state: RootState) => state.favorites.items
-  );
- 
+  const favoriteItems = useSelector((state: RootState) => state.favorites.items);
+
   useEffect(() => {
     const fetchAndPickRandom = async () => {
       const allClothes = await clothesService.getAllClothes(locale);
@@ -54,62 +54,53 @@ const RandomClothes = () => {
   };
 
   const formatPrice = (amount: number, discount: number) => {
-    const formatted = new Intl.NumberFormat(locale, {
+    const original = new Intl.NumberFormat(locale, {
       style: "currency",
       currency: "UAH",
       minimumFractionDigits: 0,
-    })
-      .format(amount)
-      .replace("₴", "")
-      .trim();
+    }).format(amount);
 
     const discounted = Math.round(amount * (1 - discount / 100));
     const formattedDiscounted = new Intl.NumberFormat(locale, {
       style: "currency",
       currency: "UAH",
       minimumFractionDigits: 0,
-    })
-      .format(discounted)
-      .replace("₴", "")
-      .trim();
+    }).format(discounted);
 
-    return discount > 0
-      ? `${formatted} → ${formattedDiscounted} ₴`
-      : `${formatted} ₴`;
+    return {
+      original,
+      discounted: formattedDiscounted,
+      hasDiscount: discount > 0,
+    };
   };
 
   return (
     <div className={styles.main}>
-      <h2 className={styles.title}>Рекомендовані товари</h2>
+      {/* <h2 className={styles.title}>Рекомендовані товари</h2> */}
       <div className={styles.clothesContainer}>
         {randomClothes.map((item) => {
           const categoryKey = getCategoryKey(
             item.category?.[locale as "uk" | "en"]
           );
-          const ecoInfo =
-            ecoDescriptions[categoryKey] || ecoDescriptions["t-shirts"];
+          const ecoInfo = ecoDescriptions[categoryKey] || ecoDescriptions["t-shirts"];
+
+          const { original, discounted, hasDiscount } = formatPrice(item.price.amount, item.price.discount);
 
           return (
             <div
               key={item._id}
-              className={`${styles.clothesCard} ${
-                flippedCards[item._id] ? styles.flipped : ""
-              }`}
+              className={`${styles.clothesCard} ${flippedCards[item._id] ? styles.flipped : ""}`}
             >
               <div className={styles.cardInner}>
                 {/* FRONT */}
                 <div className={styles.cardFront}>
                   <Link href={`/${locale}/catalog/${item._id}`}>
                     <div className={styles.imageContainer}>
-                      {item.price.discount > 0 && (
-                        <div className={styles.discountBadge}>
-                          -{item.price.discount}%
-                        </div>
+                      {hasDiscount && (
+                        <div className={styles.discountBadge}>-{item.price.discount}%</div>
                       )}
-                      {!item.stock && (
-                        <div className={styles.soldOutBadge}>
-                          Немає в наявності
-                        </div>
+                      {!item.stock?.length && (
+                        <div className={styles.soldOutBadge}>Немає в наявності</div>
                       )}
                       {item.mainImage?.url ? (
                         <img
@@ -127,10 +118,10 @@ const RandomClothes = () => {
                     <h3 className={styles.itemName}>
                       {item.name[locale as "uk" | "en"]}
                     </h3>
+
                     <div className={styles.genderCategory}>
                       <span className={styles.gender}>
-                        {item.gender &&
-                        (item.gender === "male" || item.gender === "female")
+                        {item.gender === "male" || item.gender === "female"
                           ? t(item.gender)
                           : "—"}
                       </span>
@@ -139,30 +130,19 @@ const RandomClothes = () => {
                     </div>
 
                     <div className={styles.priceContainer}>
-                      {item.price.discount > 0 ? (
+                      {hasDiscount ? (
                         <>
-                          <span className={styles.originalPrice}>
-                            {item.price.amount}₴
-                          </span>
-                          <span className={styles.discountedPrice}>
-                            {formatPrice(
-                              item.price.amount,
-                              item.price.discount
-                            )}
-                          </span>
+                          <span className={styles.originalPrice}>{original}</span>
+                          <span className={styles.discountedPrice}>{discounted}</span>
                         </>
                       ) : (
-                        <span className={styles.currentPrice}>
-                          {item.price.amount}₴
-                        </span>
+                        <span className={styles.currentPrice}>{original}</span>
                       )}
                     </div>
 
                     <div className={styles.colorsContainer}>
                       <div className={styles.colorCircles}>
-                        {Array.from(
-                          new Set(item.stock.map((s) => s.color.code))
-                        ).map((color) => (
+                        {Array.from(new Set(item.stock?.map((s) => s.color.code))).map((color) => (
                           <div
                             key={color}
                             className={styles.colorCircle}
@@ -172,25 +152,15 @@ const RandomClothes = () => {
                       </div>
                     </div>
 
-                    <div
-                      className={styles.heart}
-                      onClick={() => handleFavoriteClick(item)}
-                    >
-                      {favoriteItems.some((fav) => fav._id === item._id) ? (
-                        <HeartBlack />
-                      ) : (
-                        <HeartWhite />
-                      )}
+                    <div className={styles.heart} onClick={() => handleFavoriteClick(item)}>
+                      {favoriteItems.some((fav) => fav._id === item._id) ? <HeartBlack /> : <HeartWhite />}
                     </div>
 
                     <div className={styles.basket}>
                       <BasketBlack />
                     </div>
 
-                    <div
-                      className={styles.ecoIcon}
-                      onClick={() => handleFlipCard(item._id)}
-                    >
+                    <div className={styles.ecoIcon} onClick={() => handleFlipCard(item._id)}>
                       <Eco />
                     </div>
                   </div>
@@ -199,37 +169,24 @@ const RandomClothes = () => {
                 {/* BACK */}
                 <div className={styles.cardBack}>
                   <div className={styles.cardBackContent}>
-                    <div
-                      className={styles.closeIcon}
-                      onClick={() => handleFlipCard(item._id)}
-                    >
+                    <div className={styles.closeIcon} onClick={() => handleFlipCard(item._id)}>
                       <Cross />
                     </div>
 
                     <h3>{ecoInfo.title}</h3>
-                    <p className={styles.ecoDescription}>
-                      {ecoInfo.description}
-                    </p>
+                    <p className={styles.ecoDescription}>{ecoInfo.description}</p>
 
                     {ecoInfo.materials && (
                       <>
-                        <h4 className={styles.ecoCalculatorTitle}>
-                          Екоматеріали
-                        </h4>
+                        <h4 className={styles.ecoCalculatorTitle}>Екоматеріали</h4>
                         <div className={styles.ecoMaterials}>
                           {ecoInfo.materials.map((material, index) => (
                             <div key={index} className={styles.ecoMaterial}>
                               <div className={styles.ecoMaterialHeader}>
-                                <span className={styles.ecoMaterialName}>
-                                  {material.name}
-                                </span>
-                                <span className={styles.ecoMaterialValue}>
-                                  {material.value}
-                                </span>
+                                <span className={styles.ecoMaterialName}>{material.name}</span>
+                                <span className={styles.ecoMaterialValue}>{material.value}</span>
                               </div>
-                              <p className={styles.ecoMaterialDesc}>
-                                {material.desc}
-                              </p>
+                              <p className={styles.ecoMaterialDesc}>{material.desc}</p>
                             </div>
                           ))}
                         </div>
