@@ -9,7 +9,6 @@ import Footer from "@/components/footer/Footer";
 import "../styles/globals.css";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 import { UserLoader } from "../../redux/UserLoader";
-import { Lora, Poppins } from "next/font/google";
 
 type Props = {
   children: ReactNode;
