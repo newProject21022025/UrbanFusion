@@ -1,65 +1,185 @@
-
 .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 2rem;
-    min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
+  margin-top: 85px;
+  /* padding: 2rem; */
+  min-height: 100vh;
+  padding: 0; /* Видалено внутрішні відступи */ 
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* padding: 4rem 1rem; */
+  animation: fadeIn 0.8s ease-out;
+  width: 100%; /* Додано ширину 100% */
+  padding: 0; /* Видалено внутрішні відступи */
+}
+
+/* newCollection */
+.newCollection {
+  width: 100%;
+  height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px 0;
+  margin-bottom: 85px;
+  background-image: url("../../../public/newCollection.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative; /* Додано для коректного позиціонування */
+}
+.titleNewCollection {
+  color: #f2f2f2;
+  font-size: 128px;
+  font-weight: 400;
+  font-family: "Lora", serif;
+}
+.buyLink {
+  display: inline-flex; /* або inline-block */
+  justify-content: center;
+  align-items: center;
+
+  padding: 10px 90px; /* регулює розмір кнопки */
+  font-family: 'Lora', serif;
+  color: #F2F2F2;
+  font-size: 16px;
+  background-color: var(--color-bg-dark);
+  border-radius: 10px; 
+  text-decoration: none;
+  cursor: pointer;
+  align-self: center; /* ❗️центр по осі flex-контейнера */
+  width: auto;        /* ❗️не дозволяємо 100% ширину */
+}
+
+/* ekoInfo */
+
+.ekoInfo{
+  width: 100%;
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+  margin-bottom: 85px;  
+  grid-template-columns: repeat(4, 1fr);
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 4rem 1rem;
-    animation: fadeIn 0.8s ease-out;
-  }
-  
-  .title {
-    font-size: 3.5rem;
-    font-weight: 800;
-    background: linear-gradient(45deg, #3b82f6, #8b5cf6);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
-  }
-  
-  .content {
-    font-size: 1.25rem;
-    color: #4b5563;
-    max-width: 600px;
-    line-height: 1.6;
-    margin-bottom: 3rem;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Темная тема */
-  @media (prefers-color-scheme: dark) {
-    .content {
-      color: #d1d5db;
-    }
-  }
-  
-  /* Адаптивность */
+
   @media (max-width: 768px) {
-    .title {
-      font-size: 2.5rem;
-    }
-    
-    .content {
-      font-size: 1.1rem;
-    }
+    grid-template-columns: 1fr;
+  } 
+}
+
+.ekoInfoBox{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px; /* Додано відступи для кращого вигляду */
+}
+.ekoInfoNumber{
+  font-size: 64px;
+  font-weight: 400;
+  font-family: "Mea Culpa", serif;  
+}
+.ekoInfoText{
+  font-size: 18px;
+  font-weight: 500;
+  font-family: "Lora", serif;  
+}
+
+/* aboutUs */
+.aboutUs{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  text-align: center;
+   gap: 36px; 
+  /* padding: 20px; */
+  margin-bottom: 85px; /* Збільшено відступ знизу */
+}
+.aboutUsBox{
+  width: 100%;    
+  display: flex;  
+  justify-content: center;
+  align-items: center; 
+  gap: 80px;
+}
+
+.aboutUsTextBox {
+  display: flex;
+  flex-direction: column;
+  text-align: left; 
+}
+
+.aboutUsTextTitle{  
+  font-size: 18px;
+  font-weight: 600;  
+}
+.aboutUsImage{
+  width: 100%;
+  height: auto; 
+}
+
+.aboutUsImageContent{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+@media (max-width: 768px) {
+  .titleNewCollection {
+    font-size: 40px; /* Зменшено розмір шрифту для мобільних */
+    margin-top: 60px;
   }
+  .aboutUsBox {
+    flex-direction: column; /* Вертикальне розташування */
+    gap: 40px;               /* Менший відступ */
+    align-items: flex-start; /* Текст зліва */
+  }
+
+  .aboutUsTextBox {
+    padding: 0 16px;         /* Бічні відступи */
+    width: 100%;
+  }
+
+  .aboutUsTextTitle {
+    font-size: 16px;
+  }
+
+  .aboutUsText {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .aboutUsImage {
+    width: 100%;
+    padding: 0 16px;
+  }
+
+  .aboutUsImageContent {
+    width: 100%;
+    height: auto;
+  }
+
+  .aboutUs {
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .container {
+    margin-top: 65px;
+  }
+}
+
