@@ -38,69 +38,236 @@ export default function Home() {
         </section>
         <RandomClothes />
         <section className={styles.aboutUs}>
-          <h3 className={styles.titleAboutUs}>Про нас</h3>
+          <h3 className={styles.titleAboutUs}>{t("aboutUs.title")}</h3>
           <div className={styles.aboutUsBox}>
             <div className={styles.aboutUsImage}>
               <img
                 src="/aboutUs_1.png"
-                alt="Про нас"
+                alt={t("aboutUs.imageAlt")}
                 className={styles.aboutUsImageContent}
               />
             </div>
             <div className={styles.aboutUsTextBox}>
               <p className={styles.aboutUsText}>
-                <span className={styles.aboutUsTextTitle}>Наша компанія</span> –
-                це поєднання стилю, інновацій та відповідального ставлення до
-                природи. Ми створюємо екоодяг із натуральних та перероблених
-                матеріалів, дбаючи про комфорт, довговічність і мінімальний
-                вплив на довкілля.
+                <span className={styles.aboutUsTextTitle}>
+                  {t("aboutUs.companyTitle")}
+                </span>{" "}
+                –{t("aboutUs.companyText")}
               </p>
               <p className={styles.aboutUsText}>
-                <span className={styles.aboutUsTextTitle}>Наша місія</span> –
-                довести, що мода може бути стильною, якісною та екологічно
-                відповідальною. Обираючи наш одяг, ви не тільки виглядаєте
-                чудово, а й робите крок до збереження природи.
+                <span className={styles.aboutUsTextTitle}>
+                  {t("aboutUs.missionTitle")}
+                </span>{" "}
+                –{t("aboutUs.missionText")}
               </p>
             </div>
           </div>
+
           <div className={styles.aboutUsBox}>
             <div className={styles.aboutUsTextBox}>
-              <p className={styles.aboutUsText}>В основі нашого виробництва – принципи сталого розвитку:</p>
+              <p className={styles.aboutUsText}>
+                {t("aboutUs.sustainabilityPrinciples")}
+              </p>
               <ul>
                 <li className={styles.aboutUsText}>
                   <span className={styles.aboutUsTextTitle}>
-                    Екологічні матеріали
-                  </span>
-                  – органічна бавовна, льон, коноплі, перероблений поліестер та
-                  інші сертифіковані тканини.
+                    {t("aboutUs.ecoMaterialsTitle")}
+                  </span>{" "}
+                  – {t("aboutUs.ecoMaterialsText")}
                 </li>
                 <li className={styles.aboutUsText}>
                   <span className={styles.aboutUsTextTitle}>
-                    Етичне виробництво
-                  </span>
-                  – ми підтримуємо чесну працю, співпрацюючи з фабриками, які
-                  дотримуються етичних стандартів.
+                    {t("aboutUs.ethicalProductionTitle")}
+                  </span>{" "}
+                  – {t("aboutUs.ethicalProductionText")}
                 </li>
                 <li className={styles.aboutUsText}>
                   <span className={styles.aboutUsTextTitle}>
-                    Безвідходні технології
-                  </span>
-                  – прагнемо мінімізувати відходи та використовувати екологічні
-                  фарбники.
+                    {t("aboutUs.zeroWasteTitle")}
+                  </span>{" "}
+                  – {t("aboutUs.zeroWasteText")}
                 </li>
               </ul>
             </div>
             <div className={styles.aboutUsImage}>
-            <img
+              <img
                 src="/aboutUs_2.png"
-                alt="Про нас"
+                alt={t("aboutUs.imageAlt")}
                 className={styles.aboutUsImageContent}
               />
             </div>
           </div>
         </section>
-        <section className={styles.aboutBrand}></section>
-        <section className={styles.planWork}></section>
+
+        <section className={styles.aboutBrand}>
+          <div className={styles.aboutBrandBox}>
+            <div className={styles.aboutBrandBoxText}>
+              <p className={styles.aboutBrandTextUp}>
+                <span className={styles.aboutBrandName}>Urban Fusion </span>–
+                {t("aboutBrand.brandIntro")}
+              </p>
+              <p className={styles.aboutBrandText}>
+                <span className={styles.aboutBrandName}>Urban Fusion </span>–
+                {t("aboutBrand.brandStyle")}
+              </p>
+            </div>
+            <div className={styles.aboutBrandBoxSlogan}>
+              <p className={styles.aboutBrandSlogan}>
+                {t("aboutBrand.sloganStart")}
+                <span className={styles.aboutBrandName}> Urban Fusion </span>–
+                {t("aboutBrand.sloganEnd")}
+              </p>
+            </div>
+          </div>
+          <div className={styles.aboutBrandLine}>
+            <div className={styles.aboutBrandLineInner}>
+              <div className={styles.lineContent}>
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+              </div>
+              <div className={styles.lineContent}>
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+                <span className={styles.aboutBrandLineDecor}>UF</span>
+                {t("aboutBrand.brandLine")}
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className={styles.planWork}>
+          <h3 className={styles.titlePlanWork}>
+            {/* {t("planWork.title")} */}
+            Етапи виконання роботи
+          </h3>
+          <div className={styles.planWorkContainer}>
+            <div className={styles.planWorkBox}>
+              <div className={styles.planWorkInfo}>
+                <p className={styles.planWorkNumber}>01</p>
+                <p className={styles.planWorkText}>
+                  Вибір екологічних матеріалів
+                </p>
+              </div>
+              <ul className={styles.planWorkList}>
+                <li>Органічна бавовна (без пестицидів та хімікатів).</li>
+                <li>
+                  Льон, коноплі, бамбук (натуральні, швидко відновлювальні
+                  волокна).
+                </li>
+                <li>
+                  Перероблені матеріали (поліестер з пластикових пляшок,
+                  перероблена шерсть).
+                </li>
+              </ul>
+            </div>
+            <div className={styles.planWorkBox}>
+              <div className={styles.planWorkInfo}>
+                <p className={styles.planWorkNumber}>02</p>
+                <p className={styles.planWorkText}>
+                  Екологічне фарбування та обробка тканин
+                </p>
+              </div>
+              <ul className={styles.planWorkList}>
+                <li>Використання натуральних або малотоксичних барвників.</li>
+                <li>
+                  Мінімізація використання води та енергії в процесі обробки.
+                </li>
+              </ul>
+            </div>
+            <div className={styles.planWorkBox}>
+              <div className={styles.planWorkInfo}>
+                <p className={styles.planWorkNumber}>03</p>
+                <p className={styles.planWorkText}>Етичне виробництво</p>
+              </div>
+              <ul className={styles.planWorkList}>
+                <li>Забезпечення справедливих умов праці.</li>
+                <li>Відмова від дитячої та примусової праці.</li>
+                <li>Контроль за викидами та відходами виробництва.</li>
+              </ul>
+            </div>
+            <div className={styles.planWorkBox}>
+              <div className={styles.planWorkInfo}>
+                <p className={styles.planWorkNumber}>04</p>
+                <p className={styles.planWorkText}>Дизайн та створення одягу</p>
+              </div>
+              <ul className={styles.planWorkList}>
+                <li>Мінімізація залишків тканини.</li>
+                <li>Використання крійових технологій, що зменшують відходи.</li>
+                <li>
+                  Універсальні дизайни, що подовжують життєвий цикл виробу.
+                </li>
+              </ul>
+            </div>
+            <div className={styles.planWorkBox}>
+              <div className={styles.planWorkInfo}>
+                <p className={styles.planWorkNumber}>05</p>
+                <p className={styles.planWorkText}>Упаковка та логістика</p>
+              </div>
+              <ul className={styles.planWorkList}>
+                <li>Біорозкладні або перероблені пакувальні матеріали.</li>
+                <li>Оптимізація транспортування для зменшення викидів CO₂.</li>
+              </ul>
+            </div>
+            <div className={styles.planWorkBox}>
+              <div className={styles.planWorkInfo}>
+                <p className={styles.planWorkNumber}>06</p>
+                <p className={styles.planWorkText}>Продаж та споживання</p>
+              </div>
+              <ul className={styles.planWorkList}>
+                <li>
+                  Прозорість у виробництві (маркування екологічних
+                  сертифікатів).
+                </li>
+                <li>
+                  Освітні кампанії для споживачів щодо правильного догляду за
+                  речами.
+                </li>
+              </ul>
+            </div>
+            <div className={`${styles.planWorkBox} ${styles.lastPlanWorkBox}`}>
+              <div className={styles.planWorkInfo}>
+                <p className={styles.planWorkNumber}>07</p>
+                <p className={styles.planWorkText}>
+                  Переробка та повторне використання
+                </p>
+              </div>
+              <ul className={styles.planWorkList}>
+                <li>
+                  Збір старого одягу для вторинного використання або переробки.
+                </li>
+                <li>
+                  Розвиток програм апсайклінгу (створення нових виробів зі
+                  старих матеріалів)
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
