@@ -12,6 +12,28 @@
       "production": "Sustainable production",
       "labor": "Ethical labor conditions",
       "sustainability": "Durability and usage"
+    },
+    "aboutUs": {
+      "title": "About Us",
+      "imageAlt": "About Us",
+      "companyTitle": "Our Company",
+      "companyText": "It is a combination of style, innovation, and a responsible attitude toward nature. We create eco-friendly clothing using natural and recycled materials, prioritizing comfort, durability, and minimal environmental impact.",
+      "missionTitle": "Our Mission",
+      "missionText": "To prove that fashion can be stylish, high-quality, and environmentally responsible. By choosing our clothing, you not only look great but also take a step toward protecting nature.",
+      "sustainabilityPrinciples": "Our production is based on the principles of sustainable development:",
+      "ecoMaterialsTitle": "Eco-Friendly Materials",
+      "ecoMaterialsText": "Organic cotton, linen, hemp, recycled polyester, and other certified fabrics.",
+      "ethicalProductionTitle": "Ethical Production",
+      "ethicalProductionText": "We support fair labor by partnering with factories that uphold ethical standards.",
+      "zeroWasteTitle": "Zero-Waste Technologies",
+      "zeroWasteText": "We strive to minimize waste and use environmentally friendly dyes."
+    },
+    "aboutBrand": {
+      "brandIntro": "is a brand that combines environmental responsibility, modern design and technological innovation. We create clothes for residents of megacities who value style, comfort and conscious choice. We strive to make fashion more responsible without sacrificing comfort and self-expression.",
+      "brandStyle": "is the style of the future, where trends harmonize with care for the planet.",
+      "sloganStart": "Choose",
+      "sloganEnd": "– wear responsibility!",
+      "brandLine": "About the Brand"
     }
   },
   "About": {

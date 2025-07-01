@@ -16,6 +16,7 @@ import LogoWhite from "../../svg/Logo/logoWhite";
 import HeartEmpty from "../../svg/Heart/heartEmpty";
 import HeartBlack from "../../svg/Heart/heartBlack";
 import PersonalData from "../../svg/PersonalData/personalData";
+import Exit from "../../svg/Exit/exit";
 import CatalogDropdown from "./CatalogDropdown";
 import SearchBarHeader from "../searchBarHeader/SearchBarHeader";
 
@@ -29,7 +30,7 @@ export default function Header({ locale }: HeaderProps) {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
-  const [catalogOpen, setCatalogOpen] = useState(false); 
+  const [catalogOpen, setCatalogOpen] = useState(false);
 
   const { isAdmin, isAuthenticated, adminLinks } = useSelector(
     (state: RootState) => state.auth
@@ -58,9 +59,9 @@ export default function Header({ locale }: HeaderProps) {
   }, []);
 
   const changeLanguage = (newLocale: string) => {
-    router.push(pathname, { locale: newLocale });
+    router.push(pathname, { locale: newLocale, scroll: false });
   };
-
+  
   const handleLogout = () => {
     if (isAdmin) {
       dispatch(logoutAdmin());
@@ -134,16 +135,21 @@ export default function Header({ locale }: HeaderProps) {
           </div>
         </Link>
         <div className={styles.languageSwitcher}>
-        <SearchBarHeader />          
+          <SearchBarHeader />
           {isAuthenticated && (
             <Link href="/personalData" className={styles.navLink}>
               <PersonalData />
             </Link>
           )}
           {isAuthenticated ? (
-            <button onClick={handleLogout} className={styles.navLink}>
-              Вийти
-            </button>
+            <div
+              onClick={handleLogout}
+              className={styles.navLink}
+              role="button"
+              tabIndex={0}
+            >
+              <Exit />
+            </div>
           ) : (
             <Link href="/logIn" className={styles.navLink}>
               <LogIn />
