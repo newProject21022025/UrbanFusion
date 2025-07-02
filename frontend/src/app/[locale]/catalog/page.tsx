@@ -28,7 +28,9 @@ export default function Catalog() {
   const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
   const basketItems = useSelector((state: RootState) => state.basket.items);
   const dispatch = useDispatch();
-  const favoriteItems = useSelector((state: RootState) => state.favorites.items);
+  const favoriteItems = useSelector(
+    (state: RootState) => state.favorites.items
+  );
   const searchParams = useSearchParams();
 
   const selectedGender = searchParams.get("gender");
@@ -45,34 +47,37 @@ export default function Catalog() {
 
   useEffect(() => {
     if (!clothes?.length) return;
-  
+
     const filtered = clothes.filter((item) => {
-      const matchGender = selectedGender ? item.gender === selectedGender : true;
+      const matchGender = selectedGender
+        ? item.gender === selectedGender
+        : true;
       const matchCategory = selectedCategory
         ? item.category?.[locale as "en" | "uk"] === selectedCategory
         : true;
-  
+
       const nameMatch = item.name[locale as "en" | "uk"]
         .toLowerCase()
         .includes(searchQuery || "");
-  
+
       const categoryMatch = item.category?.[locale as "en" | "uk"]
         .toLowerCase()
         .includes(searchQuery || "");
-  
-      const articleMatch = item.article?.toLowerCase().includes(searchQuery || "");
-  
+
+      const articleMatch = item.article
+        ?.toLowerCase()
+        .includes(searchQuery || "");
+
       const matchSearch = searchQuery
         ? nameMatch || categoryMatch || articleMatch
         : true;
-  
+
       return matchGender && matchCategory && matchSearch;
     });
-  
+
     setFilteredClothes(filtered);
     setVisibleCount(10); // скидаємо при новій фільтрації
   }, [clothes, selectedGender, selectedCategory, searchQuery, locale]);
-  
 
   useEffect(() => {
     setPaginatedClothes(filteredClothes.slice(0, visibleCount));
@@ -81,19 +86,23 @@ export default function Catalog() {
   useEffect(() => {
     const handleScroll = () => {
       // Використовуємо window.innerHeight замість clientHeight
-      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-      
-      if (scrollTop + window.innerHeight >= scrollHeight - 200 && 
-          visibleCount < filteredClothes.length) {
-        setVisibleCount(prev => Math.min(prev + 10, filteredClothes.length));
+      const scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight =
+        document.documentElement.scrollHeight || document.body.scrollHeight;
+
+      if (
+        scrollTop + window.innerHeight >= scrollHeight - 200 &&
+        visibleCount < filteredClothes.length
+      ) {
+        setVisibleCount((prev) => Math.min(prev + 10, filteredClothes.length));
       }
     };
-  
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [filteredClothes.length, visibleCount]); // Додаємо visibleCount до залежностей
-  
+
   const fetchClothes = async () => {
     try {
       setLoading(true);
@@ -122,9 +131,9 @@ export default function Catalog() {
   const getGenderLabel = (gender: "male" | "female" | undefined) => {
     const safeLocale = locale === "uk" ? "uk" : "en";
     const labels = {
-      male: { en: "Men", uk: "Чоловіча" },
-      female: { en: "Women", uk: "Жіноча" },
-      undefined: { en: "Unisex", uk: "Унісекс" },
+      male: { en: "men", uk: "чоловічі" },
+      female: { en: "women", uk: "жіночі" },
+      undefined: { en: "unisex", uk: "унісекс" },
     };
     return labels[gender || "undefined"][safeLocale];
   };
@@ -154,7 +163,7 @@ export default function Catalog() {
 
   return (
     <main className={styles.main}>
-      <h1 className={styles.title}>Каталог товарів</h1>
+      <h2 className={styles.title}>Каталог</h2>
 
       {loading && <div className={styles.loading}>Завантаження...</div>}
       {error && <div className={styles.error}>{error}</div>}
@@ -181,10 +190,13 @@ export default function Catalog() {
                       {item.mainImage?.url ? (
                         <img
                           src={item.mainImage.url}
-                          alt={item.mainImage?.alt?.[locale as "en" | "uk"] || ""}
+                          alt={
+                            item.mainImage?.alt?.[locale as "en" | "uk"] || ""
+                          }
                           className={styles.clothesImage}
                           onError={(e) =>
-                            ((e.target as HTMLImageElement).style.display = "none")
+                            ((e.target as HTMLImageElement).style.display =
+                              "none")
                           }
                         />
                       ) : (
@@ -211,11 +223,10 @@ export default function Catalog() {
                       <span className={styles.gender}>
                         {getGenderLabel(item.gender)}
                       </span>
-                      <h2 className={styles.itemName}>
-                        {item.name[locale as "en" | "uk"]}
-                      </h2>
                     </div>
-
+                    <p className={styles.itemName}>
+                      {item.name[locale as "en" | "uk"]}
+                    </p>
                     <div className={styles.colorsContainer}>
                       <div className={styles.colorCircles}>
                         {item.stock?.map((stockItem, index) => (
