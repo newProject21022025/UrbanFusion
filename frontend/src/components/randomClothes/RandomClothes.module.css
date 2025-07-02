@@ -1,17 +1,15 @@
 /* RandomClothes.module.css */
 
-.main {
-  /* padding: 20px; */
+.main {  
   width: 100%;
   margin: 0 auto;
-  margin-bottom: 85px;
-  /* margin-top: 100px; */
+  margin-bottom: 85px; 
 }
-
 .title {
   text-align: center;
   margin-bottom: 30px;
-  color: #333;
+  font-family: "Lora", serif;
+  color: var(--color-text-dark);
 }
 
 .clothesContainer {
@@ -39,6 +37,10 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   height: 800px;
   perspective: 1000px;
+
+  @media (max-width: 768px) {
+    height: 700px;
+  }
 }
 
 .clothesCard:hover {
@@ -73,38 +75,46 @@
 }
 
 .cardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: "Lora", serif;
+  font-weight: 500;
+  font-size: 20px;
   padding: 15px;
 }
 
-.itemName {
-  font-size: 1.1rem;
-  margin: 0 0 8px 0;
-  color: #222;
+.itemName {  
   font-weight: 600;
 }
 
-.category {
+/* .category {
   font-size: 0.85rem;
   color: #666;
   margin-bottom: 12px;
-}
+} */
 
 .priceContainer {
   margin: 15px 0;
 }
 
-.currentPrice,
-.discountedPrice {
-  font-size: 1.2rem;
+.currentPrice {
+  font-size: 18px;
   font-weight: bold;
   color: #e63946;
 }
 
 .originalPrice {
-  font-size: 0.9rem;
+  font-size: 18px;
   text-decoration: line-through;
-  color: #999;
   margin-right: 8px;
+  font-weight: bold;
+}
+
+.discountedPrice {
+  font-size: 20px;
+  font-weight: bold;
+  color: #e63946;
 }
 
 .soldOutBadge {
@@ -122,20 +132,20 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: #e63946;
-  color: white;
+  background-color:  #c84a55;
+  color:var(--color-text-white);
   padding: 5px 10px;
   border-radius: 3px;
-  font-size: 0.8rem;
+  font-size: 14px;
   font-weight: bold;
-  z-index: 2
+  /* z-index: 2 */
 }
 
 .loading,
 .error {
   text-align: center;
   padding: 20px;
-  font-size: 1.2rem;
+  font-size: 18px;
 }
 
 .error {
@@ -144,36 +154,35 @@
 
 .genderCategory {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 8px;
-  font-size: 0.85rem;
-  color: #666;
 }
 
-.gender {
+/* .gender {
   font-weight: 600;
   color: #4a90e2;
-}
+} */
 
-.separator {
-  color: #ddd;
-}
+/* .separator {
+  color: var(--color-text-white);
+} */
 
 .colorsContainer {
   display: flex;
   align-items: center;
-  margin: 10px 0;
+  margin-top: 20px;
 }
 
 .colorCircles {
   display: flex;
-  gap: 6px;
+  gap: 15px;
 }
 
 .colorCircle {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: 1px solid #eee;
   cursor: pointer;
@@ -213,7 +222,7 @@
   padding: 20px;
   text-align: center;
   border-radius: 8px;
-  color: #f2f2f2;
+  color: var(--color-text-white);
 }
 
 .flipped .cardInner {
@@ -224,7 +233,7 @@
   cursor: pointer;
   position: absolute;
   top: 15px;
-  right: 10px;
+  right: 15px;
 }
 
 .basket {
@@ -239,6 +248,14 @@
   right: 10px;
 }
 
+.basket.active {
+  transform: scale(1.1);
+  filter: brightness(1.3);
+  background-color: yellow;
+  opacity: 0.8;
+  border-radius: 50%;
+}
+
 .basket svg {
   width: 25px;
   height: 25px;
@@ -249,18 +266,13 @@
   height: 20px;
 }
 
-.basket.active {
-  transform: scale(1.1);
-  filter: brightness(1.3);
-  background-color: yellow;
-  opacity: 0.8;
-  border-radius: 50%;
-}
-
 .ecoIcon {
+  position: fixed;
   cursor: pointer;
   margin-top: 10px;
   display: inline-block;
+  bottom: 10px;
+  right: 10px;
 }
 
 .closeIcon {
@@ -274,7 +286,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  padding: 20px;
+  padding: 40px 10px;
   display: flex;
   flex-direction: column;
 }
@@ -326,5 +338,5 @@
   margin: 0;
   font-size: 14px;
   line-height: 1.4;
-  color: #666;
+  color: var(--color-text-light);
 }

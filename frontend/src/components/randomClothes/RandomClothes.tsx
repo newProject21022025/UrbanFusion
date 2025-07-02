@@ -30,7 +30,9 @@ const RandomClothes = () => {
   const dispatch = useDispatch();
   const t = useTranslations("BasicInfoSection");
 
-  const favoriteItems = useSelector((state: RootState) => state.favorites.items);
+  const favoriteItems = useSelector(
+    (state: RootState) => state.favorites.items
+  );
 
   useEffect(() => {
     const fetchAndPickRandom = async () => {
@@ -82,14 +84,20 @@ const RandomClothes = () => {
           const categoryKey = getCategoryKey(
             item.category?.[locale as "uk" | "en"]
           );
-          const ecoInfo = ecoDescriptions[categoryKey] || ecoDescriptions["t-shirts"];
+          const ecoInfo =
+            ecoDescriptions[categoryKey] || ecoDescriptions["t-shirts"];
 
-          const { original, discounted, hasDiscount } = formatPrice(item.price.amount, item.price.discount);
+          const { original, discounted, hasDiscount } = formatPrice(
+            item.price.amount,
+            item.price.discount
+          );
 
           return (
             <div
               key={item._id}
-              className={`${styles.clothesCard} ${flippedCards[item._id] ? styles.flipped : ""}`}
+              className={`${styles.clothesCard} ${
+                flippedCards[item._id] ? styles.flipped : ""
+              }`}
             >
               <div className={styles.cardInner}>
                 {/* FRONT */}
@@ -97,10 +105,14 @@ const RandomClothes = () => {
                   <Link href={`/${locale}/catalog/${item._id}`}>
                     <div className={styles.imageContainer}>
                       {hasDiscount && (
-                        <div className={styles.discountBadge}>-{item.price.discount}%</div>
+                        <div className={styles.discountBadge}>
+                          -{item.price.discount}%
+                        </div>
                       )}
                       {!item.stock?.length && (
-                        <div className={styles.soldOutBadge}>Немає в наявності</div>
+                        <div className={styles.soldOutBadge}>
+                          Немає в наявності
+                        </div>
                       )}
                       {item.mainImage?.url ? (
                         <img
@@ -115,25 +127,27 @@ const RandomClothes = () => {
                   </Link>
 
                   <div className={styles.cardContent}>
-                    <h3 className={styles.itemName}>
-                      {item.name[locale as "uk" | "en"]}
-                    </h3>
-
                     <div className={styles.genderCategory}>
+                      <span>{item.category?.[locale as "uk" | "en"]}</span>
                       <span className={styles.gender}>
                         {item.gender === "male" || item.gender === "female"
                           ? t(item.gender)
                           : "—"}
                       </span>
-                      <span className={styles.separator}>|</span>
-                      <span>{item.category?.[locale as "uk" | "en"]}</span>
+                      {/* <span className={styles.separator}>|</span> */}
                     </div>
-
+                    <p className={styles.itemName}>
+                      {item.name[locale as "uk" | "en"]}
+                    </p>
                     <div className={styles.priceContainer}>
                       {hasDiscount ? (
                         <>
-                          <span className={styles.originalPrice}>{original}</span>
-                          <span className={styles.discountedPrice}>{discounted}</span>
+                          <span className={styles.originalPrice}>
+                            {original}
+                          </span>
+                          <span className={styles.discountedPrice}>
+                            {discounted}
+                          </span>
                         </>
                       ) : (
                         <span className={styles.currentPrice}>{original}</span>
@@ -142,7 +156,9 @@ const RandomClothes = () => {
 
                     <div className={styles.colorsContainer}>
                       <div className={styles.colorCircles}>
-                        {Array.from(new Set(item.stock?.map((s) => s.color.code))).map((color) => (
+                        {Array.from(
+                          new Set(item.stock?.map((s) => s.color.code))
+                        ).map((color) => (
                           <div
                             key={color}
                             className={styles.colorCircle}
@@ -152,15 +168,25 @@ const RandomClothes = () => {
                       </div>
                     </div>
 
-                    <div className={styles.heart} onClick={() => handleFavoriteClick(item)}>
-                      {favoriteItems.some((fav) => fav._id === item._id) ? <HeartBlack /> : <HeartWhite />}
+                    <div
+                      className={styles.heart}
+                      onClick={() => handleFavoriteClick(item)}
+                    >
+                      {favoriteItems.some((fav) => fav._id === item._id) ? (
+                        <HeartBlack />
+                      ) : (
+                        <HeartWhite />
+                      )}
                     </div>
 
                     <div className={styles.basket}>
                       <BasketBlack />
                     </div>
 
-                    <div className={styles.ecoIcon} onClick={() => handleFlipCard(item._id)}>
+                    <div
+                      className={styles.ecoIcon}
+                      onClick={() => handleFlipCard(item._id)}
+                    >
                       <Eco />
                     </div>
                   </div>
@@ -169,24 +195,37 @@ const RandomClothes = () => {
                 {/* BACK */}
                 <div className={styles.cardBack}>
                   <div className={styles.cardBackContent}>
-                    <div className={styles.closeIcon} onClick={() => handleFlipCard(item._id)}>
+                    <div
+                      className={styles.closeIcon}
+                      onClick={() => handleFlipCard(item._id)}
+                    >
                       <Cross />
                     </div>
 
                     <h3>{ecoInfo.title}</h3>
-                    <p className={styles.ecoDescription}>{ecoInfo.description}</p>
+                    <p className={styles.ecoDescription}>
+                      {ecoInfo.description}
+                    </p>
 
                     {ecoInfo.materials && (
                       <>
-                        <h4 className={styles.ecoCalculatorTitle}>Екоматеріали</h4>
+                        <h4 className={styles.ecoCalculatorTitle}>
+                          Екоматеріали
+                        </h4>
                         <div className={styles.ecoMaterials}>
                           {ecoInfo.materials.map((material, index) => (
                             <div key={index} className={styles.ecoMaterial}>
                               <div className={styles.ecoMaterialHeader}>
-                                <span className={styles.ecoMaterialName}>{material.name}</span>
-                                <span className={styles.ecoMaterialValue}>{material.value}</span>
+                                <span className={styles.ecoMaterialName}>
+                                  {material.name}
+                                </span>
+                                <span className={styles.ecoMaterialValue}>
+                                  {material.value}
+                                </span>
                               </div>
-                              <p className={styles.ecoMaterialDesc}>{material.desc}</p>
+                              <p className={styles.ecoMaterialDesc}>
+                                {material.desc}
+                              </p>
                             </div>
                           ))}
                         </div>
