@@ -58,7 +58,8 @@
     "addedToBasketMessage": "Товар додано до кошика!",
     "reviewsTitle": "Відгуки",
     "likes": "Лайки",
-    "noReviews": "Ще немає відгуків"
+    "noReviews": "Ще немає відгуків",
+    "availableGoods": "Доступні товари"
   },
   "login": {
     "title": "Вхід",

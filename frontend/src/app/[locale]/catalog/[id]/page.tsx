@@ -126,10 +126,9 @@ export default function ClothesPage() {
   console.log(clothes);
 
   return (
-    <main className={styles.container}>
+    <main className={styles.main}>
+      <div className={styles.container}>
       <div className={styles.leftColumn}>
-        <h1 className={styles.title}>{clothes.name[locale]}</h1>
-
         {clothes.mainImage?.url && (
           <img
             src={clothes.mainImage.url}
@@ -141,8 +140,84 @@ export default function ClothesPage() {
           />
         )}
 
-        <div className={styles.article}>{clothes.article}</div>
-        <div className={styles.description}>{clothes.description[locale]}</div>
+        
+      </div>
+      <div className={styles.rightColumn}>
+        {/* <div className={styles.infoBlock}></div> */}
+        <p className={styles.article}>{clothes.article}</p>
+        <h2 className={styles.title}>{clothes.name[locale]}</h2>
+        <p className={styles.description}>{clothes.description[locale]}</p>
+
+        <div className={styles.priceBlock}>
+          {clothes.price.discount > 0 && (
+            <>
+              <span className={styles.oldPrice}>
+                {clothes.price.amount} {clothes.price.currency}
+              </span>
+              <span className={styles.discount}>
+                -{clothes.price.discount}%
+              </span>
+            </>
+          )}
+          <span className={styles.newPrice}>
+            {discountedPrice.toFixed(2)} {clothes.price.currency}
+          </span>
+        </div>
+        <h2>{t("availableGoods")}:</h2>
+        <div className={styles.stockBlock}>
+          {/* Кольори у рядок */}
+          <div className={styles.colorRow}>
+            {clothes.stock.map((stock, i) => (
+              <div key={i} className={styles.stockItem}>
+                <div
+                  className={`${styles.label} ${
+                    selectedColor === stock.color.code ? styles.selected : ""
+                  }`}
+                  onClick={() => setSelectedColor(stock.color.code)}
+                >
+                  <span
+                    className={styles.colorDot}
+                    style={{ backgroundColor: stock.color.code }}
+                    title={stock.color[locale]}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Розміри — під кольорами, в один рядок */}
+          {(() => {
+            const currentStock = clothes.stock.find(
+              (stock) => stock.color.code === selectedColor
+            );
+
+            const categoryName = clothes.category[locale];
+            const hideSizesFor = ["Окуляри", "Сумки", "Glasses", "Bags"];
+            const shouldShowSizes = !hideSizesFor.includes(categoryName);
+
+            return shouldShowSizes && currentStock ? (
+              <div className={styles.sizesContainer}>
+                {currentStock.sizes.map((sizeObj, j) => (
+                  <div key={j} className={styles.sizeOption}>
+                    <input
+                      type="radio"
+                      id={`size-${j}`}
+                      name="size"
+                      value={sizeObj.size}
+                      checked={selectedSize === sizeObj.size}
+                      onChange={() => setSelectedSize(sizeObj.size)}
+                      disabled={sizeObj.quantity <= 0}
+                    />
+                    <label htmlFor={`size-${j}`}>
+                      {sizeObj.size}
+                      {/* {sizeObj.quantity} */}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            ) : null;
+          })()}
+        </div>
 
         {clothes.careInstructions?.length > 0 && (
           <div className={styles.infoBlock}>
@@ -172,90 +247,25 @@ export default function ClothesPage() {
           </div>
         )}
 
-        <div className={styles.priceBlock}>
-          {clothes.price.discount > 0 && (
-            <>
-              <span className={styles.oldPrice}>
-                {clothes.price.amount} {clothes.price.currency}
-              </span>
-              <span className={styles.discount}>
-                -{clothes.price.discount}%
-              </span>
-            </>
-          )}
-          <span className={styles.newPrice}>
-            {discountedPrice.toFixed(2)} {clothes.price.currency}
-          </span>
-        </div>
-
-        <div className={styles.stockBlock}>
-          <h2>{t("title")}:</h2>
-          {clothes.stock.map((stock, i) => {
-            const hideSizesFor = ["Окуляри", "Сумки", "Glasses", "Bags"];
-            const categoryName = clothes.category[locale];
-            const shouldShowSizes = !hideSizesFor.includes(categoryName);
-
-            return (
-              <div key={i} className={styles.stockItem}>
-                <div
-                  className={`${styles.label} ${
-                    selectedColor === stock.color.code ? styles.selected : ""
-                  }`}
-                  onClick={() => setSelectedColor(stock.color.code)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <span
-                    className={styles.colorDot}
-                    style={{ backgroundColor: stock.color.code }}
-                    title={stock.color[locale]}
-                  />
-                  {stock.color[locale]}
-                </div>
-
-                {shouldShowSizes && selectedColor === stock.color.code && (
-                  <div className={styles.sizesContainer}>
-                    {stock.sizes.map((sizeObj, j) => (
-                      <div key={j} className={styles.sizeOption}>
-                        <label>
-                          <input
-                            type="radio"
-                            name="size"
-                            value={sizeObj.size}
-                            checked={selectedSize === sizeObj.size}
-                            onChange={() => setSelectedSize(sizeObj.size)}
-                            disabled={sizeObj.quantity <= 0}
-                          />
-                          {t("selectSize")}: {sizeObj.size}, {t("quantity")}:{" "}
-                          {sizeObj.quantity}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-          <ShareLink />
-        </div>
-
         {itemAdded && (
           <div className={styles.successMessage}>
             ✅ {t("addedToBasketMessage") || "Товар додано до кошика!"}
           </div>
         )}
-
-        <button
-          className={styles.addToBasketButton}
-          onClick={handleAddToBasket}
-          disabled={!selectedColor || !selectedSize}
-        >
-          {t("addToBasket")}
-        </button>
+        <div className={styles.btnBlock}>
+          <button
+            className={styles.addToBasketButton}
+            onClick={handleAddToBasket}
+            disabled={!selectedColor || !selectedSize}
+          >
+            {t("addToBasket")}
+          </button>
+          <ShareLink />
+        </div>
       </div>
-
-      <div className={styles.rightColumn}>
-        <div className={styles.reviewsSection}>
-          <h2>{t("reviewsTitle")}</h2>
+      </div>
+      <h2>{t("reviewsTitle")}</h2>
+      <div className={styles.reviewsSection}>         
 
           {clothes.reviews?.length > 0 ? (
             <ul className={styles.reviewsList}>
@@ -319,7 +329,6 @@ export default function ClothesPage() {
             </div>
           )}
         </div>
-      </div>
     </main>
   );
 }
