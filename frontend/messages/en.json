@@ -58,7 +58,8 @@
     "addedToBasketMessage": "Item added to basket!",
     "reviewsTitle": "Reviews",
     "likes": "Likes",
-    "noReviews": "No reviews yet"
+    "noReviews": "No reviews yet",
+    "availableGoods": "Available Goods"
   },
   "login": {
     "title": "Login",
