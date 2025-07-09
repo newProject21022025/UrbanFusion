@@ -8,18 +8,18 @@ import { RootState } from "@/redux/store";
 import OrderContent from "@/components/orderContent/OrderContent";
 import OrderForm from "@/components/orderForm/OrderForm";
 import OrderSummary from "@/components/orderSummary/OrderSummary";
-import { Clothes } from "@/app/api/clothes/clothesService";
+// import { Clothes } from "@/app/api/clothes/clothesService";
 import styles from "./Order.module.css";
 import { useTranslations } from "next-intl";
 
 export default function Page() {
-  const items = useSelector(
-    (state: RootState) => state.basket.items
-  ) as (Clothes & {
-    quantity: number;
-    selectedColor: string;
-    selectedSize: string;
-  })[];
+  // const items = useSelector(
+  //   (state: RootState) => state.basket.items
+  // ) as (Clothes & {
+  //   quantity: number;
+  //   selectedColor: string;
+  //   selectedSize: string;
+  // })[];
   const t = useTranslations("Order");
 
   return (
