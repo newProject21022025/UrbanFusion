@@ -3,8 +3,8 @@
 "use client"; // бо використовуєш useSelector, useLocale
 
 import React from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+// import { useSelector } from "react-redux";
+// import { RootState } from "@/redux/store";
 import OrderContent from "@/components/orderContent/OrderContent";
 import OrderForm from "@/components/orderForm/OrderForm";
 import OrderSummary from "@/components/orderSummary/OrderSummary";
