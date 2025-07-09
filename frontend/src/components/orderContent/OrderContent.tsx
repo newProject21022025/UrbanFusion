@@ -1,6 +1,5 @@
 // components/OrderContent.tsx
 
-// components/OrderContent.tsx
 "use client";
 
 import React from "react";
@@ -9,6 +8,7 @@ import { RootState } from "../../redux/store";
 import styles from "./OrderContent.module.css";
 import { Clothes } from "../../app/api/clothes/clothesService";
 import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 type Locale = "en" | "uk";
 
@@ -32,9 +32,9 @@ export default function OrderContent() {
     return (
       <div className={styles.emptyBasket}>
         <p>{t("emptyBasket")}</p>
-        <a href="/shop" className={styles.continueShopping}>
+        <Link href="/shop" className={styles.continueShopping}>
           {t("continueShopping")}
-        </a>
+        </Link>
       </div>
     );
   }
