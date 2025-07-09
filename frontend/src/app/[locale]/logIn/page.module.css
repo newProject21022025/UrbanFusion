@@ -5,7 +5,57 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #f9fafb;
   padding: 1rem;
-  margin-top: 80px;
+  position: relative;
 }
+.registration{
+  display: flex;
+  gap: 0.5rem;
+  color: var(--color-text-dark); 
+  font-family:'Lora', serif;
+}
+.btnRegistration {
+  border: none;
+  background-color: var(--color-bg-light);
+  color: var(--color-text-dark); 
+  font-family:'Lora', serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: font-size 0.3s ease;
+}
+.btnRegistration::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-text-dark);
+  }
+  .btnRegistration:hover {
+    font-size: 1.1rem;   
+  }
+  .info{
+    position: fixed;
+    top: 10%;
+    right: 20px;
+    font-size: 14px;
+    color: var(--color-text-dark); 
+    font-family:'Lora', serif;
+    margin-top: 50px;
+    width: 300px;
+  }
+  .infoTitle{
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 1024px) {
+    .info {
+      position: static; /* ❗ Скидає fixed */
+      top: auto;
+      right: auto;
+      margin-top: 20px; /* за бажанням */
+      width: auto; /* або залишити 150px */
+    }
+  }
+  

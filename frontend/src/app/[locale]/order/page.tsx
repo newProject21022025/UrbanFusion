@@ -1,22 +1,35 @@
 // app/[locale]/order/page.tsx
 
-// import dynamic from "next/dynamic";
+"use client"; // бо використовуєш useSelector, useLocale
 
-// const OrderContent = dynamic(() => import("../../../components/orderContent/OrderContent"), {
-//   ssr: false,
-// });
+import React from "react";
+// import { useSelector } from "react-redux";
+// import { RootState } from "@/redux/store";
+import OrderContent from "@/components/orderContent/OrderContent";
+import OrderForm from "@/components/orderForm/OrderForm";
+import OrderSummary from "@/components/orderSummary/OrderSummary";
+// import { Clothes } from "@/app/api/clothes/clothesService";
+import styles from "./Order.module.css";
+import { useTranslations } from "next-intl";
 
-// export default function OrderPage() {
-//   return <OrderContent />;
-// }
-import React from 'react'
-import OrderContent from '@/components/orderContent/OrderContent'
-import OrderForm from '@/components/orderForm/OrderForm'
+export default function Page() {
+  // const items = useSelector(
+  //   (state: RootState) => state.basket.items
+  // ) as (Clothes & {
+  //   quantity: number;
+  //   selectedColor: string;
+  //   selectedSize: string;
+  // })[];
+  const t = useTranslations("Order");
 
-export default function page() {
   return (
-    <div><OrderContent />
-    <OrderForm/>
+    <div className={styles.container}>
+      <h2 className={styles.title}>{t("orderTitle")}</h2>
+      <div className={styles.containerInfo}>
+        <OrderForm />
+        <OrderSummary />
+      </div>
+      <OrderContent />
     </div>
-  )
+  );
 }

@@ -169,6 +169,8 @@
     "dateOfBirth": "Date of birth",
     "submit": "Register",
     "submitting": "Registering...",
+    "subscribeLabel": "I want to receive information about new products, promotions and discount coupons",
+    "agreementText": "I declare that I have read the Principles of Personal Data Processing, as well as the Commercial Terms and Conditions, and I wish to register.",
     "errors": {
       "required": "Required field",
       "invalidEmail": "Invalid email format",
@@ -196,7 +198,10 @@
     "quantity": "Quantity",
     "size": "Size",
     "color": "Color",
-    "price": "Price"
+    "price": "Price",
+    "total": "Total",
+    "totalSum": "Total Amount",
+    "orderSummary": "Order Summary"
   },
   "OrderForm": {
     "orderTitle": "Place your order",

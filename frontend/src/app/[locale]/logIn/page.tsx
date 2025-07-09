@@ -8,7 +8,6 @@ import { User } from "../../../types/User";
 import RegisterForm from "../../../components/registerForm/RegisterForm";
 import { useState } from "react";
 
-
 export default function LoginPage() {
   const [isRegistering, setIsRegistering] = useState(false);
   const handleSubmit = async (values: {
@@ -62,9 +61,25 @@ export default function LoginPage() {
   return (
     <div className={styles.container}>
       {isRegistering ? <RegisterForm /> : <LoginForm onSubmit={handleSubmit} />}
-      <button onClick={() => setIsRegistering(!isRegistering)}>
-        {isRegistering ? "Увійти" : "Зареєструватися"}
-      </button>
+      <div className={styles.registration}>
+        <p>
+          {isRegistering
+            ? "У вас вже є обліковий запис?"
+            : "Немає облікового запису?"}
+        </p>
+        <button
+          className={styles.btnRegistration}
+          onClick={() => setIsRegistering(!isRegistering)}
+        >
+          {isRegistering ? "Увійти" : "Зареєструватися"}
+        </button>
+      </div>
+      <ul className={styles.info}>
+        <p className={styles.infoTitle}>Переваги реєстрації:</p>
+        <li>Швидке оформлення замовлення завдяки збереженій адресі </li>
+        <li>Відстеження статусу своїх повідомлень </li>
+        <li>Перегляд історії замовлень </li>
+      </ul>
     </div>
   );
 }
