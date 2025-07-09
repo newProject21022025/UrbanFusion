@@ -102,7 +102,7 @@
 .currentPrice {
   font-size: 18px;
   font-weight: bold;
-  color: #e63946;
+  color: var(--color-text-red);
 }
 
 .originalPrice {
@@ -115,7 +115,7 @@
 .discountedPrice {
   font-size: 20px;
   font-weight: bold;
-  color: #e63946;
+  color: var(--color-text-red);
 }
 
 .soldOutBadge {
@@ -133,7 +133,7 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: #c84a55;
+  background-color: var(--color-text-red);
   color: var(--color-text-white);
   padding: 5px 10px;
   border-radius: 3px;
@@ -149,7 +149,7 @@
 }
 
 .error {
-  color: #e63946;
+  color: var(--color-text-red);
 }
 
 .genderCategory {

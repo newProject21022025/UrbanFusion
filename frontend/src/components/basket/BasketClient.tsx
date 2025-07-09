@@ -159,7 +159,8 @@ export default function BasketClient() {
                     )}
                     {item.selectedSize && <p>{t("size")}: {item.selectedSize}</p>}
                   </div>
-                  <div className={styles.itemPrice}>{formatPrice(price)}</div>
+                  <div className={styles.itemBox}>
+                  <p className={styles.itemPrice}>{formatPrice(price)}</p>
                   <div className={styles.itemQuantity}>
                     <button
                       onClick={() =>
@@ -202,8 +203,9 @@ export default function BasketClient() {
                       )
                     }
                   >
-                    ×
+                    X
                   </button>
+                  </div>
                 </div>
               );
             })}

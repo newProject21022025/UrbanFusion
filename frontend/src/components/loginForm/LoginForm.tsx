@@ -72,7 +72,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
 
   return (
     <div className={styles.card}>
-      <h1 className={styles.title}>{t("title")}</h1>
+      <h2 className={styles.title}>{t("title")}</h2>
 
       <form onSubmit={formik.handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
@@ -83,6 +83,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
             id="login"
             name="login"
             type="email"
+            placeholder="Введіть електронну адресу"
             className={`${styles.input} ${
               formik.touched.login && formik.errors.login ? styles.error : ""
             }`}
@@ -103,6 +104,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
             id="password"
             name="password"
             type="password"
+            placeholder="Введіть пароль"
             className={`${styles.input} ${
               formik.touched.password && formik.errors.password
                 ? styles.error

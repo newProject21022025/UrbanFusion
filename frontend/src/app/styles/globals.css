@@ -2,11 +2,15 @@
   /* Background colors */
   --color-bg-dark: #2F4F4F;
   --color-bg-light: #EDE7DC;
+  --color-bg-dark-hover: #709090;
 
   /* Text colors */
   --color-text-dark: #202020;
   --color-text-light: #EDE7DC;
   --color-text-white: #FFFFFF;
+  --color-text-red: #c84a55;  
+  --color-text-gray: #888;  
+  
 }
 
 * {
