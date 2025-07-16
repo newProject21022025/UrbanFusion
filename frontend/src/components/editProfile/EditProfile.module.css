@@ -1,7 +1,13 @@
 .container {
-  max-width: 500px;
+  /* max-width: 500px; */
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem; */  
+}
+.title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .form {
@@ -16,37 +22,42 @@
 }
 
 .label {
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-  font-size: 0.95rem;
+  display: block;
+  margin-bottom: 0.8rem;
+  color: var(--color-text-dark);
+  font-family: "Lora", serif;
 }
 
 .input {
-  padding: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: var(--color-bg-light);
 }
 
 .error {
-  color: red;
-  font-size: 0.85rem;
-  margin-top: 0.2rem;
+  color: var(--color-text-red);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
 }
 
 .button {
-  padding: 0.6rem;
-  background-color: #0070f3;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-light);
+  border-radius: 0.375rem;
   font-weight: 500;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s;
 }
-
-.button:disabled {
+.button:hover {
+  background-color: #709090;
+}
+/* .button:disabled {
   background-color: #aaa;
   cursor: not-allowed;
-}
+} */

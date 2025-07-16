@@ -19,6 +19,7 @@ import PersonalData from "../../svg/PersonalData/personalData";
 import Exit from "../../svg/Exit/exit";
 import CatalogDropdown from "./CatalogDropdown";
 import SearchBarHeader from "../searchBarHeader/SearchBarHeader";
+import MobileHeader from "./MobileHeader";
 
 type HeaderProps = {
   locale: "en" | "uk";
@@ -31,6 +32,7 @@ export default function Header({ locale }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
+  // const [menuOpen, setMenuOpen] = useState(false);
 
   const { isAdmin, isAuthenticated, adminLinks } = useSelector(
     (state: RootState) => state.auth
@@ -61,7 +63,7 @@ export default function Header({ locale }: HeaderProps) {
   const changeLanguage = (newLocale: string) => {
     router.push(pathname, { locale: newLocale, scroll: false });
   };
-  
+
   const handleLogout = () => {
     if (isAdmin) {
       dispatch(logoutAdmin());
@@ -110,91 +112,110 @@ export default function Header({ locale }: HeaderProps) {
   }
 
   return (
-    <header
-      className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${
-        catalogOpen ? styles.expanded : ""
-      }`}
-      onMouseLeave={() => setCatalogOpen(false)}
-    >
-      <nav className={styles.nav}>
-        <div
-          onMouseEnter={() => setCatalogOpen(true)}
-          className={styles.catalogWrapper}
+    <>
+      <div className="desktop-only">
+        <header
+          className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${
+            catalogOpen ? styles.expanded : ""
+          }`}
+          onMouseLeave={() => setCatalogOpen(false)}
         >
-          <Link href="/catalog" className={styles.navLink}>
-            {t("catalog")}
-          </Link>
-          {catalogOpen && <CatalogDropdown />}
-        </div>
-        <Link href="/" className={styles.navLink}>
-          <div className={styles.logo}>
-            <span>
-              <LogoWhite />
-            </span>
-            {t("logo")}
-          </div>
-        </Link>
-        <div className={styles.languageSwitcher}>
-          <SearchBarHeader />
-          {isAuthenticated && (
-            <Link href="/personalData" className={styles.navLink}>
-              <PersonalData />
-            </Link>
-          )}
-          {isAuthenticated ? (
+          <nav className={styles.nav}>
             <div
-              onClick={handleLogout}
-              className={styles.navLink}
-              role="button"
-              tabIndex={0}
+              onMouseEnter={() => setCatalogOpen(true)}
+              className={styles.catalogWrapper}
             >
-              <Exit />
+              <Link href="/catalog" className={styles.navLink}>
+                {t("catalog")}
+              </Link>
+              {catalogOpen && <CatalogDropdown />}
             </div>
-          ) : (
-            <Link href="/logIn" className={styles.navLink}>
-              <LogIn />
+            <Link href="/" className={styles.navLink}>
+              <div className={styles.logo}>
+                <span>
+                  <LogoWhite />
+                </span>
+                {t("logo")}
+              </div>
             </Link>
-          )}
-          <button
-            onClick={() => changeLanguage("en")}
-            className={`${styles.languageButton} ${
-              locale === "en" ? styles.active : ""
-            }`}
-          >
-            EN
-          </button>
-          <span className={styles.languageSeparator}>|</span>
-          <button
-            onClick={() => changeLanguage("uk")}
-            className={`${styles.languageButton} ${
-              locale === "uk" ? styles.active : ""
-            }`}
-          >
-            UK
-          </button>
-          <div className={styles.favoritesWrapper}>
-            <Link href="/favorites" className={styles.navLink}>
-              {favoriteCount > 0 ? <HeartBlack /> : <HeartEmpty />}
-              {favoriteCount > 0 && (
-                <span className={styles.favoritesCount}>{favoriteCount}</span>
+            <div className={styles.languageSwitcher}>
+              <SearchBarHeader />
+              {isAuthenticated && (
+                <Link href="/personalData" className={styles.navLink}>
+                  <PersonalData />
+                </Link>
               )}
-            </Link>
-          </div>
-          <div className={styles.basketWrapper}>
-            <Link href="/basket" className={styles.navLink}>
-              <BasketWhite />
-              {basketCount > 0 && (
-                <span className={styles.basketCount}>{basketCount}</span>
+              {isAuthenticated ? (
+                <div
+                  onClick={handleLogout}
+                  className={styles.navLink}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <Exit />
+                </div>
+              ) : (
+                <Link href="/logIn" className={styles.navLink}>
+                  <LogIn />
+                </Link>
               )}
-            </Link>
-          </div>
-          {isAdmin && (
-            <Link href={adminLinks.link} className={styles.navLink}>
-              {adminLinks.label}
-            </Link>
-          )}
-        </div>
-      </nav>
-    </header>
+              <button
+                onClick={() => changeLanguage("en")}
+                className={`${styles.languageButton} ${
+                  locale === "en" ? styles.active : ""
+                }`}
+              >
+                EN
+              </button>
+              <span className={styles.languageSeparator}>|</span>
+              <button
+                onClick={() => changeLanguage("uk")}
+                className={`${styles.languageButton} ${
+                  locale === "uk" ? styles.active : ""
+                }`}
+              >
+                UK
+              </button>
+              <div className={styles.favoritesWrapper}>
+                <Link href="/favorites" className={styles.navLink}>
+                  {favoriteCount > 0 ? <HeartBlack /> : <HeartEmpty />}
+                  {favoriteCount > 0 && (
+                    <span className={styles.favoritesCount}>
+                      {favoriteCount}
+                    </span>
+                  )}
+                </Link>
+              </div>
+              <div className={styles.basketWrapper}>
+                <Link href="/basket" className={styles.navLink}>
+                  <BasketWhite />
+                  {basketCount > 0 && (
+                    <span className={styles.basketCount}>{basketCount}</span>
+                  )}
+                </Link>
+              </div>
+              {isAdmin && (
+                <Link href={adminLinks.link} className={styles.navLink}>
+                  {adminLinks.label}
+                </Link>
+              )}
+            </div>
+          </nav>
+        </header>
+      </div>
+      <div className="mobile-only">
+        <MobileHeader
+          t={t}
+          locale={locale}
+          changeLanguage={changeLanguage}
+          isAuthenticated={isAuthenticated}
+          isAdmin={isAdmin}
+          adminLinks={adminLinks}
+          handleLogout={handleLogout}
+          favoriteCount={favoriteCount}
+          basketCount={basketCount}
+        />
+      </div>
+    </>
   );
 }

@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "./RandomClothes.module.css";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
@@ -21,14 +21,15 @@ import {
   getCategoryKey,
 } from "@/app/[locale]/catalog/data/ecoDescriptions";
 import { clothesService, Clothes } from "../../app/api/clothes/clothesService";
-import { useTranslations } from "next-intl";
 
 const RandomClothes = () => {
   const [randomClothes, setRandomClothes] = useState<Clothes[]>([]);
   const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
   const locale = useLocale();
   const dispatch = useDispatch();
+
   const t = useTranslations("BasicInfoSection");
+  const tEco = useTranslations("EcoDescriptions");
 
   const favoriteItems = useSelector(
     (state: RootState) => state.favorites.items
@@ -78,7 +79,6 @@ const RandomClothes = () => {
 
   return (
     <div className={styles.main}>
-      {/* <h2 className={styles.title}>Рекомендовані товари</h2> */}
       <div className={styles.clothesContainer}>
         {randomClothes.map((item) => {
           const categoryKey = getCategoryKey(
@@ -111,7 +111,7 @@ const RandomClothes = () => {
                       )}
                       {!item.stock?.length && (
                         <div className={styles.soldOutBadge}>
-                          Немає в наявності
+                          {t("soldOutBadge")}
                         </div>
                       )}
                       {item.mainImage?.url ? (
@@ -121,7 +121,7 @@ const RandomClothes = () => {
                           className={styles.clothesImage}
                         />
                       ) : (
-                        <div className={styles.noImage}>No image</div>
+                        <div className={styles.noImage}>{t("noImage")}</div>
                       )}
                     </div>
                   </Link>
@@ -131,14 +131,15 @@ const RandomClothes = () => {
                       <span>{item.category?.[locale as "uk" | "en"]}</span>
                       <span className={styles.gender}>
                         {item.gender === "male" || item.gender === "female"
-                          ? t(item.gender)
+                          ? t(`genderLabels.${item.gender}`)
                           : "—"}
                       </span>
-                      {/* <span className={styles.separator}>|</span> */}
                     </div>
+
                     <p className={styles.itemName}>
                       {item.name[locale as "uk" | "en"]}
                     </p>
+
                     <div className={styles.priceContainer}>
                       {hasDiscount ? (
                         <>
@@ -202,29 +203,30 @@ const RandomClothes = () => {
                       <Cross />
                     </div>
 
-                    <h3>{ecoInfo.title}</h3>
+                    <h3>{tEco(ecoInfo.titleKey)}</h3>
+
                     <p className={styles.ecoDescription}>
-                      {ecoInfo.description}
+                      {tEco(ecoInfo.descriptionKey)}
                     </p>
 
                     {ecoInfo.materials && (
                       <>
                         <h4 className={styles.ecoCalculatorTitle}>
-                          Екоматеріали
+                          {tEco("ecoCalculatorTitle")}
                         </h4>
                         <div className={styles.ecoMaterials}>
                           {ecoInfo.materials.map((material, index) => (
                             <div key={index} className={styles.ecoMaterial}>
                               <div className={styles.ecoMaterialHeader}>
                                 <span className={styles.ecoMaterialName}>
-                                  {material.name}
+                                  {tEco(material.nameKey)}
                                 </span>
                                 <span className={styles.ecoMaterialValue}>
                                   {material.value}
                                 </span>
                               </div>
                               <p className={styles.ecoMaterialDesc}>
-                                {material.desc}
+                                {tEco(material.descKey)}
                               </p>
                             </div>
                           ))}

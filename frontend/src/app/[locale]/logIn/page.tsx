@@ -7,9 +7,11 @@ import styles from "./page.module.css";
 import { User } from "../../../types/User";
 import RegisterForm from "../../../components/registerForm/RegisterForm";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
   const [isRegistering, setIsRegistering] = useState(false);
+  const t = useTranslations("login");
   const handleSubmit = async (values: {
     login: string;
     password: string;
@@ -62,23 +64,19 @@ export default function LoginPage() {
     <div className={styles.container}>
       {isRegistering ? <RegisterForm /> : <LoginForm onSubmit={handleSubmit} />}
       <div className={styles.registration}>
-        <p>
-          {isRegistering
-            ? "У вас вже є обліковий запис?"
-            : "Немає облікового запису?"}
-        </p>
+        <p>{isRegistering ? t("hasAccount") : t("noAccount")}</p>
         <button
           className={styles.btnRegistration}
           onClick={() => setIsRegistering(!isRegistering)}
         >
-          {isRegistering ? "Увійти" : "Зареєструватися"}
+          {isRegistering ? t('login') : t('register')}
         </button>
       </div>
       <ul className={styles.info}>
-        <p className={styles.infoTitle}>Переваги реєстрації:</p>
-        <li>Швидке оформлення замовлення завдяки збереженій адресі </li>
-        <li>Відстеження статусу своїх повідомлень </li>
-        <li>Перегляд історії замовлень </li>
+        <p className={styles.infoTitle}>{t("benefits.title")}</p>
+        <li>{t("benefits.fastOrder")}</li>
+        <li>{t("benefits.trackStatus")}</li>
+        <li>{t("benefits.orderHistory")}</li>
       </ul>
     </div>
   );

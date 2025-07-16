@@ -1,8 +1,46 @@
-.main{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    margin-top: 100px;    
-    
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin: 85px 0;
+  color: var(--color-text-dark);
+  font-family: "Lora", serif;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 34px;
+  font-weight: 600;
+}
+.historyOrders {
+  color: var(--color-text-dark);
+  font-family: "Lora", serif;
+  font-size: 20px;
+  font-weight: 600;
+}
+.greeting {
+  font-size: 20px;
+}
+
+.userInfo {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 50px;
+  padding: 20px;
+}
+.contentProfile {
+  display: grid;
+  grid-template-columns: 35% 35%;
+  width: 100%;
+  justify-content: space-around;
+}
+
+@media (max-width: 768px) {
+  .contentProfile {
+    grid-template-columns: 75%;
+  }
 }

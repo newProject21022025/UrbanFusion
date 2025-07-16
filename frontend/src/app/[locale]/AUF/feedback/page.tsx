@@ -37,18 +37,18 @@ export default function Feedback() {
     try {
       const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/callback?page=${page}&limit=${itemsPerPage}`;
       console.log("Запит до:", url); // ← чи URL правильний?
-      
+
       const res = await fetch(url);
       console.log("Статус відповіді:", res.status); // ← 200, 404, 500?
-      
+
       if (!res.ok) {
         const errorText = await res.text();
         throw new Error(`Помилка API: ${res.status} - ${errorText}`);
       }
-  
+
       const data = await res.json();
       console.log("Отримані дані:", data); // ← чи відповідає очікуваній структурі?
-      
+
       setFeedbackList(data.data || []); // ← обробка, якщо `data` може бути undefined
       setTotalPages(Math.ceil(data.total / itemsPerPage));
     } catch (error) {
@@ -117,7 +117,9 @@ export default function Feedback() {
             <th className={styles.cellHead}>{t("lastName")}</th>
             <th className={styles.cellHead}>{t("phone")}</th>
             <th className={styles.cellHead}>{t("email")}</th>
-            <th className={styles.cellHead}>{t("description")}</th>
+            <th className={`${styles.cellHead} ${styles.descriptionCell}`}>
+              {t("description")}
+            </th>
             <th className={styles.cellHead}>{t("status")}</th>
             <th className={styles.cellHead}>{t("date")}</th>
             <th className={styles.cellHead}>{t("action")}</th>
@@ -131,7 +133,9 @@ export default function Feedback() {
               <td className={styles.cell}>{item.lastName}</td>
               <td className={styles.cell}>{item.phone}</td>
               <td className={styles.cell}>{item.email}</td>
-              <td className={styles.cell}>{item.description}</td>
+              <td className={`${styles.cell} ${styles.descriptionCell}`}>
+                {item.description}
+              </td>
               <td className={styles.cell}>
                 {item.isProcessed ? t("processed") : t("unprocessed")}
               </td>
@@ -174,4 +178,3 @@ export default function Feedback() {
     </div>
   );
 }
-

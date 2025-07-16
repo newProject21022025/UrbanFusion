@@ -30,8 +30,12 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
   const t = useTranslations("login");
 
   const validationSchema = Yup.object({
-    login: Yup.string().required(t("errors.required")),
-    password: Yup.string().required(t("errors.required")),
+    login: Yup.string()
+      .email("invalidEmail")
+      .required("required"),
+    password: Yup.string()
+      .min(6, "passwordMin")
+      .required("required"),
   });
 
   const formik = useFormik({
@@ -74,7 +78,10 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
     <div className={styles.card}>
       <h2 className={styles.title}>{t("title")}</h2>
 
-      <form onSubmit={formik.handleSubmit} className={styles.form}>
+      <form
+        onSubmit={formik.handleSubmit}
+        className={styles.form}        
+      >
         <div className={styles.inputGroup}>
           <label htmlFor="login" className={styles.label}>
             {t("email")}
@@ -83,7 +90,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
             id="login"
             name="login"
             type="email"
-            placeholder="Введіть електронну адресу"
+            placeholder={t("email")}            
             className={`${styles.input} ${
               formik.touched.login && formik.errors.login ? styles.error : ""
             }`}
@@ -92,7 +99,9 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
             value={formik.values.login}
           />
           {formik.touched.login && formik.errors.login && (
-            <div className={styles.errorMessage}>{formik.errors.login}</div>
+            <div className={styles.errorMessage}>
+              {t(`errors.${formik.errors.login}`)}
+            </div>
           )}
         </div>
 
@@ -104,7 +113,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
             id="password"
             name="password"
             type="password"
-            placeholder="Введіть пароль"
+            placeholder={t("password")}            
             className={`${styles.input} ${
               formik.touched.password && formik.errors.password
                 ? styles.error
@@ -115,7 +124,9 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
             value={formik.values.password}
           />
           {formik.touched.password && formik.errors.password && (
-            <div className={styles.errorMessage}>{formik.errors.password}</div>
+            <div className={styles.errorMessage}>
+               {t(`errors.${formik.errors.password}`)}
+            </div>
           )}
         </div>
 
@@ -123,11 +134,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
           <Link href="/forgotPassword" className={styles.link}>
             {t("forgot")}
           </Link>
-          {/* <Link href="/register" className={styles.link}>
-            {t("noAccount")}
-          </Link> */}
         </div>
-
         <button
           type="submit"
           className={styles.submitButton}

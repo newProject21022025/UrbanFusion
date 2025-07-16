@@ -55,5 +55,11 @@
   .filter select {
     padding: 5px 10px;
     border-radius: 4px;
+  }     
+  .descriptionCell {
+    width: 250px;              /* або інша фіксована ширина */
+    max-width: 250px;
+    word-break: break-word;    /* переносить довгі слова */
+    white-space: normal;       /* дозволяє перенос по рядках */
   }
-    
+  

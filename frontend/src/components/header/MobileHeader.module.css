@@ -1,0 +1,99 @@
+/* Мобільний хедер */
+.mobileHeader {
+  background-color: #2F4F4F;
+  color: white;
+  padding: 0.75rem 1rem;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);  
+}
+
+.topBar {
+  display: flex;  
+  justify-content: space-between;
+  align-items: center;
+}
+
+.burger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.itemBox{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.basket {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: grey;
+  color: white;
+  font-size: 12px;
+  padding: 3px 7px;
+  border-radius: 50%;
+}
+
+.menu {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 0; 
+  background-color: #2F4F4F;
+  border: none;
+  width: 100%;
+  justify-content: center;
+}
+
+.languageToggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.languageToggle button {
+  background: none;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;  
+}
+
+.activeLang {
+  text-decoration: underline;
+}
+
+  
+  

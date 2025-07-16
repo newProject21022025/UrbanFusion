@@ -1,8 +1,7 @@
 .main {
   padding: 20px;
   max-width: 1400px;
-  margin: 0 auto;
-  margin-top: 100px;
+  margin: 85px auto;
 }
 .title {
   font-size: 48px;
@@ -11,13 +10,6 @@
   color: var(--color-text-dark);
 }
 
-/* .clothesContainer {
-  width: 1400px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  padding: 10px;
-} */
 .clothesContainer {
   width: 100%;
   display: grid;
@@ -35,7 +27,7 @@
 }
 
 .clothesCard {
-  background: #f2f2f2;
+  background: var(--color-bg-white);
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

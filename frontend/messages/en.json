@@ -34,6 +34,47 @@
       "sloganStart": "Choose",
       "sloganEnd": "– wear responsibility!",
       "brandLine": "About the Brand"
+    },
+    "planWork": {
+      "title": "Work stages",
+      "step1": {
+        "title": "Selection of ecological materials",
+        "item1": "Organic cotton (without pesticides and chemicals).",
+        "item2": "Linen, hemp, bamboo (natural, fast-renewing fibers).",
+        "item3": "Recycled materials (polyester from plastic bottles, recycled wool)."
+      },
+      "step2": {
+        "title": "Ecological dyeing and fabric processing",
+        "item1": "Use of natural or low-toxicity dyes.",
+        "item2": "Minimization of water and energy use in the processing."
+      },
+      "step3": {
+        "title": "Ethical production",
+        "item1": "Ensuring fair working conditions.",
+        "item2": "Rejection of child and forced labor.",
+        "item3": "Control of emissions and production waste."
+      },
+      "step4": {
+        "title": "Design and clothing creation",
+        "item1": "Minimization of fabric residues.",
+        "item2": "Use of cutting technologies that reduce waste.",
+        "item3": "Universal designs that extend the product's life cycle."
+      },
+      "step5": {
+        "title": "Packaging and logistics",
+        "item1": "Biodegradable or recycled packaging materials.",
+        "item2": "Transportation optimization to reduce CO₂ emissions."
+      },
+      "step6": {
+        "title": "Sales and consumption",
+        "item1": "Transparency in production (labeling of ecological certificates).",
+        "item2": "Educational campaigns for consumers on proper clothing care."
+      },
+      "step7": {
+        "title": "Recycling and reuse",
+        "item1": "Collection of old clothes for secondary use or recycling.",
+        "item2": "Development of upcycling programs (creating new products from old materials)."
+      }
     }
   },
   "About": {
@@ -59,19 +100,100 @@
     "reviewsTitle": "Reviews",
     "likes": "Likes",
     "noReviews": "No reviews yet",
-    "availableGoods": "Available Goods"
+    "availableGoods": "Available Goods",
+    "noImage": "No image",
+    "soldOutBadge": "Out of stock",
+    "genderLabels": {
+      "male": "men's",
+      "female": "women's",
+      "unisex": "unisex"
+    }
+  },
+  "EcoDescriptions": {
+    "recyclingProcessTitle": "How clothes are recycled?",
+    "recyclingProcessDescription": "1. Sorting and assessment\n2. Repair and refurbishment\n3. Repurposing and modification\n4. Material breakdown\n5. Recycling at factories",
+    "ecoCalculatorTitle": "Sustainability Calculator",
+    "materials": {
+      "linenDenim": {
+        "name": "Linen Denim",
+        "desc": "A blend of linen and cotton for added lightness and breathability."
+      },
+      "recycledCotton": {
+        "name": "Recycled Cotton",
+        "desc": "Obtained from old fabrics or production scraps, transformed into new yarn."
+      },
+      "bambooFabric": {
+        "name": "Bamboo Fabric",
+        "desc": "Made from bamboo fibers, sometimes with added organic cotton."
+      },
+      "linen": {
+        "name": "Linen",
+        "desc": "Natural fabric made from linen fibers, requiring minimal water and chemicals."
+      },
+      "recycledViscoseTextile": {
+        "name": "Recycled Viscose Textile",
+        "desc": "Made from viscose waste, reducing textile waste."
+      },
+      "organicDenim": {
+        "name": "Organic Denim",
+        "desc": "Made from cotton grown without pesticides and chemicals."
+      },
+      "stretchDenim": {
+        "name": "Stretch Denim",
+        "desc": "Jeans often contain elastane. Eco-friendly versions use biodegradable elastane."
+      },
+      "recycledDenim": {
+        "name": "Recycled Denim",
+        "desc": "Obtained from old jeans or production scraps."
+      },
+      "hempFabric": {
+        "name": "Hemp Fabric",
+        "desc": "Very durable natural fabric, resistant to wear and tear."
+      },
+      "waxedCotton": {
+        "name": "Waxed Cotton",
+        "desc": "Cotton treated with wax for water resistance."
+      },
+      "bioplastic": {
+        "name": "Bioplastic",
+        "desc": "Used for accessories. Made from corn starch or castor oil, allowing it to decompose naturally."
+      },
+      "bamboo": {
+        "name": "Bamboo",
+        "desc": "Environmentally friendly, rapidly renewable material. Requires no chemical fertilizers or pesticides."
+      },
+      "recycledPlastic": {
+        "name": "Recycled Plastic",
+        "desc": "Often made from collected ocean waste or plastic bottles. Using such material helps reduce plastic pollution."
+      },
+      "glass": {
+        "name": "Glass",
+        "desc": "Environmentally friendly, rapidly renewable material. Requires no chemical fertilizers or pesticides."
+      }
+    }
   },
   "login": {
     "title": "Login",
     "email": "Email address",
     "password": "Password",
-    "forgot": "Forgot your password?",
-    "noAccount": "No account? Sign up.",
-    "submit": "Login",
-    "submitting": "Logging in...",
+    "forgot": "Forgot password?",
+    "hasAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "login": "Log in",
+    "register": "Register",
+    "submit": "Sign In",
+    "submitSuccess": "Login successful!",
+    "submitting": "Signing in...",
     "errors": {
       "required": "Required field",
-      "invalidEmail": "Invalid email format"
+      "invalidEmail": "Invalid email format",
+      "passwordMin": "Minimum {min} characters"
+    },
+    "benefits": {
+      "title": "Registration benefits:",
+      "fastOrder": "Faster checkout with saved address",
+      "trackStatus": "Track your order status",
+      "orderHistory": "View order history"
     }
   },
   "Basket": {
@@ -89,9 +211,10 @@
     "nameUk": "Name (Ukrainian)",
     "descEn": "Description (English)",
     "descUk": "Description (Ukrainian)",
-    "gender": "Gender",
-    "male": "Male",
-    "female": "Female"
+    "genderLabels": {
+      "male": "Male",
+      "female": "Female"
+    }   
   },
   "ImageSection": {
     "mainImage": "Main Image",
@@ -183,11 +306,9 @@
     }
   },
   "PersonalData": {
-    "title": "Personal Data",
-    "content": "This is the personal data page content in English.",
-    "name": "Name",
-    "email": "Email",
-    "userOrders": "Your Orders"
+    "title": "Personal account",
+    "name": "Hello, ",
+    "userOrders": "Your order history"
   },
   "Order": {
     "emptyBasket": "Basket is empty",
@@ -305,5 +426,126 @@
   "share": {
     "button": "Share",
     "copied": "Link copied!"
-  }
+  },
+  "ReturnClothes": {
+    "howToReturnTitle": "How to return clothes for recycling",
+    "description1": "We at",
+    "description2": "are committed to a sustainable future, and you can be part of this movement! If you have old items from our brand that you no longer wear, we offer a convenient and eco-friendly way to recycle them.",
+    "stepByStepTitle": "Step-by-step guide to returning clothes:",
+    "step1": "Check the condition – make sure the clothes are clean and dry. We accept items with minor defects, but heavily damaged or soiled items should be disposed of in another way.",
+    "step2": "Pack the items – place the clothes in any clean packaging (bag or box).",
+    "chooseMethodTitle": "Choose a return method:",
+    "method1": "Bring to our brand store – find the nearest drop-off point on the map https://www.google.com/maps/place/%D0%A3%D0%BA%.",
+    "method2": "Send by courier – arrange a return through a courier service, specifying our address.",
+    "method3": "Get a bonus – for participating in the recycling program we give you a discount or bonus points for your next purchase. More about the promotion: https://urban-fusion-5fee.vercel.app/en",
+    "afterReturnTitle": "What happens to clothes after return?",
+    "after1": "Collected items are sent for recycling, where they get a second life. Materials are reused for fabrics, insulation, or other useful materials, reducing environmental impact.",
+    "after2": "Join us in creating a more eco-friendly future! If you have any questions, contact us via email at project21022025@proton.me."
+  },
+  "Recycling": {
+    "title": "Clothing Recycling",
+    "highlight": "Clothing recycling",
+    "description": "is the process of turning old or unwanted clothes into new items of added value. It’s an eco-friendly approach that helps reduce textile waste and create unique products.",
+    "howTitle": "How is clothing recycled?",
+    "steps": {
+      "01": {
+        "title": "Sorting and evaluation",
+        "list": [
+          "The condition of clothing is checked: what can be restored, and what should be broken down into materials.",
+          "Items that can be resold as second-hand or suitable for recycling are identified."
+        ]
+      },
+      "02": {
+        "title": "Repair and refresh",
+        "list": [
+          "Replacing buttons, zippers, patching holes.",
+          "Dyeing or bleaching fabric to change its appearance.",
+          "Adding patches, prints, embroidery, or other decorations."
+        ]
+      },
+      "03": {
+        "title": "Remake and modification",
+        "list": [
+          "Changing the style: turning t-shirts into crop tops, jeans into shorts, or denim into bags.",
+          "Combining fabrics to create new designs.",
+          "Using leftover fabric for accessories (headbands, covers, wallets)."
+        ]
+      },
+      "04": {
+        "title": "Material breakdown",
+        "list": [
+          "Unrepairable clothes are cut into pieces for further use.",
+          "Creating new yarn from old sweaters.",
+          "Transforming textiles into rags, insulation, or even new fabrics."
+        ]
+      },
+      "05": {
+        "title": "Factory recycling",
+        "alt": "Factory recycling",
+        "list": [
+          "Some companies specialize in industrial recycling: shredding fabric and converting it into new raw materials for clothing, carpets, or insulation.",
+          "Clothing recycling extends the life of garments and helps reduce the environmental footprint of textile production."
+        ]
+      }
+    }
+  },
+  "UserOrders": {
+    "myOrders": "My Orders",
+    "date": "Date",
+    "orderNumber": "Order Number",
+    "name": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "status": "Status",
+    "itemName": "Item Name",
+    "quantity": "Quantity",
+    "pieces": "pcs.",
+    "size": "Size",
+    "color": "Color",
+    "priceWithoutDiscount": "Price without discount",
+    "priceWithDiscount": "Price with discount",
+    "totalAmount": "Total",
+    "orderTotal": "Order Total",
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "shipped": "Shipped",
+    "canceled": "Canceled",
+    "loading": "Loading...",
+    "allOrdersLoaded": "These are all your orders 😊",
+    "failedToFetchOrders": "Failed to fetch orders"
+  },
+  "EditProfile": {
+    "loadingProfile": "Loading profile...",
+    "editProfileTitle": "Edit Profile",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phone": "Phone",
+    "address": "Address",
+    "postOfficeDetails": "Nova Poshta Details",
+    "save": "Save",
+    "saving": "Saving...",
+    "firstNameRequired": "First name is required",
+    "invalidPhoneFormat": "Invalid phone format",
+    "dataUpdatedSuccessfully": "Data updated successfully!",
+    "updateError": "Update error",
+    "somethingWentWrong": "Something went wrong."
+  },
+  "ChangePasswordForm": {
+    "changePasswordTitle": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "updatePasswordButton": "Update Password",
+    "updatingPasswordButton": "Updating...",
+    "currentPasswordRequired": "Current password is required",
+    "newPasswordRequired": "New password is required",
+    "minSixChars": "Minimum 6 characters",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "confirmationRequired": "Confirmation is required",
+    "passwordUpdatedSuccessfully": "Password updated successfully!",
+    "passwordUpdateError": "Password update error",
+    "somethingWentWrong": "Something went wrong"
+  } 
 }

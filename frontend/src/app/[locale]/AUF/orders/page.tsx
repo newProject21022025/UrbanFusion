@@ -47,16 +47,23 @@ export default function AdminOrdersPage() {
 
   const loadOrders = useCallback(async () => {
     if (loading || page > totalPages) return;
-
+  
     setLoading(true);
-
+  
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders?page=${page}&limit=5`
       );
       const data: PaginatedOrders = await res.json();
-
-      setOrders((prev) => [...prev, ...data.data]);
+  
+      setOrders((prev) => {
+        // Фільтруємо нові замовлення, щоб не додавати дублікати
+        const newOrders = data.data.filter(
+          (newOrder) => !prev.some((order) => order._id === newOrder._id)
+        );
+        return [...prev, ...newOrders];
+      });
+  
       setTotalPages(data.totalPages);
       setPage((prev) => prev + 1);
     } catch (err) {
@@ -65,6 +72,28 @@ export default function AdminOrdersPage() {
       setLoading(false);
     }
   }, [page, loading, totalPages]);
+  
+
+  // const loadOrders = useCallback(async () => {
+  //   if (loading || page > totalPages) return;
+
+  //   setLoading(true);
+
+  //   try {
+  //     const res = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders?page=${page}&limit=5`
+  //     );
+  //     const data: PaginatedOrders = await res.json();
+
+  //     setOrders((prev) => [...prev, ...data.data]);
+  //     setTotalPages(data.totalPages);
+  //     setPage((prev) => prev + 1);
+  //   } catch (err) {
+  //     console.error("Помилка при завантаженні замовлень:", err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, [page, loading, totalPages]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -156,7 +185,7 @@ export default function AdminOrdersPage() {
 
   return (
     <div className={styles.container}>
-      <h1>Усі замовлення</h1>
+      <h2>Усі замовлення</h2>
 
       {orders.map((order) => (
         <div key={order._id} className={styles.orderCard}>
