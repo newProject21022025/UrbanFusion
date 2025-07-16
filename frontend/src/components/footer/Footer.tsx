@@ -38,7 +38,7 @@ export default function Footer() {
           <ul className={styles.containerItem}>
             <li className={styles.itemTitle}>{t("aboutUs")}</li>
             <li className={styles.item}>
-              <Link href="/callback" className={styles.footerLink}>
+              <Link href="/recycling" className={styles.footerLink}>
                 {t("recycling")}
               </Link>
             </li>
@@ -46,7 +46,7 @@ export default function Footer() {
   
           <ul className={styles.containerItem}>
             <li className={styles.item}>
-              <Link href="/callback" className={styles.footerLink}>
+              <Link href="/returnClothes" className={styles.footerLink}>
                 {t("returnClothes")}
               </Link>
             </li>

@@ -1,0 +1,55 @@
+.container {
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 85px auto;
+  color: var(--color-text-dark);
+  font-family: "Lora", serif;
+  padding: 30px;
+  gap: 50px;
+}
+.returnClothesBox{
+  display: flex;
+  flex-direction: column;  
+  width: 100%;
+  gap: 10px;  
+  margin-bottom: 20px;
+}
+.returnClothesTitle {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.returnClothesDescription{
+  margin-bottom: 20px;
+}
+.returnClothesHighlight {
+  font-size: 18px;
+  font-weight: 600;
+}
+.returnClothesNumber {
+  font-size: 20px;
+  font-weight: 400;
+  font-family: "Mea Culpa", serif;
+}
+.returnClothesImageBox{
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+}
+.returnClothesImage {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+@media (max-width: 768px) {
+  .returnClothesImageBox {
+    grid-template-columns: 1fr; /* Змінюємо на один стовпець */
+    justify-items: center;
+  }
+  .container {
+    padding: 20px; /* Зменшуємо відступи на менших екранах */
+  }
+  
+}

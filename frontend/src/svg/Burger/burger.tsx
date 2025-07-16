@@ -1,0 +1,13 @@
+const Burger = () => {
+    return (
+      
+      <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="6" y="11" width="33" height="4" fill="#EDE7DC"/>
+      <rect x="6" y="19" width="33" height="4" fill="#EDE7DC"/>
+      <rect x="6" y="27" width="33" height="4" fill="#EDE7DC"/>
+      </svg>
+      
+    );
+  };
+  
+  export default Burger;

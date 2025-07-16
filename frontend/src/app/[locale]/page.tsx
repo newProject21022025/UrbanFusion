@@ -42,7 +42,7 @@ export default function Home() {
           <div className={styles.aboutUsBox}>
             <div className={styles.aboutUsImage}>
               <img
-                src="/aboutUs_1.png"
+                src="/home/aboutUs_1.png"
                 alt={t("aboutUs.imageAlt")}
                 className={styles.aboutUsImageContent}
               />
@@ -91,7 +91,7 @@ export default function Home() {
             </div>
             <div className={styles.aboutUsImage}>
               <img
-                src="/aboutUs_2.png"
+                src="/home/aboutUs_2.png"
                 alt={t("aboutUs.imageAlt")}
                 className={styles.aboutUsImageContent}
               />
@@ -161,113 +161,99 @@ export default function Home() {
           </div>
         </section>
         <section className={styles.planWork}>
-          <h3 className={styles.titlePlanWork}>
-            {/* {t("planWork.title")} */}
-            Етапи виконання роботи
-          </h3>
-          <div className={styles.planWorkContainer}>
-            <div className={styles.planWorkBox}>
-              <div className={styles.planWorkInfo}>
-                <p className={styles.planWorkNumber}>01</p>
-                <p className={styles.planWorkText}>
-                  Вибір екологічних матеріалів
-                </p>
-              </div>
-              <ul className={styles.planWorkList}>
-                <li>Органічна бавовна (без пестицидів та хімікатів).</li>
-                <li>
-                  Льон, коноплі, бамбук (натуральні, швидко відновлювальні
-                  волокна).
-                </li>
-                <li>
-                  Перероблені матеріали (поліестер з пластикових пляшок,
-                  перероблена шерсть).
-                </li>
-              </ul>
-            </div>
-            <div className={styles.planWorkBox}>
-              <div className={styles.planWorkInfo}>
-                <p className={styles.planWorkNumber}>02</p>
-                <p className={styles.planWorkText}>
-                  Екологічне фарбування та обробка тканин
-                </p>
-              </div>
-              <ul className={styles.planWorkList}>
-                <li>Використання натуральних або малотоксичних барвників.</li>
-                <li>
-                  Мінімізація використання води та енергії в процесі обробки.
-                </li>
-              </ul>
-            </div>
-            <div className={styles.planWorkBox}>
-              <div className={styles.planWorkInfo}>
-                <p className={styles.planWorkNumber}>03</p>
-                <p className={styles.planWorkText}>Етичне виробництво</p>
-              </div>
-              <ul className={styles.planWorkList}>
-                <li>Забезпечення справедливих умов праці.</li>
-                <li>Відмова від дитячої та примусової праці.</li>
-                <li>Контроль за викидами та відходами виробництва.</li>
-              </ul>
-            </div>
-            <div className={styles.planWorkBox}>
-              <div className={styles.planWorkInfo}>
-                <p className={styles.planWorkNumber}>04</p>
-                <p className={styles.planWorkText}>Дизайн та створення одягу</p>
-              </div>
-              <ul className={styles.planWorkList}>
-                <li>Мінімізація залишків тканини.</li>
-                <li>Використання крійових технологій, що зменшують відходи.</li>
-                <li>
-                  Універсальні дизайни, що подовжують життєвий цикл виробу.
-                </li>
-              </ul>
-            </div>
-            <div className={styles.planWorkBox}>
-              <div className={styles.planWorkInfo}>
-                <p className={styles.planWorkNumber}>05</p>
-                <p className={styles.planWorkText}>Упаковка та логістика</p>
-              </div>
-              <ul className={styles.planWorkList}>
-                <li>Біорозкладні або перероблені пакувальні матеріали.</li>
-                <li>Оптимізація транспортування для зменшення викидів CO₂.</li>
-              </ul>
-            </div>
-            <div className={styles.planWorkBox}>
-              <div className={styles.planWorkInfo}>
-                <p className={styles.planWorkNumber}>06</p>
-                <p className={styles.planWorkText}>Продаж та споживання</p>
-              </div>
-              <ul className={styles.planWorkList}>
-                <li>
-                  Прозорість у виробництві (маркування екологічних
-                  сертифікатів).
-                </li>
-                <li>
-                  Освітні кампанії для споживачів щодо правильного догляду за
-                  речами.
-                </li>
-              </ul>
-            </div>
-            <div className={`${styles.planWorkBox} ${styles.lastPlanWorkBox}`}>
-              <div className={styles.planWorkInfo}>
-                <p className={styles.planWorkNumber}>07</p>
-                <p className={styles.planWorkText}>
-                  Переробка та повторне використання
-                </p>
-              </div>
-              <ul className={styles.planWorkList}>
-                <li>
-                  Збір старого одягу для вторинного використання або переробки.
-                </li>
-                <li>
-                  Розвиток програм апсайклінгу (створення нових виробів зі
-                  старих матеріалів)
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
+  <h3 className={styles.titlePlanWork}>
+    {t("planWork.title")}
+  </h3>
+  <div className={styles.planWorkContainer}>
+    <div className={styles.planWorkBox}>
+      <div className={styles.planWorkInfo}>
+        <p className={styles.planWorkNumber}>01</p>
+        <p className={styles.planWorkText}>
+          {t("planWork.step1.title")}
+        </p>
+      </div>
+      <ul className={styles.planWorkList}>
+        <li>{t("planWork.step1.item1")}</li>
+        <li>{t("planWork.step1.item2")}</li>
+        <li>{t("planWork.step1.item3")}</li>
+      </ul>
+    </div>
+    <div className={styles.planWorkBox}>
+      <div className={styles.planWorkInfo}>
+        <p className={styles.planWorkNumber}>02</p>
+        <p className={styles.planWorkText}>
+          {t("planWork.step2.title")}
+        </p>
+      </div>
+      <ul className={styles.planWorkList}>
+        <li>{t("planWork.step2.item1")}</li>
+        <li>{t("planWork.step2.item2")}</li>
+      </ul>
+    </div>
+    <div className={styles.planWorkBox}>
+      <div className={styles.planWorkInfo}>
+        <p className={styles.planWorkNumber}>03</p>
+        <p className={styles.planWorkText}>
+          {t("planWork.step3.title")}
+        </p>
+      </div>
+      <ul className={styles.planWorkList}>
+        <li>{t("planWork.step3.item1")}</li>
+        <li>{t("planWork.step3.item2")}</li>
+        <li>{t("planWork.step3.item3")}</li>
+      </ul>
+    </div>
+    <div className={styles.planWorkBox}>
+      <div className={styles.planWorkInfo}>
+        <p className={styles.planWorkNumber}>04</p>
+        <p className={styles.planWorkText}>
+          {t("planWork.step4.title")}
+        </p>
+      </div>
+      <ul className={styles.planWorkList}>
+        <li>{t("planWork.step4.item1")}</li>
+        <li>{t("planWork.step4.item2")}</li>
+        <li>{t("planWork.step4.item3")}</li>
+      </ul>
+    </div>
+    <div className={styles.planWorkBox}>
+      <div className={styles.planWorkInfo}>
+        <p className={styles.planWorkNumber}>05</p>
+        <p className={styles.planWorkText}>
+          {t("planWork.step5.title")}
+        </p>
+      </div>
+      <ul className={styles.planWorkList}>
+        <li>{t("planWork.step5.item1")}</li>
+        <li>{t("planWork.step5.item2")}</li>
+      </ul>
+    </div>
+    <div className={styles.planWorkBox}>
+      <div className={styles.planWorkInfo}>
+        <p className={styles.planWorkNumber}>06</p>
+        <p className={styles.planWorkText}>
+          {t("planWork.step6.title")}
+        </p>
+      </div>
+      <ul className={styles.planWorkList}>
+        <li>{t("planWork.step6.item1")}</li>
+        <li>{t("planWork.step6.item2")}</li>
+      </ul>
+    </div>
+    <div className={`${styles.planWorkBox} ${styles.lastPlanWorkBox}`}>
+      <div className={styles.planWorkInfo}>
+        <p className={styles.planWorkNumber}>07</p>
+        <p className={styles.planWorkText}>
+          {t("planWork.step7.title")}
+        </p>
+      </div>
+      <ul className={styles.planWorkList}>
+        <li>{t("planWork.step7.item1")}</li>
+        <li>{t("planWork.step7.item2")}</li>
+      </ul>
+    </div>
+  </div>
+</section>
       </main>
     </div>
   );

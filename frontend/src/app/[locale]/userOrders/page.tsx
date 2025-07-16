@@ -27,7 +27,7 @@ interface Order {
     mainImage?: {
       url: string;
       alt: { en?: string; uk?: string };
-    };    
+    };
   }[];
 }
 
@@ -42,14 +42,14 @@ export default function UserOrders() {
   const fetchOrders = async () => {
     if (!userId || loading || !hasMore) return;
     setLoading(true);
-  
+
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders/user/${userId}?page=${page}&limit=5`
       );
       if (!res.ok) throw new Error("Не вдалося отримати замовлення");
       const data = await res.json();
-  
+
       setOrders((prev) => {
         const combined = [...prev, ...data.data];
         const uniqueOrders = combined.filter(
@@ -58,7 +58,7 @@ export default function UserOrders() {
         );
         return uniqueOrders;
       });
-  
+
       setHasMore(data.page < data.totalPages);
       setPage((prev) => prev + 1);
     } catch (err) {
@@ -67,7 +67,6 @@ export default function UserOrders() {
       setLoading(false);
     }
   };
-  
 
   useEffect(() => {
     fetchOrders(); // завантажити першу сторінку
@@ -94,79 +93,136 @@ export default function UserOrders() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Мої замовлення</h1>
+      <h2 className={styles.title}>Мої замовлення</h2>
       {orders.map((order) => (
         <div key={order._id} className={styles.orderCard}>
-          <p><strong>Номер замовлення:</strong> {order.orderNumber}</p>
-          <div className={styles.article}>{order.article}</div>
-          <p><strong>Ім’я:</strong> {order.firstName} {order.lastName}</p>
-          <p><strong>Email:</strong> {order.userEmail}</p>
-          <p><strong>Телефон:</strong> {order.phone}</p>
-          <p><strong>Адреса:</strong> {order.deliveryAddress}</p>
-          <p><strong>Статус:</strong> {order.status}</p>
-          <p><strong>Дата:</strong> {new Date(order.createdAt).toLocaleDateString()}</p>
-          <ul className={styles.orderItems}>
+          <div className={styles.imageBox}>
             {order.items.map((item, i) => (
-              <li key={i} className={styles.noBullet}>
+              <div className={styles.imageBox} key={i}>
                 {item.mainImage?.url && (
                   <img
+                    className={styles.image}
                     src={item.mainImage.url}
-                    width={80}
-                    height={80}
                     style={{ objectFit: "cover", borderRadius: "8px" }}
                   />
                 )}
-                {item.name.uk} – {item.quantity} шт., {item.size}, {item.color} –{" "}
-                <span style={{ textDecoration: "line-through", color: "gray" }}>
-                  {item.price.amount} {item.price.currency}
-                </span>{" "}
-                →{" "}
-                <span style={{ fontWeight: "bold", color: "green" }}>
-                  {(
-                    item.price.amount *
-                    (1 - item.price.discount / 100)
-                  ).toFixed(2)}{" "}
-                  {item.price.currency}
-                </span>{" "}
-                ={" "}
-                {(
-                  item.quantity *
-                  item.price.amount *
-                  (1 - item.price.discount / 100)
-                ).toFixed(2)}{" "}
-                {item.price.currency}
-                <div className={styles.statusButtons}>
-                  <p>
-                    <strong>Статус: </strong>
-                    <span
-                      className={`${styles.statusBadge} ${styles["status-" + order.status]}`}
-                    >
-                      {{
-                        pending: "Очікує",
-                        confirmed: "Підтверджено",
-                        shipped: "Відправлено",
-                        canceled: "Скасовано",
-                      }[order.status]}
-                    </span>
-                  </p>
-                </div>
-              </li>
+              </div>
             ))}
-          </ul>
-          <p>
-            <strong>Сума замовлення:</strong>{" "}
-            {order.items
-              .reduce(
-                (total, item) =>
-                  total +
-                  item.quantity *
-                    item.price.amount *
-                    (1 - item.price.discount / 100),
-                0
-              )
-              .toFixed(2)}{" "}
-            {order.items[0]?.price.currency || "UAH"}
-          </p>
+          </div>
+          <div className={styles.infoBox}>
+            <p>
+              <strong>Дата:</strong>{" "}
+              {new Date(order.createdAt).toLocaleDateString()}
+            </p>
+            <p>
+              <strong>Номер замовлення:</strong> {order.orderNumber}
+            </p>
+            <div className={styles.article}>{order.article}</div>
+            <p>
+              <strong>Ім’я:</strong> {order.firstName}
+            </p>
+            <p>
+              <strong>Прізвище:</strong> {order.lastName}
+            </p>
+            <p>
+              <strong>Email:</strong> {order.userEmail}
+            </p>
+            <p>
+              <strong>Телефон:</strong> {order.phone}
+            </p>
+            <p>
+              <strong>Адреса:</strong> {order.deliveryAddress}
+            </p>
+          </div>
+          <div className={styles.orderBox}>
+            <p>
+              <strong>Статус:</strong> {order.status}
+            </p>
+            <ul className={styles.orderItems}>
+              {order.items.map((item, i) => (
+                <li key={i} className={styles.noBullet}>
+                  <ul className={styles.itemDetails}>
+                    <li>Назва товару: {item.name.uk}</li>
+                    <li>Кількість: {item.quantity} шт.</li>
+                    <li>Розмір: {item.size}</li>
+                    <li>
+                      Колір:{" "}
+                      <span
+                        className={styles.circle}
+                        style={{ backgroundColor: item.color }}
+                      ></span>
+                    </li>
+                    <li>
+                      Ціна без знижки:{" "}
+                      <span
+                        style={{
+                          textDecoration: "line-through",
+                          color: "gray",
+                        }}
+                      >
+                        {" "}
+                        {item.price.amount} {item.price.currency}
+                      </span>
+                    </li>
+                    <li >
+                      Ціна зі знижкою:{" "}
+                      <span style={{ fontWeight: "bold" }}>
+                        {" "}
+                        {(
+                          item.price.amount *
+                          (1 - item.price.discount / 100)
+                        ).toFixed(2)}{" "}
+                        {item.price.currency}
+                      </span>
+                    </li>
+                    <li>
+                      Сума:{" "}
+                      {(
+                        item.quantity *
+                        item.price.amount *
+                        (1 - item.price.discount / 100)
+                      ).toFixed(2)}{" "}
+                      {item.price.currency}
+                    </li>
+                  </ul>
+                </li>
+              ))}
+            </ul>
+
+            <div className={styles.statusButtons}>
+              <p>
+                <strong>Статус: </strong>
+                <span
+                  className={`${styles.statusBadge} ${
+                    styles["status-" + order.status]
+                  }`}
+                >
+                  {
+                    {
+                      pending: "Очікує",
+                      confirmed: "Підтверджено",
+                      shipped: "Відправлено",
+                      canceled: "Скасовано",
+                    }[order.status]
+                  }
+                </span>
+              </p>
+            </div>
+            <p>
+              <strong>Сума замовлення:</strong>{" "}
+              {order.items
+                .reduce(
+                  (total, item) =>
+                    total +
+                    item.quantity *
+                      item.price.amount *
+                      (1 - item.price.discount / 100),
+                  0
+                )
+                .toFixed(2)}{" "}
+              {order.items[0]?.price.currency || "UAH"}
+            </p>
+          </div>
         </div>
       ))}
       <div ref={observerRef} style={{ height: 1 }} />

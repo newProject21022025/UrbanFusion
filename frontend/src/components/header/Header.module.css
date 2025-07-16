@@ -13,8 +13,8 @@
   justify-content: space-between;
   align-items: flex-start;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  min-height: 60px; /* Початкова висота хедера */
-  overflow: hidden; /* Щоб меню не визирало поза межі */
+  min-height: 60px; 
+  overflow: hidden; 
 }
 
 .header.scrolled {
@@ -23,15 +23,16 @@
 }
 
 .header.expanded {
-  min-height: 350px; /* Висота при відкритому каталозі */
+  min-height: 350px; 
 }
 
 .nav {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  
-  /* flex-direction: column;  */
+  align-items: center;
+   
+ 
 }
 
 .navLink {
@@ -55,6 +56,9 @@
   gap: 5px;
   font-size: 24px;
   font-weight: 600;  
+  align-items: center;
+  position: relative;
+  left: calc(50% - 20px); 
 }
 
 .languageSwitcher {
@@ -105,7 +109,7 @@
   display: inline-block;
 }
 
-/* Стилі для каталогу (з двома колонками) */
+
 .catalogDropdown {
   display: flex;
   padding: 1rem 2rem;
@@ -113,7 +117,7 @@
   background-color: rgba(237, 231, 220, 1);
   color: #2F4F4F;
   box-shadow: inset 0 1px 0 #eee;
-  flex: 1; /* щоб зайняти доступний простір */
+  flex: 1; 
 }
 
 .catalogDropdown .column {
@@ -144,30 +148,29 @@
   background-color: #f0f0f0;
 }
 
-/* .searchWrapper {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem; 
-  position: relative;
-}
-
-.searchForm {
-  display: flex;
-}
-
-.searchInput {
-  padding: 0.4rem 0.8rem;
-  font-size: 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  outline: none;
-  width: 200px;
-  transition: width 0.3s ease;
-
-  @media (max-width: 768px) {
-    width: 120px;
+@media (max-width: 1024px) {
+  .logo {
+    position: static;
+    transform: none;
+    margin: 0 auto;
+    justify-content: center;
   }
-} */
+}
 
+.desktop-only {
+  display: block;
+}
 
+.mobile-only {
+  display: none;
+}
 
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+  
+  .mobile-only {
+    display: block;
+  }
+}

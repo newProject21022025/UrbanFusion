@@ -22,7 +22,7 @@ export default function ChangePasswordForm() {
 
   return (
     <div className={styles.passwordSection}>
-      <h3 className={styles.sectionTitle}>Змінити пароль</h3>
+      <h3 className={styles.title}>Змінити пароль</h3>
       <Formik
         initialValues={{
           currentPassword: '',

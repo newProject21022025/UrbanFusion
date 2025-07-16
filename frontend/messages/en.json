@@ -34,6 +34,47 @@
       "sloganStart": "Choose",
       "sloganEnd": "– wear responsibility!",
       "brandLine": "About the Brand"
+    },
+    "planWork": {
+      "title": "Work stages",
+      "step1": {
+        "title": "Selection of ecological materials",
+        "item1": "Organic cotton (without pesticides and chemicals).",
+        "item2": "Linen, hemp, bamboo (natural, fast-renewing fibers).",
+        "item3": "Recycled materials (polyester from plastic bottles, recycled wool)."
+      },
+      "step2": {
+        "title": "Ecological dyeing and fabric processing",
+        "item1": "Use of natural or low-toxicity dyes.",
+        "item2": "Minimization of water and energy use in the processing."
+      },
+      "step3": {
+        "title": "Ethical production",
+        "item1": "Ensuring fair working conditions.",
+        "item2": "Rejection of child and forced labor.",
+        "item3": "Control of emissions and production waste."
+      },
+      "step4": {
+        "title": "Design and clothing creation",
+        "item1": "Minimization of fabric residues.",
+        "item2": "Use of cutting technologies that reduce waste.",
+        "item3": "Universal designs that extend the product's life cycle."
+      },
+      "step5": {
+        "title": "Packaging and logistics",
+        "item1": "Biodegradable or recycled packaging materials.",
+        "item2": "Transportation optimization to reduce CO₂ emissions."
+      },
+      "step6": {
+        "title": "Sales and consumption",
+        "item1": "Transparency in production (labeling of ecological certificates).",
+        "item2": "Educational campaigns for consumers on proper clothing care."
+      },
+      "step7": {
+        "title": "Recycling and reuse",
+        "item1": "Collection of old clothes for secondary use or recycling.",
+        "item2": "Development of upcycling programs (creating new products from old materials)."
+      }
     }
   },
   "About": {
@@ -65,13 +106,24 @@
     "title": "Login",
     "email": "Email address",
     "password": "Password",
-    "forgot": "Forgot your password?",
-    "noAccount": "No account? Sign up.",
-    "submit": "Login",
-    "submitting": "Logging in...",
+    "forgot": "Forgot password?",
+    "hasAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "login": "Log in",
+    "register": "Register",
+    "submit": "Sign In",
+    "submitSuccess": "Login successful!",
+    "submitting": "Signing in...",
     "errors": {
       "required": "Required field",
-      "invalidEmail": "Invalid email format"
+      "invalidEmail": "Invalid email format",
+      "passwordMin": "Minimum {min} characters"
+    },
+    "benefits": {
+      "title": "Registration benefits:",
+      "fastOrder": "Faster checkout with saved address",
+      "trackStatus": "Track your order status",
+      "orderHistory": "View order history"
     }
   },
   "Basket": {
@@ -183,11 +235,9 @@
     }
   },
   "PersonalData": {
-    "title": "Personal Data",
-    "content": "This is the personal data page content in English.",
-    "name": "Name",
-    "email": "Email",
-    "userOrders": "Your Orders"
+    "title": "Personal account",
+    "name": "Hello, ",
+    "userOrders": "Your order history"
   },
   "Order": {
     "emptyBasket": "Basket is empty",

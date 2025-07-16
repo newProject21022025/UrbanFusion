@@ -1,7 +1,7 @@
 .container {
   max-width: 1400px;
-  margin: 0 auto;
-  margin-top: 85px;
+  margin: 85px auto;
+  /* margin-top: 85px; */
   /* padding: 2rem; */
   min-height: 100vh;
   padding: 0; /* Видалено внутрішні відступи */
@@ -27,7 +27,7 @@
   justify-content: space-between;
   padding: 30px 0;
   margin-bottom: 85px;
-  background-image: url("../../../public/newCollection.png");
+  background-image: url("../../../public/home/newCollection.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -170,7 +170,7 @@
   left: 25%;
   width: 50%;
   height: 75%;
-  background-image: url("../../../public/aboutBrand.png");
+  background-image: url("../../../public/home/aboutBrand.png");
   background-size: cover;
   background-position: center;
   opacity: 0.7;

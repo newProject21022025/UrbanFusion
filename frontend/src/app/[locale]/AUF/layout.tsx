@@ -27,7 +27,7 @@ export default function AUFLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Перемикач вкладок</h1>
+      <h2 className={styles.title}>Перемикач вкладок</h2>
       <div className={styles.buttonGroup}>
         {TABS.map(tab => (
           <button

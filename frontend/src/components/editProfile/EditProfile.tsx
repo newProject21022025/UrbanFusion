@@ -9,7 +9,6 @@ import { setUser } from '../../redux/slices/userSlice';
 import styles from './EditProfile.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import ChangePasswordForm from './ChangePasswordForm';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required("Ім'я обов'язкове"),
@@ -76,7 +75,7 @@ export default function EditProfile() {
 
   return (
     <div className={styles.container}>
-      <h2>Редагувати профіль</h2>
+      <h2 className={styles.title}>Редагувати профіль</h2>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -119,8 +118,7 @@ export default function EditProfile() {
             </button>
           </Form>
         )}
-      </Formik>
-      <ChangePasswordForm />
+      </Formik>      
     </div>
   );
 }
