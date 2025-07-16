@@ -1,170 +1,177 @@
+// src/app/[locale]/catalog/data/ecoDescriptions.ts
+
 // Об'єкт з еко-описами для кожної категорії
-export const ecoDescriptions: Record<string, { title: string; description: string; materials: Array<{ name: string; value: number; desc: string }> }> = {
+// Ці значення тепер є ключами для перекладу
+export const ecoDescriptions: Record<string, {
+  titleKey: string;
+  descriptionKey: string;
+  materials: Array<{ nameKey: string; value: number; descKey: string }>
+}> = {
   't-shirts': {
-    title: "Як переробляється одяг?",
-    description: "1. Сортування та оцінка\n2. Ремонт та оновлення\n3. Перешивання та модифікація\n4. Розбирання на матеріали\n5. Переробка на фабриках",
+    titleKey: "recyclingProcessTitle",
+    descriptionKey: "recyclingProcessDescription",
     materials: [
       {
-        name: "Льняний денім",
+        nameKey: "materials.linenDenim.name",
         value: 20,
-        desc: "Суміш льону та бавовни для додаткової легкості та повітропроникності."
+        descKey: "materials.linenDenim.desc"
       },
       {
-        name: "Перероблена бавовна",
+        nameKey: "materials.recycledCotton.name",
         value: 50,
-        desc: "Отримана зі старих тканин або залишків виробництва, перетворених на нову пряжу."
+        descKey: "materials.recycledCotton.desc"
       },
       {
-        name: "Бамбукова тканина",
+        nameKey: "materials.bambooFabric.name",
         value: 30,
-        desc: "Виготовляється з бамбукових волокон, інколи з додаванням органічної бавовни."
+        descKey: "materials.bambooFabric.desc"
       }
     ]
   },
   'shirts': {
-    title: "Як переробляється одяг?",
-    description: "1. Сортування та оцінка\n2. Ремонт та оновлення\n3. Перешивання та модифікація\n4. Розбирання на матеріали\n5. Переробка на фабриках",
+    titleKey: "recyclingProcessTitle",
+    descriptionKey: "recyclingProcessDescription",
     materials: [
       {
-        name: "Льняний денім",
+        nameKey: "materials.linenDenim.name",
         value: 20,
-        desc: "Суміш льону та бавовни для додаткової легкості та повітропроникності."
+        descKey: "materials.linenDenim.desc"
       },
       {
-        name: "Льон",
+        nameKey: "materials.linen.name",
         value: 50,
-        desc: "Натуральна тканина з льонових волокон, що потребує мінімальної кількості води та хімікатів."
+        descKey: "materials.linen.desc"
       },
       {
-        name: "Перероблений віскозний текстиль",
+        nameKey: "materials.recycledViscoseTextile.name",
         value: 30,
-        desc: "Виготовляється з відходів віскози, що скорочує кількість текстильних відходів."
+        descKey: "materials.recycledViscoseTextile.desc"
       }
     ]
   },
   'jeans': {
-    title: "Як переробляється одяг?",
-    description: "1. Сортування та оцінка\n2. Ремонт та оновлення\n3. Перешивання та модифікація\n4. Розбирання на матеріали\n5. Переробка на фабриках",
+    titleKey: "recyclingProcessTitle",
+    descriptionKey: "recyclingProcessDescription",
     materials: [
       {
-        name: "Органічний денім",
+        nameKey: "materials.organicDenim.name",
         value: 50,
-        desc: "Виготовляється з бавовни, вирощеної без пестицидів та хімікатів."
+        descKey: "materials.organicDenim.desc"
       },
       {
-        name: "Стрейч-денім",
+        nameKey: "materials.stretchDenim.name",
         value: 15,
-        desc: "Джинси часто містять еластан. В еко-варіантах використовують біорозкладний еластан."
+        descKey: "materials.stretchDenim.desc"
       },
       {
-        name: "Перероблений денім",
+        nameKey: "materials.recycledDenim.name",
         value: 35,
-        desc: "Отриманий із старих джинсів або виробничих залишків."
+        descKey: "materials.recycledDenim.desc"
       }
     ]
   },
   'jackets': {
-    title: "Як переробляється одяг?",
-    description: "1. Сортування та оцінка\n2. Ремонт та оновлення\n3. Перешивання та модифікація\n4. Розбирання на матеріали\n5. Переробка на фабриках",
+    titleKey: "recyclingProcessTitle",
+    descriptionKey: "recyclingProcessDescription",
     materials: [
       {
-        name: "Конопляна тканина",
+        nameKey: "materials.hempFabric.name",
         value: 20,
-        desc: "Дуже міцна натуральна тканина, стійка до зношування."
+        descKey: "materials.hempFabric.desc"
       },
       {
-        name: "Воскова бавовна",
+        nameKey: "materials.waxedCotton.name",
         value: 50,
-        desc: "Бавовна, просочена воском для водонепроникності."
+        descKey: "materials.waxedCotton.desc"
       },
       {
-        name: "Біопластик",
+        nameKey: "materials.bioplastic.name",
         value: 30,
-        desc: "Використовується для фурнітури. Виготовляється з кукурудзяного крохмалю або рицинової олії, що дозволяє розкладатися у природі."
+        descKey: "materials.bioplastic.desc"
       }
     ]
   },
   'bags': {
-    title: "Як переробляється одяг?",
-    description: "1. Сортування та оцінка\n2. Ремонт та оновлення\n3. Перешивання та модифікація\n4. Розбирання на матеріали\n5. Переробка на фабриках",
+    titleKey: "recyclingProcessTitle",
+    descriptionKey: "recyclingProcessDescription",
     materials: [
       {
-        name: "Бамбук",
+        nameKey: "materials.bamboo.name",
         value: 30,
-        desc: "Екологічно чистий, швидко відновлюваний матеріал. Не потребує хімічних добрив і пестицидів."
+        descKey: "materials.bamboo.desc"
       },
       {
-        name: "Перероблений пластик",
+        nameKey: "materials.recycledPlastic.name",
         value: 70,
-        desc: "Часто виготовляється зі зібраних океанічних відходів або пластикових пляшок. Використання такого матеріалу допомагає скоротити пластикове забруднення."
+        descKey: "materials.recycledPlastic.desc"
       }
     ]
   },
   'glasses': {
-    title: "Як переробляється одяг?",
-    description: "1. Сортування та оцінка\n2. Ремонт та оновлення\n3. Перешивання та модифікація\n4. Розбирання на матеріали\n5. Переробка на фабриках",
+    titleKey: "recyclingProcessTitle",
+    descriptionKey: "recyclingProcessDescription",
     materials: [
       {
-        name: "Скло",
+        nameKey: "materials.glass.name",
         value: 30,
-        desc: "Екологічно чистий, швидко відновлюваний матеріал. Не потребує хімічних добрив і пестицидів."
+        descKey: "materials.glass.desc"
       },
       {
-        name: "Перероблений пластик",
+        nameKey: "materials.recycledPlastic.name",
         value: 70,
-        desc: "Часто виготовляється зі зібраних океанічних відходів або пластикових пляшок. Використання такого матеріалу допомагає скоротити пластикове забруднення."
+        descKey: "materials.recycledPlastic.desc"
       }
     ]
   },
   'hats': {
-    title: "Як переробляється одяг?",
-    description: "1. Сортування та оцінка\n2. Ремонт та оновлення\n3. Перешивання та модифікація\n4. Розбирання на матеріали\n5. Переробка на фабриках",
+    titleKey: "recyclingProcessTitle",
+    descriptionKey: "recyclingProcessDescription",
     materials: [
       {
-        name: "Конопляна тканина",
+        nameKey: "materials.hempFabric.name",
         value: 25,
-        desc: "Натуральне волокно з рослини коноплі, яка росте без пестицидів."
+        descKey: "materials.hempFabric.desc"
       },
       {
-        name: "Льняний денім",
+        nameKey: "materials.linenDenim.name",
         value: 60,
-        desc: "Суміш льону та бавовни для додаткової легкості та повітропроникності."
+        descKey: "materials.linenDenim.desc"
       },
       {
-        name: "Перероблений віскозний текстиль",
+        nameKey: "materials.recycledViscoseTextile.name",
         value: 15,
-        desc: "Виготовляється з відходів віскози, що скорочує кількість текстильних відходів."
+        descKey: "materials.recycledViscoseTextile.desc"
       }
     ]
   },
   'tops': {
-    title: "Як переробляється одяг?",
-    description: "1. Сортування та оцінка\n2. Ремонт та оновлення\n3. Перешивання та модифікація\n4. Розбирання на матеріали\n5. Переробка на фабриках",
+    titleKey: "recyclingProcessTitle",
+    descriptionKey: "recyclingProcessDescription",
     materials: [
       {
-        name: "Конопляна тканина",
+        nameKey: "materials.hempFabric.name",
         value: 25,
-        desc: "Натуральне волокно з рослини коноплі, яка росте без пестицидів."
+        descKey: "materials.hempFabric.desc"
       },
       {
-        name: "Льняний денім",
+        nameKey: "materials.linenDenim.name",
         value: 60,
-        desc: "Суміш льону та бавовни для додаткової легкості та повітропроникності."
+        descKey: "materials.linenDenim.desc"
       },
       {
-        name: "Перероблений віскозний текстиль",
+        nameKey: "materials.recycledViscoseTextile.name",
         value: 15,
-        desc: "Виготовляється з відходів віскози, що скорочує кількість текстильних відходів."
+        descKey: "materials.recycledViscoseTextile.desc"
       }
     ]
   }
 };
 
-// Функція для отримання категорії товару
+// Функція для отримання категорії товару (залишається без змін)
 export const getCategoryKey = (category: string | undefined) => {
   if (!category) return 't-shirts';
   const lowerCaseCategory = category.toLowerCase();
-  
+
   if (lowerCaseCategory.includes('t-shirt') || lowerCaseCategory.includes('футбол')) {
     return 't-shirts';
   } else if (lowerCaseCategory.includes('shirt') || lowerCaseCategory.includes('сороч')) {
@@ -182,7 +189,6 @@ export const getCategoryKey = (category: string | undefined) => {
   } else if (lowerCaseCategory.includes('top') || lowerCaseCategory.includes('топ')) {
     return 'tops';
   }
-  
+
   return 't-shirts'; // default
 };
-

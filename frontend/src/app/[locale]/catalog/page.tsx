@@ -3,7 +3,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./Catalog.module.css";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl"; // Додано useTranslations
 import { clothesService, Clothes } from "../../api/clothes/clothesService";
 import Eco from "../../../svg/Eco/eco";
 import Cross from "../../../svg/Cross/cross";
@@ -22,6 +22,9 @@ import { useSearchParams } from "next/navigation";
 
 export default function Catalog() {
   const locale = useLocale();
+  const t = useTranslations("Catalog"); // Для загальних текстів каталогу
+  const tEco = useTranslations("EcoDescriptions"); // Для еко-описів
+
   const [clothes, setClothes] = useState<Clothes[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -85,7 +88,6 @@ export default function Catalog() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Використовуємо window.innerHeight замість clientHeight
       const scrollTop =
         document.documentElement.scrollTop || document.body.scrollTop;
       const scrollHeight =
@@ -101,7 +103,7 @@ export default function Catalog() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [filteredClothes.length, visibleCount]); // Додаємо visibleCount до залежностей
+  }, [filteredClothes.length, visibleCount]);
 
   const fetchClothes = async () => {
     try {
@@ -109,7 +111,7 @@ export default function Catalog() {
       const data = await clothesService.getAllClothes(locale);
       setClothes(data);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Unknown error");
+      setError(err instanceof Error ? err.message : "Unknown error"); // Тут можна також перекласти "Unknown error"
     } finally {
       setLoading(false);
     }
@@ -129,14 +131,9 @@ export default function Catalog() {
   };
 
   const getGenderLabel = (gender: "male" | "female" | undefined) => {
-    const safeLocale = locale === "uk" ? "uk" : "en";
-    const labels = {
-      male: { en: "men", uk: "чоловічі" },
-      female: { en: "women", uk: "жіночі" },
-      undefined: { en: "unisex", uk: "унісекс" },
-    };
-    return labels[gender || "undefined"][safeLocale];
+    return t(`genderLabels.${gender || "unisex"}`);
   };
+  
 
   const handleFlipCard = (id: string) => {
     setFlippedCards((prev) => ({
@@ -163,11 +160,11 @@ export default function Catalog() {
 
   return (
     <main className={styles.main}>
-      <h2 className={styles.title}>Каталог</h2>
-
-      {loading && <div className={styles.loading}>Завантаження...</div>}
+      <h2 className={styles.title}>{t("title")}</h2>{" "}
+      {/* Перекладено заголовок */}
+      {loading && <div className={styles.loading}>{t("loading")}</div>}{" "}
+      {/* Перекладено завантаження */}
       {error && <div className={styles.error}>{error}</div>}
-
       <div className={styles.clothesContainer}>
         {paginatedClothes.map((item) => {
           const categoryKey = getCategoryKey(
@@ -200,12 +197,14 @@ export default function Catalog() {
                           }
                         />
                       ) : (
-                        <div className={styles.noImage}>No image</div>
+                        <div className={styles.noImage}>
+                          {t("noImage")}
+                        </div> // Перекладено "No image"
                       )}
                       {!item.availability && (
                         <div className={styles.soldOutBadge}>
-                          Немає в наявності
-                        </div>
+                          {t("soldOutBadge")}
+                        </div> // Перекладено "Немає в наявності"
                       )}
                       {item.price.discount > 0 && (
                         <div className={styles.discountBadge}>
@@ -293,30 +292,36 @@ export default function Catalog() {
 
                 <div className={styles.cardBack}>
                   <div className={styles.cardBackContent}>
-                    <h3>{ecoInfo.title}</h3>
+                    <h3>{tEco(ecoInfo.titleKey)}</h3>{" "}
+                    {/* Переклад заголовка еко-інфо */}
                     <div className={styles.ecoDescription}>
-                      {ecoInfo.description.split("\n").map((line, i) => (
-                        <p key={i}>{line}</p>
-                      ))}
+                      {tEco(ecoInfo.descriptionKey)
+                        .split("\n")
+                        .map((line, i) => (
+                          <p key={i}>{line}</p>
+                        ))}{" "}
+                      {/* Переклад опису еко-інфо */}
                     </div>
 
                     <h4 className={styles.ecoCalculatorTitle}>
-                      Калькулятор екологічності
-                    </h4>
-
+                      {tEco("ecoCalculatorTitle")}
+                    </h4>{" "}
+                    {/* Переклад заголовка калькулятора */}
                     <div className={styles.ecoMaterials}>
                       {ecoInfo.materials.map((material, index) => (
                         <div key={index} className={styles.ecoMaterial}>
                           <div className={styles.ecoMaterialHeader}>
                             <span className={styles.ecoMaterialName}>
-                              {material.name}
+                              {tEco(material.nameKey)}{" "}
+                              {/* Переклад назви матеріалу */}
                             </span>
                             <span className={styles.ecoMaterialValue}>
                               {material.value}
                             </span>
                           </div>
                           <p className={styles.ecoMaterialDesc}>
-                            {material.desc}
+                            {tEco(material.descKey)}{" "}
+                            {/* Переклад опису матеріалу */}
                           </p>
                         </div>
                       ))}
@@ -336,7 +341,7 @@ export default function Catalog() {
         })}
       </div>
 
-      {loading && <div className={styles.loading}>Завантаження...</div>}
+      {loading && <div className={styles.loading}>{t("loading")}</div>}
     </main>
   );
 }

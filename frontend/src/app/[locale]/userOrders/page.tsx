@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./UserOrders.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import { useTranslations } from "next-intl"; // Import useTranslations
+import { useParams } from "next/navigation"; // Import useParams to get the locale
 
 interface Order {
   _id: string;
@@ -32,6 +34,10 @@ interface Order {
 }
 
 export default function UserOrders() {
+  const t = useTranslations("UserOrders"); // Initialize translations for the "UserOrders" namespace
+  const params = useParams();
+  const currentLocale = params.locale as string; // Get the current locale from URL params
+
   const userId = useSelector((state: RootState) => state.user.userId);
   const [orders, setOrders] = useState<Order[]>([]);
   const [page, setPage] = useState(1);
@@ -45,9 +51,9 @@ export default function UserOrders() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders/user/${userId}?page=${page}&limit=5`
-      );
-      if (!res.ok) throw new Error("Не вдалося отримати замовлення");
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/${currentLocale}/orders/user/${userId}?page=${page}&limit=5`
+      ); // Use currentLocale in the API path
+      if (!res.ok) throw new Error(t("failedToFetchOrders")); // Translate error message
       const data = await res.json();
 
       setOrders((prev) => {
@@ -62,15 +68,20 @@ export default function UserOrders() {
       setHasMore(data.page < data.totalPages);
       setPage((prev) => prev + 1);
     } catch (err) {
-      console.error("Помилка завантаження замовлень:", err);
+      console.error(t("failedToFetchOrders"), err); // Translate error message
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchOrders(); // завантажити першу сторінку
-  }, [userId]);
+    // Reset state when userId or locale changes
+    setOrders([]);
+    setPage(1);
+    setHasMore(true);
+    setLoading(false);
+    fetchOrders(); // Load the first page
+  }, [userId, currentLocale]); // Add currentLocale to dependency array
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -89,11 +100,12 @@ export default function UserOrders() {
     return () => {
       if (observerRef.current) observer.unobserve(observerRef.current);
     };
-  }, [observerRef.current, hasMore, loading]);
+  }, [observerRef.current, hasMore, loading, fetchOrders]); // Add fetchOrders to dependency array for correctness
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Мої замовлення</h2>
+      <h2 className={styles.title}>{t("myOrders")}</h2>{" "}
+      {/* Translate "Мої замовлення" */}
       {orders.map((order) => (
         <div key={order._id} className={styles.orderCard}>
           <div className={styles.imageBox}>
@@ -104,6 +116,11 @@ export default function UserOrders() {
                     className={styles.image}
                     src={item.mainImage.url}
                     style={{ objectFit: "cover", borderRadius: "8px" }}
+                    alt={
+                      item.mainImage.alt
+                        ? item.mainImage.alt[currentLocale as "en" | "uk"] || ""
+                        : ""
+                    }
                   />
                 )}
               </div>
@@ -111,49 +128,57 @@ export default function UserOrders() {
           </div>
           <div className={styles.infoBox}>
             <p>
-              <strong>Дата:</strong>{" "}
-              {new Date(order.createdAt).toLocaleDateString()}
+              <strong>{t("date")}:</strong>{" "}
+              {new Date(order.createdAt).toLocaleDateString(currentLocale)}
             </p>
             <p>
-              <strong>Номер замовлення:</strong> {order.orderNumber}
+              <strong>{t("orderNumber")}:</strong> {order.orderNumber}
             </p>
             <div className={styles.article}>{order.article}</div>
             <p>
-              <strong>Ім’я:</strong> {order.firstName}
+              <strong>{t("name")}:</strong> {order.firstName}
             </p>
             <p>
-              <strong>Прізвище:</strong> {order.lastName}
+              <strong>{t("lastName")}:</strong> {order.lastName}
             </p>
             <p>
-              <strong>Email:</strong> {order.userEmail}
+              <strong>{t("email")}:</strong> {order.userEmail}
             </p>
             <p>
-              <strong>Телефон:</strong> {order.phone}
+              <strong>{t("phone")}:</strong> {order.phone}
             </p>
             <p>
-              <strong>Адреса:</strong> {order.deliveryAddress}
+              <strong>{t("address")}:</strong> {order.deliveryAddress}
             </p>
           </div>
           <div className={styles.orderBox}>
             <p>
-              <strong>Статус:</strong> {order.status}
+              <strong>{t("status")}:</strong> {order.status}
             </p>
             <ul className={styles.orderItems}>
               {order.items.map((item, i) => (
                 <li key={i} className={styles.noBullet}>
                   <ul className={styles.itemDetails}>
-                    <li>Назва товару: {item.name.uk}</li>
-                    <li>Кількість: {item.quantity} шт.</li>
-                    <li>Розмір: {item.size}</li>
                     <li>
-                      Колір:{" "}
+                      {t("itemName")}:{" "}
+                      {item.name[currentLocale as "en" | "uk"]}
+                    </li>{" "}
+                    {/* Translate item name */}
+                    <li>
+                      {t("quantity")}: {item.quantity} {t("pieces")}
+                    </li>
+                    <li>
+                      {t("size")}: {item.size}
+                    </li>
+                    <li>
+                      {t("color")}:{" "}
                       <span
                         className={styles.circle}
                         style={{ backgroundColor: item.color }}
                       ></span>
                     </li>
                     <li>
-                      Ціна без знижки:{" "}
+                      {t("priceWithoutDiscount")}:{" "}
                       <span
                         style={{
                           textDecoration: "line-through",
@@ -164,8 +189,8 @@ export default function UserOrders() {
                         {item.price.amount} {item.price.currency}
                       </span>
                     </li>
-                    <li >
-                      Ціна зі знижкою:{" "}
+                    <li>
+                      {t("priceWithDiscount")}:{" "}
                       <span style={{ fontWeight: "bold" }}>
                         {" "}
                         {(
@@ -176,7 +201,7 @@ export default function UserOrders() {
                       </span>
                     </li>
                     <li>
-                      Сума:{" "}
+                      {t("totalAmount")}:{" "}
                       {(
                         item.quantity *
                         item.price.amount *
@@ -191,7 +216,7 @@ export default function UserOrders() {
 
             <div className={styles.statusButtons}>
               <p>
-                <strong>Статус: </strong>
+                <strong>{t("status")}: </strong>
                 <span
                   className={`${styles.statusBadge} ${
                     styles["status-" + order.status]
@@ -199,17 +224,17 @@ export default function UserOrders() {
                 >
                   {
                     {
-                      pending: "Очікує",
-                      confirmed: "Підтверджено",
-                      shipped: "Відправлено",
-                      canceled: "Скасовано",
+                      pending: t("pending"),
+                      confirmed: t("confirmed"),
+                      shipped: t("shipped"),
+                      canceled: t("canceled"),
                     }[order.status]
                   }
                 </span>
               </p>
             </div>
             <p>
-              <strong>Сума замовлення:</strong>{" "}
+              <strong>{t("orderTotal")}:</strong>{" "}
               {order.items
                 .reduce(
                   (total, item) =>
@@ -226,8 +251,10 @@ export default function UserOrders() {
         </div>
       ))}
       <div ref={observerRef} style={{ height: 1 }} />
-      {loading && <p>Завантаження...</p>}
-      {!hasMore && <p>Це всі ваші замовлення 😊</p>}
+      {loading && <p>{t("loading")}</p>}{" "}
+      {/* Translate "Завантаження..." */}
+      {!hasMore && <p>{t("allOrdersLoaded")}</p>}{" "}
+      {/* Translate "Це всі ваші замовлення 😊" */}
     </div>
   );
 }

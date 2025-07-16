@@ -8,21 +8,31 @@ import { RootState } from '../../redux/store';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styles from './EditProfile.module.css';
-
-const passwordSchema = Yup.object().shape({
-  currentPassword: Yup.string().required('Поточний пароль обовʼязковий'),
-  newPassword: Yup.string().min(6, 'Мінімум 6 символів').required('Новий пароль обовʼязковий'),
-  confirmNewPassword: Yup.string()
-    .oneOf([Yup.ref('newPassword')], 'Паролі не співпадають')
-    .required('Підтвердження обовʼязкове'),
-});
+import { useTranslations } from 'next-intl'; // Import useTranslations
+import { useParams } from 'next/navigation'; // Import useParams
 
 export default function ChangePasswordForm() {
+  const t = useTranslations('ChangePasswordForm'); // Initialize translations for the "ChangePasswordForm" namespace
+  const params = useParams();
+  const currentLocale = params.locale as string; // Get the current locale from URL params
+
   const user = useSelector((state: RootState) => state.user);
+
+  // Create validation schema dynamically based on the current locale
+  const passwordSchema = Yup.object().shape({
+    currentPassword: Yup.string().required(t('currentPasswordRequired')),
+    newPassword: Yup.string()
+      .min(6, t('minSixChars'))
+      .required(t('newPasswordRequired')),
+    confirmNewPassword: Yup.string()
+      .oneOf([Yup.ref('newPassword')], t('passwordsDoNotMatch'))
+      .required(t('confirmationRequired')),
+  });
 
   return (
     <div className={styles.passwordSection}>
-      <h3 className={styles.title}>Змінити пароль</h3>
+      <h3 className={styles.title}>{t('changePasswordTitle')}</h3>{" "}
+      {/* Translate title */}
       <Formik
         initialValues={{
           currentPassword: '',
@@ -32,52 +42,98 @@ export default function ChangePasswordForm() {
         validationSchema={passwordSchema}
         onSubmit={async (values, { resetForm }) => {
           try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/auth/update-password/${user.userId}`, {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                currentPassword: values.currentPassword,
-                newPassword: values.newPassword,
-              }),
-            });
+            const res = await fetch(
+              `${process.env.NEXT_PUBLIC_BACKEND_URL}/${currentLocale}/auth/update-password/${user.userId}`, // Use currentLocale in API path
+              {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  currentPassword: values.currentPassword,
+                  newPassword: values.newPassword,
+                }),
+              }
+            );
 
             const data = await res.json();
             if (data.success) {
-              alert('Пароль оновлено успішно!');
+              alert(t('passwordUpdatedSuccessfully')); // Translate success message
               resetForm();
             } else {
-              alert(data.message || 'Помилка оновлення пароля');
+              // Assuming data.message might be an error from backend that needs translation
+              // Or you can map backend error codes to translation keys
+              alert(data.message || t('passwordUpdateError')); // Translate error message
             }
           } catch (error) {
             console.error('Password update error:', error);
-            alert('Щось пішло не так');
+            alert(t('somethingWentWrong')); // Translate generic error message
           }
         }}
       >
         {({ isSubmitting }) => (
           <Form className={styles.form}>
             <div className={styles.fieldGroup}>
-              <label htmlFor="currentPassword" className={styles.label}>Поточний пароль</label>
-              <Field id="currentPassword" name="currentPassword" type="password" className={styles.input} />
-              <ErrorMessage name="currentPassword" component="div" className={styles.error} />
+              <label htmlFor="currentPassword" className={styles.label}>
+                {t('currentPassword')}
+              </label>{" "}
+              {/* Translate label */}
+              <Field
+                id="currentPassword"
+                name="currentPassword"
+                type="password"
+                className={styles.input}
+              />
+              <ErrorMessage
+                name="currentPassword"
+                component="div"
+                className={styles.error}
+              />
             </div>
 
             <div className={styles.fieldGroup}>
-              <label htmlFor="newPassword" className={styles.label}>Новий пароль</label>
-              <Field id="newPassword" name="newPassword" type="password" className={styles.input} />
-              <ErrorMessage name="newPassword" component="div" className={styles.error} />
+              <label htmlFor="newPassword" className={styles.label}>
+                {t('newPassword')}
+              </label>{" "}
+              {/* Translate label */}
+              <Field
+                id="newPassword"
+                name="newPassword"
+                type="password"
+                className={styles.input}
+              />
+              <ErrorMessage
+                name="newPassword"
+                component="div"
+                className={styles.error}
+              />
             </div>
 
             <div className={styles.fieldGroup}>
-              <label htmlFor="confirmNewPassword" className={styles.label}>Підтвердіть новий пароль</label>
-              <Field id="confirmNewPassword" name="confirmNewPassword" type="password" className={styles.input} />
-              <ErrorMessage name="confirmNewPassword" component="div" className={styles.error} />
+              <label htmlFor="confirmNewPassword" className={styles.label}>
+                {t('confirmNewPassword')}
+              </label>{" "}
+              {/* Translate label */}
+              <Field
+                id="confirmNewPassword"
+                name="confirmNewPassword"
+                type="password"
+                className={styles.input}
+              />
+              <ErrorMessage
+                name="confirmNewPassword"
+                component="div"
+                className={styles.error}
+              />
             </div>
 
-            <button type="submit" className={styles.button} disabled={isSubmitting}>
-              {isSubmitting ? 'Оновлення...' : 'Оновити пароль'}
+            <button
+              type="submit"
+              className={styles.button}
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? t('updatingPasswordButton') : t('updatePasswordButton')}{" "}
+              {/* Translate button text */}
             </button>
           </Form>
         )}

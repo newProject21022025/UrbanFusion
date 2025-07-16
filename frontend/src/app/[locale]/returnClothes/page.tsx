@@ -1,109 +1,105 @@
+
+
 import React from "react";
-// import { useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import styles from "./ReturnClothes.module.css";
 
 export default function ReturnClothes() {
+  const t = useTranslations("ReturnClothes");
+
   return (
     <div className={styles.container}>
       <section className={styles.returnClothes}>
         <h2 className={styles.returnClothesTitle}>
-          Як повернути одяг для переробки
+          {t("howToReturnTitle")}
         </h2>
         <p className={styles.returnClothesDescription}>
-          Ми в{" "}
-          <span className={styles.returnClothesHighlight}>UrbanFusion</span> —
-          прагнемо стійкого майбутнього, і ви можете стати частиною цього руху!
-          Якщо у вас є старі речі нашого бренду, які вже не носяться, ми
-          пропонуємо зручний та екологічний спосіб їхньої переробки.
+          {t("description1")}{" "}
+          <span className={styles.returnClothesHighlight}>UrbanFusion</span>{" "}
+          {t("description2")}
         </p>
         <div className={styles.returnClothesImageBox}>
           <img
             src="/returnClothes/1.png"
-            // alt={t("aboutUs.imageAlt")}
+            alt="return step 1"
             className={styles.returnClothesImage}
           />
         </div>
       </section>
+
       <section className={styles.returnClothesItems}>
         <div className={styles.returnClothesBox}>
           <h2 className={styles.returnClothesTitle}>
-            Покрокова інструкція з повернення одягу:
+            {t("stepByStepTitle")}
           </h2>
           <p>
-            <span className={styles.returnClothesNumber}>01.</span> Перевірте
-            стан – переконайтеся, що одяг чистий та сухий. Ми приймаємо речі з
-            незначними дефектами, але сильно пошкоджені чи забруднені вироби
-            краще утилізувати в інший спосіб.
+            <span className={styles.returnClothesNumber}>01.</span>{" "}
+            {t("step1")}
           </p>
           <p>
-            <span className={styles.returnClothesNumber}>02.</span> Упакуйте
-            речі – складіть одяг у будь-яку чисту упаковку (пакет чи коробку).
+            <span className={styles.returnClothesNumber}>02.</span>{" "}
+            {t("step2")}
           </p>
         </div>
         <div className={styles.returnClothesImageBox}>
           <img
             src="/returnClothes/2.png"
-            // alt={t("aboutUs.imageAlt")}
+            alt="return step 2"
             className={styles.returnClothesImage}
           />
           <img
             src="/returnClothes/3.png"
-            // alt={t("aboutUs.imageAlt")}
+            alt="return step 3"
             className={styles.returnClothesImage}
           />
         </div>
       </section>
+
       <section className={styles.returnClothesItems}>
         <div className={styles.returnClothesBox}>
           <h2 className={styles.returnClothesTitle}>
-            Виберіть спосіб повернення:
+            {t("chooseMethodTitle")}
           </h2>
           <p>
-            <span className={styles.returnClothesNumber}>01.</span> Віднесіть до
-            нашого фірмового магазину – знайдіть найближчу точку збору на карті
-            https://www.google.com/maps/place/%D0%A3%D0%BA%.
+            <span className={styles.returnClothesNumber}>01.</span>{" "}
+            {t("method1")}
           </p>
           <p>
-            <span className={styles.returnClothesNumber}>02.</span> Надішліть
-            посилкою – оформіть повернення через кур'єрську службу, вказавши
-            нашу адресу.
+            <span className={styles.returnClothesNumber}>02.</span>{" "}
+            {t("method2")}
           </p>
           <p>
-            <span className={styles.returnClothesNumber}>03.</span> Отримайте
-            бонус – за участь у програмі переробки ми даруємо вам знижку чи
-            бонусні бали на наступну покупку. Докладніше про умови акції:
-            https://urban-fusion-5fee.vercel.app/uk
+            <span className={styles.returnClothesNumber}>03.</span>{" "}
+            {t("method3")}
           </p>
         </div>
         <div className={styles.returnClothesImageBox}>
           <img
             src="/returnClothes/4.png"
-            // alt={t("aboutUs.imageAlt")}
+            alt="return step 4"
             className={styles.returnClothesImage}
           />
         </div>
       </section>
+
       <section className={styles.returnClothesItems}>
         <div className={styles.returnClothesBox}>
           <h2 className={styles.returnClothesTitle}>
-            Що відбувається з одягом після повернення?
+            {t("afterReturnTitle")}
           </h2>
           <p>
-            <span className={styles.returnClothesNumber}>01.</span> Зібрані речі
-            вирушають на переробку, де вони здобувають друге життя. Матеріали
-            переробляються на нові тканини, утеплювачі чи інші корисні
-            матеріали, зменшуючи негативний вплив на довкілля.
+            <span className={styles.returnClothesNumber}>01.</span>{" "}
+            {t("after1")}
           </p>
           <p>
-            <span className={styles.returnClothesNumber}>02.</span> Приєднуйтесь
-            до нас у створенні екологічнішого майбутнього! Якщо ви маєте
-            запитання, зв'яжіться з нами через пошту project21022025@proton.me.
+            <span className={styles.returnClothesNumber}>02.</span>{" "}
+            {t("after2")}
           </p>
         </div>
         <div className={styles.returnClothesImageBox}>
           <img
             src="/returnClothes/5.png"
-            // alt={t("aboutUs.imageAlt")}
+            alt="return step 5"
             className={styles.returnClothesImage}
           />
         </div>

@@ -14,9 +14,10 @@ import HeartBlack from "../../svg/Heart/heartBlack";
 import LogIn from "../../svg/LogIn/logIn";
 import Exit from "../../svg/Exit/exit";
 import SearchBarHeader from "../searchBarHeader/SearchBarHeader";
+import { useTranslations } from "next-intl";
 
 type Props = {
-  t: any;
+  t:  ReturnType<typeof useTranslations>;
   locale: "en" | "uk";
   changeLanguage: (lang: string) => void;
   isAuthenticated: boolean;
