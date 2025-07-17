@@ -33,6 +33,7 @@ export default function CatalogDropdown() {
     t("women.hat"),
     t("women.top"),
   ];
+console.log(womenItems);
 
   return (
     <div className={styles.catalogDropdown}>
