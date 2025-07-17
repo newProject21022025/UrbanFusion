@@ -13,9 +13,10 @@
 }
 
 .topBar {
-  display: flex;  
+  display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .burger {
@@ -24,11 +25,15 @@
   cursor: pointer;
   color: white;
 }
-
 .logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  z-index: 1;
+  height: 100%;
 }
 .itemBox{
   display: flex;

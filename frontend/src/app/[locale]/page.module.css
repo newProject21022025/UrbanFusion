@@ -104,26 +104,32 @@
   align-items: start;
   text-align: center;
   gap: 36px;
-  /* padding: 20px; */
   margin-bottom: 85px; /* Збільшено відступ знизу */
+  padding: 0 20px; /* Бічні відступи */
 }
 .aboutUsBox {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Дві колонки */
+  align-items: center;
+  gap: 20px;
+  /* padding: 0 20px; */
+  /* display: flex;
   justify-content: center;
   align-items: center;
-  gap: 80px;
+  gap: 80px; */
 }
 
 .aboutUsTextBox {
   display: flex;
   flex-direction: column;
   text-align: left;
+  
 }
 
 .aboutUsTextTitle {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 600;  
 }
 .aboutUsImage {
   width: 100%;
@@ -252,6 +258,7 @@
   width: 100%;
   align-items: start;
   margin-bottom: 85px;
+  padding: 0 20px; /* Бічні відступи */
 }
 .planWorkContainer {
   display: flex;
@@ -276,7 +283,7 @@
     align-items: center;
     /* flex: 1 1 100%; */
     max-width: 100%;   
-  }
+  }  
 }
 .planWorkInfo {
   display: flex;
@@ -331,13 +338,12 @@
   }
   
   .aboutUsBox {
-    flex-direction: column; /* Вертикальне розташування */
+    grid-template-columns: 1fr;
     gap: 40px; /* Менший відступ */
     align-items: flex-start; /* Текст зліва */
   }
 
-  .aboutUsTextBox {
-    padding: 0 16px; /* Бічні відступи */
+  .aboutUsTextBox {   
     width: 100%;
   }
 
@@ -352,7 +358,7 @@
 
   .aboutUsImage {
     width: 100%;
-    padding: 0 16px;
+    /* padding: 0 16px; */    
   }
 
   .aboutUsImageContent {
@@ -363,13 +369,31 @@
   .aboutUs {
     gap: 48px;
     margin-bottom: 48px;
+    align-items: center;
+  }
+  .aboutBrand{
+    height:600px; /* Змінено висоту для мобільних */
+     /* Додано відступи */
   }
   .aboutBrandBox {
-    padding: 20px;   
+    padding: 20px 20px 0 20px;   
+  }
+  .aboutBrandBox::after
+  {
+    bottom: 20px; /* Зменшено відступ знизу */
+    left: 15%;
+    width: 60%; /* Зменшено ширину */
+    height: 40%; /* Зменшено висоту */
+  }
+  .aboutBrandText{
+    width: 100%;
   }
   .planWorkList {   
     margin-top: 30px;   
     padding: 0 30px; /* Бічні відступи */
   }
+  .planWork{
+    align-items: center;
+  }  
 }
 

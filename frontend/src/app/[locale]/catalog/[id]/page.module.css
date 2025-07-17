@@ -127,7 +127,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 2px solid #ddd;
+  border: 1px solid var( --color-bg-dark);
   transition: transform 0.3s ease;
 }
 
@@ -151,11 +151,12 @@
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-radius: 20px;
-  font-size: 20px;
-  background-color: #fff;
+  font-size: 28px;
+  background-color: var(--color-bg-white);
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   display: inline-block;
+  font-weight: 600;
 }
 
 .sizeOption label:hover {

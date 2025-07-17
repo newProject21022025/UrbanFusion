@@ -15,9 +15,10 @@ import LogIn from "../../svg/LogIn/logIn";
 import Exit from "../../svg/Exit/exit";
 import SearchBarHeader from "../searchBarHeader/SearchBarHeader";
 import { useTranslations } from "next-intl";
+import PersonalData from "../../svg/PersonalData/personalData";
 
 type Props = {
-  t:  ReturnType<typeof useTranslations>;
+  t: ReturnType<typeof useTranslations>;
   locale: "en" | "uk";
   changeLanguage: (lang: string) => void;
   isAuthenticated: boolean;
@@ -70,6 +71,11 @@ export default function MobileHeader({
         </Link>
 
         <div className={styles.itemBox}>
+          {isAuthenticated && (
+            <Link href="/personalData" className={styles.navLink}>
+              <PersonalData />
+            </Link>
+          )}
           <Link
             href="/favorites"
             className={styles.menuItem}

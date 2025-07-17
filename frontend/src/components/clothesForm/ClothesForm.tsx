@@ -116,7 +116,7 @@ export default function ClothesForm({
     stock: [
       {
         color: { code: "", en: "", uk: "" },
-        sizes: [{ size: "", quantity: 0 }],
+        sizes: [{ size: "", quantity: 10 }],
       },
     ],
     careInstructions: [{ en: "", uk: "" }],
