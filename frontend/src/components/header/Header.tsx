@@ -60,8 +60,14 @@ export default function Header({ locale }: HeaderProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // const changeLanguage = (newLocale: string) => {
+  //   router.push(pathname, { locale: newLocale });
+  // };
   const changeLanguage = (newLocale: string) => {
-    router.push(pathname, { locale: newLocale });
+    // Отримати поточний шлях без локалі, якщо потрібно
+    const currentPathWithoutLocale = pathname.replace(`/${locale}`, '');
+    // Перенаправити на повний URL з новою локаллю
+    window.location.href = `/${newLocale}${currentPathWithoutLocale}`;
   };
 
   const handleLogout = () => {
