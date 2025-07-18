@@ -59,15 +59,15 @@ export default function BasicInfoSection({ formData, handleChange }: BasicInfoSe
       </div>
 
       <div className={styles.formGroup}>
-        {/* <label>{t('gender')}</label> */}
+        <label>{t('gender')}</label>
         <select
-          name="genderLabels"
+          name="gender"
           value={formData.gender}
           onChange={handleChange}
           required
         >
-          <option value="male">{t('genderLabels.male')}</option>
-          <option value="female">{t('genderLabels.female')}</option>
+          <option value="male">{t('male')}</option>
+          <option value="female">{t('female')}</option>
         </select>
       </div>
     </div>

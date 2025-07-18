@@ -211,11 +211,14 @@
     "nameUk": "Name (Ukrainian)",
     "descEn": "Description (English)",
     "descUk": "Description (Ukrainian)",
-    
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
     "genderLabels": {
-      "male": "Male",
-      "female": "Female"
-    }   
+      "male": "men's",
+      "female": "women's",
+      "unisex": "unisex"
+    }  
   },
   "ImageSection": {
     "mainImage": "Main Image",

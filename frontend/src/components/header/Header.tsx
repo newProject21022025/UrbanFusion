@@ -61,7 +61,7 @@ export default function Header({ locale }: HeaderProps) {
   }, []);
 
   const changeLanguage = (newLocale: string) => {
-    router.push(pathname, { locale: newLocale, scroll: false });
+    router.push(pathname, { locale: newLocale });
   };
 
   const handleLogout = () => {
@@ -128,7 +128,7 @@ export default function Header({ locale }: HeaderProps) {
               <Link href="/catalog" className={styles.navLink}>
                 {t("catalog")}
               </Link>
-              {catalogOpen && <CatalogDropdown />}
+              {catalogOpen && <CatalogDropdown onSelect={() => setCatalogOpen(false)} />}
             </div>
             <Link href="/" className={styles.navLink}>
               <div className={styles.logo}>
