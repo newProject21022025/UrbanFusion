@@ -61,7 +61,7 @@ import Footer from "@/components/footer/Footer";
 import "../styles/globals.css";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 import { UserLoader } from "../../redux/UserLoader";
-import { cookies } from 'next/headers';
+// import { cookies } from 'next/headers';
 
 type Props = {
   children: ReactNode;

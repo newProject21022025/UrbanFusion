@@ -39,7 +39,7 @@ type Props = {
 
 export default function MobileHeader({
   t,
-  changeLanguage,
+  // changeLanguage,
   isAuthenticated,
   isAdmin,
   adminLinks,
