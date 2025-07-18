@@ -14,13 +14,12 @@ import HeartBlack from "../../svg/Heart/heartBlack";
 import LogIn from "../../svg/LogIn/logIn";
 import Exit from "../../svg/Exit/exit";
 import SearchBarHeader from "../searchBarHeader/SearchBarHeader";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import PersonalData from "../../svg/PersonalData/personalData";
 import CatalogDropdown from "./CatalogDropdown";
 
 type Props = {
   t: ReturnType<typeof useTranslations>;
-  locale: "en" | "uk";
   changeLanguage: (lang: string) => void;
   isAuthenticated: boolean;
   isAdmin: boolean;
@@ -35,7 +34,6 @@ type Props = {
 
 export default function MobileHeader({
   t,
-  locale,
   changeLanguage,
   isAuthenticated,
   isAdmin,
@@ -44,13 +42,14 @@ export default function MobileHeader({
   favoriteCount,
   basketCount,
 }: Props) {
+  const locale = useLocale(); // Отримуємо поточну мову через хук
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showCatalog, setShowCatalog] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
-    setShowCatalog(false); // Ховати dropdown при закритті меню
+    setShowCatalog(false);
   };
 
   useEffect(() => {
@@ -59,6 +58,11 @@ export default function MobileHeader({
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  const handleLanguageChange = (newLocale: string) => {
+    changeLanguage(newLocale);
+    setMenuOpen(false); // Закриваємо меню після зміни мови
+  };
 
   if (!isMobile) return null;
 
@@ -155,21 +159,21 @@ export default function MobileHeader({
             </Link>
           )}
 
-          <div className={styles.languageToggle}>
-            <button
-              onClick={() => changeLanguage("uk")}
-              className={locale === "uk" ? styles.activeLang : ""}
-            >
-              UK
-            </button>
-            <span>|</span>
-            <button
-              onClick={() => changeLanguage("en")}
-              className={locale === "en" ? styles.activeLang : ""}
-            >
-              EN
-            </button>
-          </div>
+<div className={styles.languageToggle}>
+        <button
+          onClick={() => handleLanguageChange("uk")}
+          className={locale === "uk" ? styles.activeLang : ""}
+        >
+          UK
+        </button>
+        <span>|</span>
+        <button
+          onClick={() => handleLanguageChange("en")}
+          className={locale === "en" ? styles.activeLang : ""}
+        >
+          EN
+        </button>
+      </div>
 
           {isAuthenticated ? (
             <button onClick={handleLogout} className={styles.menuItem}>
