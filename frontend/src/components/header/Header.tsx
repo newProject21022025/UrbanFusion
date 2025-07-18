@@ -206,7 +206,7 @@ export default function Header({ locale }: HeaderProps) {
       <div className="mobile-only">
         <MobileHeader
           t={t}
-          locale={locale}
+          // locale={locale}
           changeLanguage={changeLanguage}
           isAuthenticated={isAuthenticated}
           isAdmin={isAdmin}
