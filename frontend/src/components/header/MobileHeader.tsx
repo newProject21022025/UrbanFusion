@@ -17,6 +17,11 @@ import SearchBarHeader from "../searchBarHeader/SearchBarHeader";
 import { useTranslations, useLocale } from "next-intl";
 import PersonalData from "../../svg/PersonalData/personalData";
 import CatalogDropdown from "./CatalogDropdown";
+import { usePathname, useRouter } from '@/i18n/navigation';
+
+
+
+
 
 type Props = {
   t: ReturnType<typeof useTranslations>;
@@ -34,7 +39,7 @@ type Props = {
 
 export default function MobileHeader({
   t,
-  changeLanguage,
+  // changeLanguage,
   isAuthenticated,
   isAdmin,
   adminLinks,
@@ -46,6 +51,9 @@ export default function MobileHeader({
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showCatalog, setShowCatalog] = useState(false);
+
+  const router = useRouter();
+const pathname = usePathname();
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -59,9 +67,18 @@ export default function MobileHeader({
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // const handleLanguageChange = (newLocale: string) => {
+  //   changeLanguage(newLocale);
+  //   setMenuOpen(false); // Закриваємо меню після зміни мови
+  // };
   const handleLanguageChange = (newLocale: string) => {
-    changeLanguage(newLocale);
-    setMenuOpen(false); // Закриваємо меню після зміни мови
+    // Зберігаємо вибір мови
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+    localStorage.setItem('user-locale', newLocale);
+    
+    // Оновлюємо сторінку з новою мовою
+    router.push(pathname, {locale: newLocale});
+    setMenuOpen(false);
   };
 
   if (!isMobile) return null;
