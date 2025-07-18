@@ -54,7 +54,7 @@
   background-color: grey;
   color: white;
   font-size: 12px;
-  padding: 3px 7px;
+  padding: 0px 7px;
   border-radius: 50%;
 }
 
@@ -95,10 +95,36 @@
   font-weight: bold;
   cursor: pointer;  
 }
-
 .activeLang {
   text-decoration: underline;
 }
+.btnBurger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 100%; */
+  padding: 10px 20px;
+  background-color: var(--color-bg-dark);
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  border: 1px solid  var( --color-text-gray);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btnBurger:hover {
+  background-color: var(--color-bg-dark-hover);
+}
+
+.catalogDropdownWrapper {
+  width: 100%;
+  background-color: var(--color-bg-dark);
+  padding: 0.5rem 1rem;
+}
+
+
 
   
   

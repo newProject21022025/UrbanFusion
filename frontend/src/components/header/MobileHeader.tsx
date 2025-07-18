@@ -16,6 +16,7 @@ import Exit from "../../svg/Exit/exit";
 import SearchBarHeader from "../searchBarHeader/SearchBarHeader";
 import { useTranslations } from "next-intl";
 import PersonalData from "../../svg/PersonalData/personalData";
+import CatalogDropdown from "./CatalogDropdown";
 
 type Props = {
   t: ReturnType<typeof useTranslations>;
@@ -45,6 +46,12 @@ export default function MobileHeader({
 }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showCatalog, setShowCatalog] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+    setShowCatalog(false); // Ховати dropdown при закритті меню
+  };
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -59,31 +66,43 @@ export default function MobileHeader({
     <header className={styles.mobileHeader}>
       <div className={styles.topBar}>
         <button
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={toggleMenu}
           className={styles.burger}
           aria-label="Toggle menu"
         >
           {menuOpen ? <Cross /> : <Burger />}
         </button>
+        {/* <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className={styles.burger}
+          aria-label="Toggle menu"
+        >
+          {menuOpen ? <Cross /> : <Burger />}
+        </button> */}
 
-        <Link href="/" className={styles.logo}>
+        <Link href="/" locale={locale} className={styles.logo}>
           <LogoWhite />
         </Link>
 
         <div className={styles.itemBox}>
           {isAuthenticated && (
-            <Link href="/personalData" className={styles.navLink}>
+            <Link
+              href="/personalData"
+              locale={locale}
+              className={styles.navLink}
+            >
               <PersonalData />
             </Link>
           )}
           <Link
             href="/favorites"
+            locale={locale}
             className={styles.menuItem}
             onClick={() => setMenuOpen(false)}
           >
             {favoriteCount > 0 ? <HeartBlack /> : <HeartEmpty />}
           </Link>
-          <Link href="/basket" className={styles.basket}>
+          <Link href="/basket" locale={locale} className={styles.basket}>
             <BasketWhite />
             {basketCount > 0 && (
               <span className={styles.count}>{basketCount}</span>
@@ -100,14 +119,34 @@ export default function MobileHeader({
 
           <Link
             href="/catalog"
+            locale={locale}
             className={styles.menuItem}
             onClick={() => setMenuOpen(false)}
           >
             {t("catalog")}
           </Link>
 
+          <button
+            className={styles.btnBurger}
+            onClick={() => setShowCatalog((prev) => !prev)}
+          >
+            {/* {t("catalog")} */}Категорія
+          </button>
+
+          {showCatalog && (
+            <div className={styles.catalogDropdownWrapper}>
+              <CatalogDropdown
+                onSelect={() => {
+                  setShowCatalog(false);
+                  setMenuOpen(false);
+                }}
+              />
+            </div>
+          )}
+
           {isAdmin && adminLinks && (
             <Link
+              locale={locale}
               href={adminLinks.link}
               className={styles.menuItem}
               onClick={() => setMenuOpen(false)}
@@ -140,6 +179,7 @@ export default function MobileHeader({
           ) : (
             <Link
               href="/logIn"
+              locale={locale}
               className={styles.menuItem}
               onClick={() => setMenuOpen(false)}
             >
