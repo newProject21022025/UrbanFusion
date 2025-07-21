@@ -8,13 +8,13 @@ import {
   Param,
   Put,
   Delete,
-  Query,
 } from '@nestjs/common';
 import { ClothesService } from './clothes.service';
 import { CreateClothesDto } from './dto/create-clothes.dto';
 import { UpdateClothesDto } from './dto/update-clothes.dto';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { PaginationQueryDto } from '../clothes/dto/pagination-query.dto';
+import { Query } from '@nestjs/common';
 
 @Controller('clothes')
 export class ClothesController {
@@ -25,16 +25,9 @@ export class ClothesController {
     return this.clothesService.create(createClothesDto);
   }
 
-  @Get('article/:article')
-  findByArticle(@Param('article') article: string) {
-    return this.clothesService.findByArticle(article);
-  }
-
   @Get()
-  async findPaginated(@Query() query: PaginationQueryDto) {
-    const page = query.page ?? 1;
-    const limit = query.limit ?? 10;
-    return this.clothesService.findPaginated(page, limit);
+  findAll() {
+    return this.clothesService.findAll();
   }
 
   @Get(':id')
@@ -75,6 +68,7 @@ export class ClothesController {
     return this.clothesService.deleteReview(id, reviewId);
   }
 
+  // Поставити лайк на відгук
   @Post(':id/reviews/:reviewId/like')
   async likeReview(
     @Param('id') id: string,
@@ -84,6 +78,7 @@ export class ClothesController {
     return this.clothesService.likeReview(id, reviewId, userId);
   }
 
+  // Поставити дизлайк на відгук
   @Post(':id/reviews/:reviewId/dislike')
   async dislikeReview(
     @Param('id') id: string,
@@ -92,8 +87,20 @@ export class ClothesController {
   ) {
     return this.clothesService.dislikeReview(id, reviewId, userId);
   }
-}
 
+  @Get()
+  async findPaginated(@Query() query: PaginationQueryDto) {
+    const page = query.page ?? 1;
+    const limit = query.limit ?? 10;
+
+    return this.clothesService.findPaginated(page, limit);
+  }
+
+  @Get('article/:article')
+  findByArticle(@Param('article') article: string) {
+    return this.clothesService.findByArticle(article);
+  }
+}
 
 
 // // src/clothes/clothes.controller.ts
@@ -106,13 +113,13 @@ export class ClothesController {
 //   Param,
 //   Put,
 //   Delete,
+//   Query,
 // } from '@nestjs/common';
 // import { ClothesService } from './clothes.service';
 // import { CreateClothesDto } from './dto/create-clothes.dto';
 // import { UpdateClothesDto } from './dto/update-clothes.dto';
 // import { CreateReviewDto } from './dto/create-review.dto';
 // import { PaginationQueryDto } from '../clothes/dto/pagination-query.dto';
-// import { Query } from '@nestjs/common';
 
 // @Controller('clothes')
 // export class ClothesController {
@@ -123,9 +130,16 @@ export class ClothesController {
 //     return this.clothesService.create(createClothesDto);
 //   }
 
+//   @Get('article/:article')
+//   findByArticle(@Param('article') article: string) {
+//     return this.clothesService.findByArticle(article);
+//   }
+
 //   @Get()
-//   findAll() {
-//     return this.clothesService.findAll();
+//   async findPaginated(@Query() query: PaginationQueryDto) {
+//     const page = query.page ?? 1;
+//     const limit = query.limit ?? 10;
+//     return this.clothesService.findPaginated(page, limit);
 //   }
 
 //   @Get(':id')
@@ -166,7 +180,6 @@ export class ClothesController {
 //     return this.clothesService.deleteReview(id, reviewId);
 //   }
 
-//   // Поставити лайк на відгук
 //   @Post(':id/reviews/:reviewId/like')
 //   async likeReview(
 //     @Param('id') id: string,
@@ -176,7 +189,6 @@ export class ClothesController {
 //     return this.clothesService.likeReview(id, reviewId, userId);
 //   }
 
-//   // Поставити дизлайк на відгук
 //   @Post(':id/reviews/:reviewId/dislike')
 //   async dislikeReview(
 //     @Param('id') id: string,
@@ -185,17 +197,7 @@ export class ClothesController {
 //   ) {
 //     return this.clothesService.dislikeReview(id, reviewId, userId);
 //   }
-
-//   @Get()
-//   async findPaginated(@Query() query: PaginationQueryDto) {
-//     const page = query.page ?? 1;
-//     const limit = query.limit ?? 10;
-
-//     return this.clothesService.findPaginated(page, limit);
-//   }
-
-//   @Get('article/:article')
-//   findByArticle(@Param('article') article: string) {
-//     return this.clothesService.findByArticle(article);
-//   }
 // }
+
+
+
