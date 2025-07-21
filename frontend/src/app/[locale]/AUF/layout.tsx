@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { ReactNode, useEffect } from 'react'
 import styles from './page.module.css'
 
-const TABS = ['edit', 'create', 'feedback', 'orders']
+const TABS = ['edit', 'create', 'feedback', 'orders', 'comments']
 
 export default function AUFLayout({ children }: { children: ReactNode }) {
   const router = useRouter()
