@@ -107,7 +107,10 @@
       "male": "men's",
       "female": "women's",
       "unisex": "unisex"
-    }
+    },
+    "deleteReview": "Delete review",
+    "confirmDeleteReview": "Are you sure you want to delete this review?",
+    "deleteReviewError": "Failed to delete review"
   },
   "EcoDescriptions": {
     "recyclingProcessTitle": "How clothes are recycled?",

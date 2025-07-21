@@ -32,6 +32,9 @@ export default function ClothesPage() {
   const [error, setError] = useState<string | null>(null);
   const [itemAdded, setItemAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const isAdmin = useSelector(
+    (state: RootState) => state.user.role === "admin"
+  );
 
   const fetchClothes = useCallback(async () => {
     try {
@@ -315,6 +318,28 @@ export default function ClothesPage() {
                             ))
                         : null}
                     </span>
+                    {isAdmin && (
+                      <button
+                        className={styles.deleteButton}
+                        onClick={async () => {
+                          if (confirm(t("confirmDeleteReview"))) {
+                            try {
+                              await clothesService.deleteReview(
+                                clothes._id,
+                                review._id,
+                                locale
+                              );
+                              fetchClothes();
+                            } catch (error) {
+                              console.error("Failed to delete review:", error);
+                              alert(t("deleteReviewError"));
+                            }
+                          }
+                        }}
+                      >
+                        🗑 {t("deleteReview")}
+                      </button>
+                    )}
                   </div>
                   <p className={styles.reviewComment}>{review.comment}</p>
                   <div className={styles.reviewActions}>

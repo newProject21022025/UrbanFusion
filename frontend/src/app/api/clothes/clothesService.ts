@@ -48,7 +48,6 @@ export interface Clothes {
   }[];
   gender: "male" | "female";
 
-
   article: string;
 }
 
@@ -66,13 +65,17 @@ export const clothesService = {
   },
 
   async getAllClothes(locale: string): Promise<Clothes[]> {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes`
+    );
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     return await res.json();
   },
 
   async getClothesById(id: string, locale: string): Promise<Clothes> {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes/${id}`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes/${id}`
+    );
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
     return await res.json();
   },
@@ -108,18 +111,25 @@ export const clothesService = {
         sizes: item.sizes.map(({ size, quantity }) => ({ size, quantity })),
       })),
     };
-  
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payloadToSend),
-    });
-  
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payloadToSend),
+      }
+    );
+
     if (!res.ok) throw new Error(`HTTP помилка! статус: ${res.status}`);
     return await res.json();
   },
-  
-  async updateClothes(id: string, data: ClothesFormData, locale: string): Promise<Clothes> {
+
+  async updateClothes(
+    id: string,
+    data: ClothesFormData,
+    locale: string
+  ): Promise<Clothes> {
     const payloadToSend = {
       name: data.name,
       description: data.description,
@@ -153,7 +163,7 @@ export const clothesService = {
       },
       // не додаємо selectedSize, selectedColor, slug, reviews, _id, createdAt, updatedAt, __v
     };
-  
+
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes/${id}`,
       {
@@ -162,19 +172,37 @@ export const clothesService = {
         body: JSON.stringify(payloadToSend),
       }
     );
-  
+
     if (!res.ok) {
       const errorData = await res.json();
       throw new Error(`HTTP error ${res.status}: ${JSON.stringify(errorData)}`);
     }
     return await res.json();
   },
-  
 
   async deleteClothes(id: string, locale: string): Promise<void> {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes/${id}`, {
-      method: "DELETE",
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
     if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+  },
+
+  // всередині clothesService
+  async deleteReview(
+    clothesId: string,
+    reviewId: string,
+    locale: string
+  ): Promise<void> {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/${locale}/clothes/${clothesId}/reviews/${reviewId}`,
+      {
+        method: "DELETE",
+      }
+    );
+    if (!res.ok)
+      throw new Error(`Failed to delete review. Status: ${res.status}`);
   },
 };
