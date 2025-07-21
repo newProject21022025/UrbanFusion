@@ -29,7 +29,7 @@ export default function CatalogDropdown({ onSelect }: Props) {
     t("men.jacket"),
     t("men.bag"),
     t("men.glass"),
-    t("men.hat"),
+    t("men.hats"),
   ];
 
   const womenItems = [
@@ -39,7 +39,7 @@ export default function CatalogDropdown({ onSelect }: Props) {
     t("women.jacket"),
     t("women.bag"),
     t("women.glass"),
-    t("women.hat"),
+    t("women.hats"),
     t("women.top"),
   ];
 

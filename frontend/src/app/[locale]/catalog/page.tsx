@@ -341,7 +341,7 @@ export default function Catalog() {
         })}
       </div>
 
-      {loading && <div className={styles.loading}>{t("loading")}</div>}
+      {/* {loading && <div className={styles.loading}>{t("loading")}</div>} */}
     </main>
   );
 }
