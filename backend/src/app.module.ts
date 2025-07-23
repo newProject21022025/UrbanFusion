@@ -10,6 +10,7 @@ import { RequestMethod } from '@nestjs/common';
 import { OrdersModule } from './orders/orders.module';
 import { MailerModule } from './mailer/mailer.module';
 import { CallbackModule } from './callback/callback.module'; 
+import { VisitsModule } from './visits/visits.module';
 
 @Module({
   imports: [
@@ -32,7 +33,8 @@ import { CallbackModule } from './callback/callback.module';
     ClothesModule,
     OrdersModule,
     MailerModule,
-    CallbackModule
+    CallbackModule,
+    VisitsModule, // Додано модуль для відстеження відвідувань
   ],
 })
 export class AppModule implements NestModule {
