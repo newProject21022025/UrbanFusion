@@ -74,27 +74,6 @@ export default function AdminOrdersPage() {
   }, [page, loading, totalPages]);
   
 
-  // const loadOrders = useCallback(async () => {
-  //   if (loading || page > totalPages) return;
-
-  //   setLoading(true);
-
-  //   try {
-  //     const res = await fetch(
-  //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/orders?page=${page}&limit=5`
-  //     );
-  //     const data: PaginatedOrders = await res.json();
-
-  //     setOrders((prev) => [...prev, ...data.data]);
-  //     setTotalPages(data.totalPages);
-  //     setPage((prev) => prev + 1);
-  //   } catch (err) {
-  //     console.error("Помилка при завантаженні замовлень:", err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, [page, loading, totalPages]);
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
