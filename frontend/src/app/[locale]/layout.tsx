@@ -9,6 +9,7 @@ import Footer from "@/components/footer/Footer";
 import "../styles/globals.css";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 import { UserLoader } from "../../redux/UserLoader";
+import { LogVisitClient } from "./LogVisitClient"; // 📌 Імпортуємо компонент логування
 
 type Props = {
   children: ReactNode;
@@ -39,6 +40,7 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body>
         <ReduxProvider>
           <UserLoader />
+          <LogVisitClient /> {/* 📌 Додаємо логування */}
           <NextIntlClientProvider locale={locale}>
             <Header locale={locale} />
             {children}
