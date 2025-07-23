@@ -235,7 +235,7 @@ export default function OrderStatsPage() {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis allowDecimals={false} />
-            <Tooltip formatter={(value: any) => `${value} ₴`} />
+            <Tooltip formatter={(value: number | string) => `${value} ₴`} />
             <Legend />
             <Bar dataKey="Сума" fill="#ffc658" />
           </BarChart>
