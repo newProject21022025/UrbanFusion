@@ -28,17 +28,21 @@ export default function VisitsPage() {
         if (!res.ok || !data.success) {
           throw new Error(data.message || "Помилка завантаження");
         }
-        setVisits(data.visits.reverse()); // показувати останні спочатку
-      } catch (err: any) {
-        setError(err.message || "Невідома помилка");
+        setVisits(data.visits.reverse());
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Невідома помилка");
+        }
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchVisits();
   }, []);
-
+  
   if (loading) return <p>Завантаження...</p>;
   if (error) return <p>Помилка: {error}</p>;
 
