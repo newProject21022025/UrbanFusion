@@ -4,9 +4,27 @@ import { useTranslations } from "next-intl";
 import styles from "./page.module.css";
 import RandomClothes from "../../components/randomClothes/RandomClothes";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function Home() {
   const t = useTranslations("Home");
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "";
+  useEffect(() => {
+    const visitData = {
+      timestamp: new Date().toISOString(),
+      ip: "unknown", // IP можна отримувати на сервері, або лишити так
+      url: window.location.pathname,
+      userAgent: navigator.userAgent,
+    };
+  
+    fetch(`${backendUrl}/uk/visits`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(visitData),
+    }).catch(console.error);
+  }, []);
 
   return (
     <div className={styles.container}>
