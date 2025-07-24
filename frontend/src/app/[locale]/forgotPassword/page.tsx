@@ -7,7 +7,7 @@ import { ForgotPasswordForm } from "@/components/forgotPasswordForm/ForgotPasswo
 export default function ForgotPassword() {
   return (
     <div className={styles.container}>
-      <h2>12345</h2>
+      {/* <h2>12345</h2> */}
       <ForgotPasswordForm />
     {/* <form onSubmit={handleSubmit}>
   <input
