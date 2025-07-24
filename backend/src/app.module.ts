@@ -18,10 +18,12 @@ import * as redisStore from 'cache-manager-redis-store';
   imports: [
     CacheModule.registerAsync({
       useFactory: () => ({
-        store: redisStore as any,
-        host: 'localhost', // або redis в docker-compose
-        port: 6379,
-        ttl: 60, // глобальний TTL за замовчуванням
+        store: redisStore,
+        socket: {
+          host: 'localhost',
+          port: 6379,
+        },
+        ttl: 60, // TTL в секундах
       }),
     }),
     ConfigModule.forRoot({
