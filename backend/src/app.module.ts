@@ -11,9 +11,19 @@ import { OrdersModule } from './orders/orders.module';
 import { MailerModule } from './mailer/mailer.module';
 import { CallbackModule } from './callback/callback.module'; 
 import { VisitsModule } from './visits/visits.module';
+import { CacheModule } from '@nestjs/cache-manager';
+import * as redisStore from 'cache-manager-redis-store';
 
 @Module({
   imports: [
+    CacheModule.registerAsync({
+      useFactory: () => ({
+        store: redisStore as any,
+        host: 'localhost', // або redis в docker-compose
+        port: 6379,
+        ttl: 60, // глобальний TTL за замовчуванням
+      }),
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env', // Додано явне вказання файлу .env
