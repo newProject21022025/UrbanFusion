@@ -57,6 +57,9 @@ export default function Footer() {
       <div className={styles.copyright}>
         <p className={styles.text}>© 2024 UrbanFusion. {t("rights")}</p>
         <p className={styles.text}>{t("developedWithLove")}</p>
+        <Link href="/authors" className={styles.footerLink}>
+                {t("authors")}
+              </Link>
       </div>
     </div>
   );
