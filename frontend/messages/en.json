@@ -329,7 +329,8 @@
     "price": "Price",
     "total": "Total",
     "totalSum": "Total Amount",
-    "orderSummary": "Order Summary"
+    "orderSummary": "Order Summary",
+    "continueShopping": "Continue shopping"
   },
   "OrderForm": {
     "orderTitle": "Place your order",
@@ -536,6 +537,7 @@
     "saving": "Saving...",
     "firstNameRequired": "First name is required",
     "invalidPhoneFormat": "Invalid phone format",
+    "phoneRequired": "The phone field is required",
     "dataUpdatedSuccessfully": "Data updated successfully!",
     "updateError": "Update error",
     "somethingWentWrong": "Something went wrong."

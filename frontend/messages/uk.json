@@ -328,7 +328,8 @@
     "price": "Ціна",
     "total": "Сума за товар",
     "totalSum": "Загальна сума",
-    "orderSummary": "Підсумок замовлення"
+    "orderSummary": "Підсумок замовлення",
+    "continueShopping": "Продовжити покупки"
   },
   "OrderForm": {
     "orderTitle": "Оформлення замовлення",
@@ -535,6 +536,7 @@
     "saving": "Збереження...",
     "firstNameRequired": "Ім'я обов'язкове",
     "invalidPhoneFormat": "Невірний формат телефону",
+    "phoneRequired": "Поле телефону є обов’язковим",
     "dataUpdatedSuccessfully": "Дані оновлено успішно!",
     "updateError": "Помилка оновлення",
     "somethingWentWrong": "Щось пішло не так."
