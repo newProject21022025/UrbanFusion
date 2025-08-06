@@ -18,7 +18,7 @@ export default function Authors() {
         <h3 className={styles.subtitle}>🎨 Дизайнери</h3>
         <ul className={styles.list}>
           <li>
-            <strong>Анна Христолюбова </strong>
+            <strong>Анна Христолюбова (anna.khristoliubova@gmail.com) </strong>
           </li>
           <li>
             <strong>Жанна Манкаускайте </strong>

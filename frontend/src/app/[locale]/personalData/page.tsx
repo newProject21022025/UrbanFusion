@@ -9,8 +9,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store"; // Шлях залежить від структури проекту
 import EditProfile from "../../../components/editProfile/EditProfile"; // Шлях залежить від структури проекту
 import Link from "next/link";
-import ChangePasswordForm from "../../../components/editProfile/ChangePasswordForm"; // Шлях залежить від структури проекту
+// import ChangePasswordForm from "../../../components/editProfile/ChangePasswordForm"; // Шлях залежить від структури проекту
+import dynamic from "next/dynamic";
 
+const ChangePasswordForm = dynamic(() => import("../../../components/editProfile/ChangePasswordForm"), {
+  ssr: false, // виключити серверний рендеринг
+});
 export default function PersonalData() {
   const t = useTranslations("PersonalData");
 

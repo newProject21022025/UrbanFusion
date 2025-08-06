@@ -3,7 +3,12 @@
 
 import React from "react";
 import styles from "./Callback.module.css";
-import CallbackForm from "@/components/callbackForm/CallbackForm";
+// import CallbackForm from "@/components/callbackForm/CallbackForm";
+import dynamic from "next/dynamic";
+
+const CallbackForm = dynamic(() => import("@/components/callbackForm/CallbackForm"), {
+  ssr: false, // виключити серверний рендеринг
+});
 
 export default function Callback() {
   return (
