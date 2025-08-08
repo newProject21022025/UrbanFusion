@@ -35,19 +35,16 @@ export default function Feedback() {
   const fetchFeedback = async (page = 1) => {
     setLoading(true);
     try {
-      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/callback?page=${page}&limit=${itemsPerPage}`;
-      console.log("Запит до:", url); // ← чи URL правильний?
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}/uk/callback?page=${page}&limit=${itemsPerPage}`;      
 
-      const res = await fetch(url);
-      console.log("Статус відповіді:", res.status); // ← 200, 404, 500?
+      const res = await fetch(url);      
 
       if (!res.ok) {
         const errorText = await res.text();
         throw new Error(`Помилка API: ${res.status} - ${errorText}`);
       }
 
-      const data = await res.json();
-      console.log("Отримані дані:", data); // ← чи відповідає очікуваній структурі?
+      const data = await res.json();     
 
       setFeedbackList(data.data || []); // ← обробка, якщо `data` може бути undefined
       setTotalPages(Math.ceil(data.total / itemsPerPage));
@@ -59,8 +56,7 @@ export default function Feedback() {
     }
   };
 
-  useEffect(() => {
-    console.log("Effect triggered");
+  useEffect(() => {    
     fetchFeedback(currentPage);
   }, [currentPage]);
 

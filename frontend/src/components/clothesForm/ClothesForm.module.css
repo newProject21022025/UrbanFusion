@@ -5,8 +5,7 @@
   .form {
     display: flex;
     gap: 10px;
-    flex-wrap: wrap;
-    /* max-width: 1000px; */
+    flex-wrap: wrap;    
     margin: 0 auto;
     padding: 2rem;
     background: #f9f9f9;
@@ -86,8 +85,7 @@
     background: #218838;
   }
 
-  .removeButton {
-    /* composes: formButton; */
+  .removeButton {  
     background: #dc3545;
   }
   

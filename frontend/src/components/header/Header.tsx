@@ -32,7 +32,6 @@ export default function Header({ locale }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
-  // const [menuOpen, setMenuOpen] = useState(false);
 
   const { isAdmin, isAuthenticated, adminLinks } = useSelector(
     (state: RootState) => state.auth
@@ -59,10 +58,7 @@ export default function Header({ locale }: HeaderProps) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // const changeLanguage = (newLocale: string) => {
-  //   router.push(pathname, { locale: newLocale });
-  // };
+ 
   const changeLanguage = (newLocale: string) => {
     // Отримати поточний шлях без локалі, якщо потрібно
     const currentPathWithoutLocale = pathname.replace(`/${locale}`, '');

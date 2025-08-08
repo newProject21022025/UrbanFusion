@@ -8,8 +8,8 @@ import { RootState } from '../../redux/store';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styles from './EditProfile.module.css';
-import { useTranslations } from 'next-intl'; // Import useTranslations
-import { useParams } from 'next/navigation'; // Import useParams
+import { useTranslations } from 'next-intl'; 
+import { useParams } from 'next/navigation'; 
 
 export default function ChangePasswordForm() {
   const t = useTranslations('ChangePasswordForm'); // Initialize translations for the "ChangePasswordForm" namespace
@@ -31,8 +31,7 @@ export default function ChangePasswordForm() {
 
   return (
     <div className={styles.passwordSection}>
-      <h3 className={styles.title}>{t('changePasswordTitle')}</h3>{" "}
-      {/* Translate title */}
+      <h3 className={styles.title}>{t('changePasswordTitle')}</h3>{" "}     
       <Formik
         initialValues={{
           currentPassword: '',
@@ -58,16 +57,14 @@ export default function ChangePasswordForm() {
 
             const data = await res.json();
             if (data.success) {
-              alert(t('passwordUpdatedSuccessfully')); // Translate success message
+              alert(t('passwordUpdatedSuccessfully'));
               resetForm();
-            } else {
-              // Assuming data.message might be an error from backend that needs translation
-              // Or you can map backend error codes to translation keys
-              alert(data.message || t('passwordUpdateError')); // Translate error message
+            } else {             
+              alert(data.message || t('passwordUpdateError')); 
             }
           } catch (error) {
             console.error('Password update error:', error);
-            alert(t('somethingWentWrong')); // Translate generic error message
+            alert(t('somethingWentWrong')); 
           }
         }}
       >
@@ -94,8 +91,7 @@ export default function ChangePasswordForm() {
             <div className={styles.fieldGroup}>
               <label htmlFor="newPassword" className={styles.label}>
                 {t('newPassword')}
-              </label>{" "}
-              {/* Translate label */}
+              </label>{" "}             
               <Field
                 id="newPassword"
                 name="newPassword"
@@ -112,8 +108,7 @@ export default function ChangePasswordForm() {
             <div className={styles.fieldGroup}>
               <label htmlFor="confirmNewPassword" className={styles.label}>
                 {t('confirmNewPassword')}
-              </label>{" "}
-              {/* Translate label */}
+              </label>{" "}              
               <Field
                 id="confirmNewPassword"
                 name="confirmNewPassword"
@@ -132,8 +127,7 @@ export default function ChangePasswordForm() {
               className={styles.button}
               disabled={isSubmitting}
             >
-              {isSubmitting ? t('updatingPasswordButton') : t('updatePasswordButton')}{" "}
-              {/* Translate button text */}
+              {isSubmitting ? t('updatingPasswordButton') : t('updatePasswordButton')}{" "}              
             </button>
           </Form>
         )}

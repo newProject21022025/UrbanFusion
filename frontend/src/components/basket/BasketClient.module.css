@@ -2,6 +2,9 @@
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    color: var(--color-text-dark); 
+    font-family:'Lora', serif;
+    font-size: 20px;
 }
 
 .title {
@@ -50,8 +53,7 @@
     grid-template-columns: auto auto auto;
     gap: 1rem;
     align-items: center;
-    padding: 1rem;
-    /* border-bottom: 1px solid black; */
+    padding: 1rem;    
     border: 1px solid #ddd;
     border-radius: 10px;
 }
@@ -75,6 +77,8 @@
     align-items: center;
     justify-content: center;
     justify-content: space-around;
+    flex-direction: column;
+    gap: 5px;
 }
 .article{
     font-size: 0.9rem;
@@ -160,8 +164,9 @@
     background-color: var(--color-bg-light);
     color: var(--color-text-dark); 
     font-family:'Lora', serif;
-    font-size: 16px;    
+    font-size: 20px;    
     border-radius: 8px;
+    font-weight: 600;
 }
 
 .clearBasket:hover {
@@ -174,6 +179,7 @@
     color: var(--color-text-white);
     border-radius: 8px;
     text-decoration: none;
+    text-align: center;    
 }
 
 .order:hover {

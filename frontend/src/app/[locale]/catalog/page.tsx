@@ -3,7 +3,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./Catalog.module.css";
-import { useLocale, useTranslations } from "next-intl"; // Додано useTranslations
+import { useLocale, useTranslations } from "next-intl"; 
 import { clothesService, Clothes } from "../../api/clothes/clothesService";
 import Eco from "../../../svg/Eco/eco";
 import Cross from "../../../svg/Cross/cross";
@@ -273,13 +273,13 @@ export default function Catalog() {
                         <HeartWhite />
                       )}
                     </div>
-                    <div
+                    {/* <div
                       className={`${styles.basket} ${
                         isItemInBasket(item._id) ? styles.active : ""
                       }`}
                     >
                       <BasketBlack />
-                    </div>
+                    </div> */}
 
                     <div
                       className={styles.ecoIcon}
@@ -339,9 +339,7 @@ export default function Catalog() {
             </div>
           );
         })}
-      </div>
-
-      {/* {loading && <div className={styles.loading}>{t("loading")}</div>} */}
+      </div>      
     </main>
   );
 }

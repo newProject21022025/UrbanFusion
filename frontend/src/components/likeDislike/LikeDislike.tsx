@@ -14,7 +14,7 @@ interface LikeDislikeProps {
   locale: string;
   onChange: () => void;
   userVote?: "like" | "dislike" | null;
-  authorId: string; // ← додано
+  authorId: string; 
 }
 
 const LikeDislike = ({
@@ -26,7 +26,7 @@ const LikeDislike = ({
   locale,
   onChange,
   userVote = null,
-  authorId, // ← додано
+  authorId, 
 }: LikeDislikeProps) => {
   const [likes, setLikes] = useState<number>(initialLikes);
   const [dislikes, setDislikes] = useState<number>(initialDislikes);

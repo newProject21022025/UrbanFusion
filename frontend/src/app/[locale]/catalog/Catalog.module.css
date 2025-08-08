@@ -227,7 +227,7 @@
   right: 15px;
 }
 
-.basket {
+/* .basket {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -251,7 +251,7 @@
 .basket svg {
   width: 25px;
   height: 25px;
-}
+} */
 .heart svg {
   width: 20px;
   height: 20px;
@@ -269,7 +269,7 @@
 .closeIcon {
   cursor: pointer;
   position: absolute;
-  top: 10px;
+  bottom: 10px;
   right: 10px;
 }
 

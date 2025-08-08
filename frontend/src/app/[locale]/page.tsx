@@ -28,8 +28,7 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <main className={styles.main}>
-        {/* <p className={styles.content}>{t('content')}</p> */}
+      <main className={styles.main}>       
         <section className={styles.newCollection}>
           <h2 className={styles.titleNewCollection}>{t("title")}</h2>
           <Link href="/catalog" className={styles.buyLink}>

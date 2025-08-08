@@ -68,23 +68,6 @@ export default function ImageSection({ formData, handleChange, setFormData }: Im
   return (
     <div className={styles.formSection}>
       <h3>{t('mainImage')}</h3>
-
-      {/* <div className={styles.formGroup}>
-        <label>{t('uploadImage')}:</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileUpload}
-          ref={fileInputRef}
-          disabled={isUploading}
-        />
-        {isUploading && (
-          <div className={styles.progressBar}>
-            <div style={{ width: `${uploadProgress}%` }}></div>
-          </div>
-        )}
-      </div> */}
-
       <div className={styles.customFileInput}>
   <button type="button" onClick={() => fileInputRef.current?.click()} disabled={isUploading}>
     {t('chooseFile')}

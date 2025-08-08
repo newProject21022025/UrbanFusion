@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
+import ScrollToTopOnNavigation from "@/components/scrollToTopOnNavigation/ScrollToTopOnNavigation";
 import "../styles/globals.css";
 import { ReduxProvider } from "@/providers/ReduxProvider";
 import { UserLoader } from "../../redux/UserLoader";
@@ -42,8 +43,9 @@ export default async function LocaleLayout({ children, params }: Props) {
           <UserLoader />
           <LogVisitClient /> {/* 📌 Додаємо логування */}
           <NextIntlClientProvider locale={locale}>
-            <Header locale={locale} />
+            <Header locale={locale} />            
             {children}
+            <ScrollToTopOnNavigation />
             <Footer />
           </NextIntlClientProvider>
         </ReduxProvider>

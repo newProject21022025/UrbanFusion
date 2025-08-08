@@ -1,37 +1,36 @@
 /* src/components/shareLink/ShareLink.module.css */
 
 .shareLink {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 1rem;
-  }
-  
-  .button {
-    padding: 0.5rem 1rem;
-    background-color: #2F4F4F;
-    border: none;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .button:hover {
-    background-color:#202020;
-  }
-  
-  .tooltip {
-    position: absolute;
-    top: 110%;
-    left: 0;
-    background: #323232;
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    white-space: nowrap;
-    margin-top: 4px;
-    z-index: 100;
-  }
-  
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.button {
+  background-color: #2f4f4f;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #202020;
+}
+
+.tooltip {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: #323232;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  margin-top: 4px;
+  z-index: 100;
+}
