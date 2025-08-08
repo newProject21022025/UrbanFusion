@@ -29,7 +29,7 @@ export default function Catalog() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
-  const basketItems = useSelector((state: RootState) => state.basket.items);
+  // const basketItems = useSelector((state: RootState) => state.basket.items);
   const dispatch = useDispatch();
   const favoriteItems = useSelector(
     (state: RootState) => state.favorites.items
