@@ -18,11 +18,13 @@ export default function Favorites() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // Прокрутка до верху сторінки при завантаженні
+    window.scrollTo(0, 0);
     setHasMounted(true);
   }, []);
 
   if (!hasMounted) {
-    return null; // або loader, або просто нічого
+    return null;
   }
 
   const formatPrice = (amount: number) => {

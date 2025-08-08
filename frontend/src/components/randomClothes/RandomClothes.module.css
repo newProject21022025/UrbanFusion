@@ -88,12 +88,6 @@
   font-weight: 600;
 }
 
-/* .category {
-  font-size: 0.85rem;
-  color: #666;
-  margin-bottom: 12px;
-} */
-
 .priceContainer {
   margin: 15px 0;
 }
@@ -159,15 +153,6 @@
   gap: 10px;
   margin-bottom: 8px;
 }
-
-/* .gender {
-  font-weight: 600;
-  color: #4a90e2;
-} */
-
-/* .separator {
-  color: var(--color-text-white);
-} */
 
 .colorsContainer {
   display: flex;

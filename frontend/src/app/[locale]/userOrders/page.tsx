@@ -6,8 +6,8 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./UserOrders.module.css";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { useTranslations } from "next-intl"; // Import useTranslations
-import { useParams } from "next/navigation"; // Import useParams to get the locale
+import { useTranslations } from "next-intl"; 
+import { useParams } from "next/navigation"; 
 
 interface Order {
   _id: string;
@@ -162,8 +162,7 @@ export default function UserOrders() {
                     <li>
                       {t("itemName")}:{" "}
                       {item.name[currentLocale as "en" | "uk"]}
-                    </li>{" "}
-                    {/* Translate item name */}
+                    </li>{" "}                    
                     <li>
                       {t("quantity")}: {item.quantity} {t("pieces")}
                     </li>
@@ -251,10 +250,8 @@ export default function UserOrders() {
         </div>
       ))}
       <div ref={observerRef} style={{ height: 1 }} />
-      {loading && <p>{t("loading")}</p>}{" "}
-      {/* Translate "Завантаження..." */}
-      {!hasMore && <p>{t("allOrdersLoaded")}</p>}{" "}
-      {/* Translate "Це всі ваші замовлення 😊" */}
+      {loading && <p>{t("loading")}</p>}{" "}    
+      {!hasMore && <p>{t("allOrdersLoaded")}</p>}{" "}      
     </div>
   );
 }

@@ -11,18 +11,13 @@
 
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Ліва колонка ширша за праву */
-
-  /* font-family: "Lora", serif;
-  background: #f2f2f2; */
+  grid-template-columns: 1fr 1fr;   
 }
 
-/* Ліва колонка - фото, опис, вибір кольору/розміру */
 .leftColumn {
   padding: 20px;
 }
 
-/* Права колонка - відгуки */
 .rightColumn {
   padding: 20px; 
 }

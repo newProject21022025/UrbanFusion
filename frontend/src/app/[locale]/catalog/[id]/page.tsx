@@ -146,8 +146,7 @@ export default function ClothesPage() {
   const handleCommentAdded = () => {
     fetchClothes();
   };
-
-  console.log(clothes);
+  
 
   return (
     <main className={styles.main}>
@@ -164,8 +163,7 @@ export default function ClothesPage() {
             />
           )}
         </div>
-        <div className={styles.rightColumn}>
-          {/* <div className={styles.infoBlock}></div> */}
+        <div className={styles.rightColumn}>         
           <p className={styles.article}>{clothes.article}</p>
           <h2 className={styles.title}>{clothes.name[locale]}</h2>
           <p className={styles.description}>{clothes.description[locale]}</p>
@@ -235,8 +233,7 @@ export default function ClothesPage() {
                           disabled={sizeObj.quantity <= 0}
                         />
                         <label htmlFor={`size-${j}`}>
-                          {sizeObj.size}
-                          {/* {sizeObj.quantity} */}
+                          {sizeObj.size}                          
                         </label>
                       </div>
                     ))}
@@ -352,7 +349,7 @@ export default function ClothesPage() {
                       locale={locale}
                       onChange={fetchClothes}
                       userVote={userVote}
-                      authorId={review.userId} // ← додано
+                      authorId={review.userId} 
                     />
                   </div>
                 </li>

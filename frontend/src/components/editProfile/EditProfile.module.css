@@ -1,8 +1,6 @@
-.container {
-  /* max-width: 500px; */
+.container { 
   width: 100%;
-  margin: 0 auto;
-  /* padding: 2rem; */  
+  margin: 0 auto;  
 }
 .title {
   margin-bottom: 1rem;
@@ -57,7 +55,4 @@
 .button:hover {
   background-color: #709090;
 }
-/* .button:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
-} */
+

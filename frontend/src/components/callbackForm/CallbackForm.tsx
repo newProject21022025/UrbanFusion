@@ -19,8 +19,7 @@ interface CallbackFormValues {
   description: string;
 }
 
-const formatPhoneNumber = (value: string): string => {
-  // Видаляємо всі нецифрові символи і зайвий код 380
+const formatPhoneNumber = (value: string): string => { 
   const cleaned = value.replace(/\D/g, "").replace(/^380/, "");
   const limited = cleaned.slice(0, 9); // лише 9 цифр після коду країни
 

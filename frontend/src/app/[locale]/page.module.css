@@ -1,21 +1,18 @@
 .container {
   max-width: 1400px;
-  margin: 85px auto;
-  /* margin-top: 85px; */
-  /* padding: 2rem; */
+  margin: 85px auto;  
   min-height: 100vh;
-  padding: 0; /* Видалено внутрішні відступи */
+  padding: 0;
 }
 .main {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  /* padding: 4rem 1rem; */
+  text-align: center; 
   animation: fadeIn 0.8s ease-out;
-  width: 100%; /* Додано ширину 100% */
-  padding: 0; /* Видалено внутрішні відступи */
+  width: 100%;
+  padding: 0; 
 }
 
 /* newCollection */
@@ -31,7 +28,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  position: relative; /* Додано для коректного позиціонування */
+  position: relative; 
 }
 .titleNewCollection {
   color: #f2f2f2;
@@ -40,11 +37,11 @@
   font-family: "Lora", serif;
 }
 .buyLink {
-  display: inline-flex; /* або inline-block */
+  display: inline-flex; 
   justify-content: center;
   align-items: center;
 
-  padding: 10px 90px; /* регулює розмір кнопки */
+  padding: 10px 90px; 
   font-family: "Lora", serif;
   color: #f2f2f2;
   font-size: 16px;
@@ -52,8 +49,8 @@
   border-radius: 10px;
   text-decoration: none;
   cursor: pointer;
-  align-self: center; /* ❗️центр по осі flex-контейнера */
-  width: auto; /* ❗️не дозволяємо 100% ширину */
+  align-self: center; 
+  width: auto; 
 }
 
 /* ekoInfo */
@@ -82,7 +79,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 40px; /* Додано відступи для кращого вигляду */
+  padding: 40px; 
 }
 .ekoInfoNumber {
   font-size: 64px;
@@ -104,20 +101,15 @@
   align-items: start;
   text-align: center;
   gap: 36px;
-  margin-bottom: 85px; /* Збільшено відступ знизу */
-  padding: 0 20px; /* Бічні відступи */
+  margin-bottom: 85px; 
+  padding: 0 20px;
 }
 .aboutUsBox {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Дві колонки */
+  grid-template-columns: 1fr 1fr; 
   align-items: center;
-  gap: 20px;
-  /* padding: 0 20px; */
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 80px; */
+  gap: 20px; 
 }
 
 .aboutUsTextBox {
@@ -258,7 +250,7 @@
   width: 100%;
   align-items: start;
   margin-bottom: 85px;
-  padding: 0 20px; /* Бічні відступи */
+  padding: 0 20px; 
 }
 .planWorkContainer {
   display: flex;
@@ -280,8 +272,7 @@
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    /* flex: 1 1 100%; */
+    align-items: center;    
     max-width: 100%;   
   }  
 }
@@ -292,11 +283,11 @@
   align-items: center;
   text-align: center;
   padding: 20px;
-  width: 310px;  /* однаковий розмір */
-  height: 310px; /* робить його круглим */
+  width: 310px;  
+  height: 310px; 
   border-radius: 50%;
   border: 1px solid var(--color-bg-dark);
-  margin: 0 auto 20px; /* центрує коло в межах боксу */
+  margin: 0 auto 20px; 
 }
 
 .planWorkNumber {
@@ -321,7 +312,7 @@
 
 @media (max-width: 1024px) {
   .titleAboutUs, .titlePlanWork {
-    font-size: 48px; /* Зменшено розмір шрифту для планшетів */
+    font-size: 48px; 
   }
   .container {
     margin-top: 65px;
@@ -330,17 +321,17 @@
 
 @media (max-width: 768px) {
   .titleAboutUs, .titlePlanWork {
-    font-size: 32px; /* Зменшено розмір шрифту для мобільних */
+    font-size: 32px; 
   }
   .titleNewCollection {
-    font-size: 40px; /* Зменшено розмір шрифту для мобільних */
+    font-size: 40px; 
     margin-top: 60px;
   }
   
   .aboutUsBox {
     grid-template-columns: 1fr;
-    gap: 40px; /* Менший відступ */
-    align-items: flex-start; /* Текст зліва */
+    gap: 40px; 
+    align-items: flex-start; 
   }
 
   .aboutUsTextBox {   
@@ -357,8 +348,7 @@
   }
 
   .aboutUsImage {
-    width: 100%;
-    /* padding: 0 16px; */    
+    width: 100%;    
   }
 
   .aboutUsImageContent {
@@ -372,25 +362,25 @@
     align-items: center;
   }
   .aboutBrand{
-    height:600px; /* Змінено висоту для мобільних */
-     /* Додано відступи */
+    height:600px; 
+     
   }
   .aboutBrandBox {
     padding: 20px 20px 0 20px;   
   }
   .aboutBrandBox::after
   {
-    bottom: 20px; /* Зменшено відступ знизу */
+    bottom: 20px; 
     left: 15%;
-    width: 60%; /* Зменшено ширину */
-    height: 40%; /* Зменшено висоту */
+    width: 60%; 
+    height: 40%; 
   }
   .aboutBrandText{
     width: 100%;
   }
   .planWorkList {   
     margin-top: 30px;   
-    padding: 0 30px; /* Бічні відступи */
+    padding: 0 30px; 
   }
   .planWork{
     align-items: center;

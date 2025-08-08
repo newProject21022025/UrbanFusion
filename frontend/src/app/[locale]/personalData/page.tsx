@@ -6,10 +6,9 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import styles from "./PersonalData.module.css";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store"; // Шлях залежить від структури проекту
-import EditProfile from "../../../components/editProfile/EditProfile"; // Шлях залежить від структури проекту
+import { RootState } from "../../../redux/store"; 
+import EditProfile from "../../../components/editProfile/EditProfile"; 
 import Link from "next/link";
-// import ChangePasswordForm from "../../../components/editProfile/ChangePasswordForm"; // Шлях залежить від структури проекту
 import dynamic from "next/dynamic";
 
 const ChangePasswordForm = dynamic(() => import("../../../components/editProfile/ChangePasswordForm"), {

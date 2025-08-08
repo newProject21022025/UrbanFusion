@@ -195,7 +195,7 @@ export default function ClothesForm({
   
   const handleStockChange = (
     index: number,
-    field: string, // Змінити на string
+    field: string, 
     value: string | number,
     sizeIndex?: number
   ) => {

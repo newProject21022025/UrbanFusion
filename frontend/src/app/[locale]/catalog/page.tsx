@@ -3,13 +3,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./Catalog.module.css";
-import { useLocale, useTranslations } from "next-intl"; // Додано useTranslations
+import { useLocale, useTranslations } from "next-intl"; 
 import { clothesService, Clothes } from "../../api/clothes/clothesService";
 import Eco from "../../../svg/Eco/eco";
 import Cross from "../../../svg/Cross/cross";
 import { ecoDescriptions, getCategoryKey } from "./data/ecoDescriptions";
 import Link from "next/link";
-import BasketBlack from "../../../svg/Basket/basketBlack";
+// import BasketBlack from "../../../svg/Basket/basketBlack";
 import HeartWhite from "../../../svg/Heart/heartWhite";
 import HeartBlack from "../../../svg/Heart/heartBlack";
 import { useSelector, useDispatch } from "react-redux";
@@ -29,7 +29,7 @@ export default function Catalog() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [flippedCards, setFlippedCards] = useState<Record<string, boolean>>({});
-  const basketItems = useSelector((state: RootState) => state.basket.items);
+  // const basketItems = useSelector((state: RootState) => state.basket.items);
   const dispatch = useDispatch();
   const favoriteItems = useSelector(
     (state: RootState) => state.favorites.items
@@ -142,9 +142,9 @@ export default function Catalog() {
     }));
   };
 
-  const isItemInBasket = (id: string) => {
-    return basketItems.some((item) => item._id === id);
-  };
+  // const isItemInBasket = (id: string) => {
+  //   return basketItems.some((item) => item._id === id);
+  // };
 
   const isItemInFavorites = (id: string) => {
     return favoriteItems.some((item) => item._id === id);
@@ -273,13 +273,13 @@ export default function Catalog() {
                         <HeartWhite />
                       )}
                     </div>
-                    <div
+                    {/* <div
                       className={`${styles.basket} ${
                         isItemInBasket(item._id) ? styles.active : ""
                       }`}
                     >
                       <BasketBlack />
-                    </div>
+                    </div> */}
 
                     <div
                       className={styles.ecoIcon}
@@ -339,9 +339,7 @@ export default function Catalog() {
             </div>
           );
         })}
-      </div>
-
-      {/* {loading && <div className={styles.loading}>{t("loading")}</div>} */}
+      </div>      
     </main>
   );
 }

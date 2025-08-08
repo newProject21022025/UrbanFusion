@@ -16,8 +16,7 @@ export default function LoginPage() {
     login: string;
     password: string;
   }): Promise<{ success: boolean; isAdmin: boolean; user?: User }> => {
-    try {
-      console.log("Login attempt:", values.login);
+    try {   
 
       // This would be your actual API call
       const response = await fetch("/api/auth/login", {
@@ -31,8 +30,6 @@ export default function LoginPage() {
       if (!response.ok || !data.success) {
         throw new Error(data.message || "Login failed");
       }
-
-      // console.log("Login success:", data.user);
 
       // Determine if user is admin
       const isAdmin = data.user.role === "admin";

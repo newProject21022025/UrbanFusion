@@ -9,8 +9,8 @@ import { useTranslations } from "next-intl";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { setUser } from "../../redux/slices/userSlice";
-import styles from "./RegisterForm.module.css"; // переконайся, що такий файл існує
-import { loginUser } from "../../redux/slices/authSlice"; // Імпортуємо action creator для логіну
+import styles from "./RegisterForm.module.css"; 
+import { loginUser } from "../../redux/slices/authSlice"; 
 
 const RegisterForm = () => {
   const t = useTranslations("register");
@@ -91,9 +91,9 @@ const RegisterForm = () => {
           role: user.role || "user",
         })
       );
-      // if (user) {
+      
       localStorage.setItem("userData", JSON.stringify(user)); // <--- ВАЖНО
-      // }
+      
       dispatch(loginUser());
       resetForm();
       router.push("/");
