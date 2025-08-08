@@ -9,7 +9,7 @@ import Eco from "../../../svg/Eco/eco";
 import Cross from "../../../svg/Cross/cross";
 import { ecoDescriptions, getCategoryKey } from "./data/ecoDescriptions";
 import Link from "next/link";
-import BasketBlack from "../../../svg/Basket/basketBlack";
+// import BasketBlack from "../../../svg/Basket/basketBlack";
 import HeartWhite from "../../../svg/Heart/heartWhite";
 import HeartBlack from "../../../svg/Heart/heartBlack";
 import { useSelector, useDispatch } from "react-redux";
@@ -142,9 +142,9 @@ export default function Catalog() {
     }));
   };
 
-  const isItemInBasket = (id: string) => {
-    return basketItems.some((item) => item._id === id);
-  };
+  // const isItemInBasket = (id: string) => {
+  //   return basketItems.some((item) => item._id === id);
+  // };
 
   const isItemInFavorites = (id: string) => {
     return favoriteItems.some((item) => item._id === id);
