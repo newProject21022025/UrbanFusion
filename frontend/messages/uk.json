@@ -602,6 +602,12 @@
     "developer2": "Андрій Дурицький (andy73594@gmail.com)",
     "developerResponsibilities1": "— бекенд-розробка, робота з базою даних, API та безпека проєкту.",
     "developerResponsibilities2": "— фронтенд-розробка, інтеграція з перекладом, оптимізація інтерфейсу та адаптивність.",
+    "technologiesTitle": "Технології та інструменти",
+    "technologiesFrontend": "Frontend: Next.js 15, React 19, TypeScript, Redux Toolkit, Axios, Formik, Yup, Recharts, Cloudinary, CSS Modules, next-intl.",
+    "technologiesBackend": "Backend: NestJS 11, TypeScript, MongoDB Atlas, Mongoose, Redis, bcrypt, Nodemailer, class-validator, Rate Limiter Flexible.",
+    "technologiesInfrastructure": "Інфраструктура: Vercel, Node.js 18+, Git, GitHub, ESLint, Prettier.",
+    "technologiesDesign": "Дизайн: Figma, Behance.",
     "footer": "Дякуємо кожному учаснику за натхнення, ідеї та час, вкладений у створення платформи!"
   }
+  
 }

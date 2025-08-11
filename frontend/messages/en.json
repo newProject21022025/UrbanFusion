@@ -590,19 +590,25 @@
       "title": "Favorite Items",
       "empty": "You have no favorite items"
     },
-    "Authors":{
+    "Authors": {
       "title": "Project Authors",
       "description": "This project was created thanks to the joint work of talented designers and developers. Each team member contributed to the visual aesthetics, functionality, and overall concept of the platform.",
       "designersTitle": "Designers",
       "designer1": "Anna Khristoliubova (anna.khristoliubova@gmail.com)",
       "designer2": "Zhanna Mankauskaite (zmankauskajte@gmail.com)",
-      "designerResponsibilities1": "— Responsible for the main design concept, visual style, and user interface.",
-      "designerResponsibilities2": "— UX specialists, design adaptation for mobile devices, color palette.",
+      "designerResponsibilities1": "— responsible for the main design concept, visual style, and user interface.",
+      "designerResponsibilities2": "— UX specialists, mobile design adaptation, color palette.",
       "developersTitle": "Developers",
       "developer1": "Denys Khristoliubov (khristoliubov1986@gmail.com)",
       "developer2": "Andrii Durytskyi (andy73594@gmail.com)",
-      "developerResponsibilities1": "— Backend development, database management, API, and project security.",
-      "developerResponsibilities2": "— Frontend development, translation integration, UI optimization, and responsiveness.",
-      "footer": "Thanks to every team member for the inspiration, ideas, and time invested in building this platform!"
+      "developerResponsibilities1": "— backend development, database work, API, and project security.",
+      "developerResponsibilities2": "— frontend development, translation integration, interface optimization, and responsiveness.",
+      "technologiesTitle": "Technologies & Tools",
+      "technologiesFrontend": "Frontend: Next.js 15, React 19, TypeScript, Redux Toolkit, Axios, Formik, Yup, Recharts, Cloudinary, CSS Modules, next-intl.",
+      "technologiesBackend": "Backend: NestJS 11, TypeScript, MongoDB Atlas, Mongoose, Redis, bcrypt, Nodemailer, class-validator, Rate Limiter Flexible.",
+      "technologiesInfrastructure": "Infrastructure: Vercel, Node.js 18+, Git, GitHub, ESLint, Prettier.",
+      "technologiesDesign": "Design: Figma, Behance.",
+      "footer": "Thanks to each participant for the inspiration, ideas, and time invested in creating the platform!"
     }
+    
 }
