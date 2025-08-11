@@ -22,6 +22,19 @@ export default function OrderContent() {
 
   const [hasMounted, setHasMounted] = React.useState(false);
 
+  const formatPrice = (amount: number) => {
+    return (
+      new Intl.NumberFormat(locale, {
+        style: "currency",
+        currency: "UAH",
+        minimumFractionDigits: 0,
+      })
+        .format(amount)
+        .replace("₴", "")
+        .trim() + " "
+    );
+  };
+
   React.useEffect(() => {
     setHasMounted(true);
   }, []);
@@ -96,13 +109,15 @@ export default function OrderContent() {
                   <strong>{t("price")}:</strong>{" "}
                   {discount ? (
                     <>
-                      <span className={styles.oldPrice}>{price} грн</span>{" "}
+                      <span className={styles.oldPrice}>
+                        {formatPrice(price)}
+                      </span>{" "}
                       <span className={styles.discountPrice}>
-                        {finalPrice} грн
+                        {formatPrice(finalPrice)}
                       </span>
                     </>
                   ) : (
-                    `${price} грн`
+                    formatPrice(price)
                   )}
                 </p>
               </div>
@@ -113,4 +128,5 @@ export default function OrderContent() {
     </div>
   );
 }
+
 

@@ -1,7 +1,8 @@
 {
   "Header": {
     "catalog": "Catalog",
-    "logo": "UrbanFusion"
+    "logo": "UrbanFusion",
+    "category": "Category"
   },
   "Home": {
     "title": "New Collection",
@@ -557,5 +558,51 @@
     "passwordUpdatedSuccessfully": "Password updated successfully!",
     "passwordUpdateError": "Password update error",
     "somethingWentWrong": "Something went wrong"
-  } 
+  },
+  "SearchBar": {
+    "searchPlaceholderHeader": "Search for products...",
+    "searchPlaceholder": "Search by name or article number",
+    "searchButton": "Search",
+    "noResults": "No results found",
+    "searching": "Searching...",
+    "searchError": "Error occurred while searching"
+  },
+      "CreateComment": {
+      "leaveComment": "Leave a comment",
+      "rating": "Rating:",
+      "noRating": "No rating",
+      "placeholder": "Your comment...",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "loginToComment": "You must be logged in to leave a comment"
+    },
+    "ForgotPassword": {
+      "title": "Password Recovery",
+      "labelEmail": "Email",
+      "placeholderEmail": "Enter your email",
+      "sendNewPassword": "Send new password",
+      "invalidEmail": "Invalid email format",
+      "requiredEmail": "Email is required",
+      "requestError": "Error sending request",
+      "unknownError": "Unknown error"
+    },
+    "Favorites": {
+      "title": "Favorite Items",
+      "empty": "You have no favorite items"
+    },
+    "Authors":{
+      "title": "Project Authors",
+      "description": "This project was created thanks to the joint work of talented designers and developers. Each team member contributed to the visual aesthetics, functionality, and overall concept of the platform.",
+      "designersTitle": "Designers",
+      "designer1": "Anna Khristoliubova (anna.khristoliubova@gmail.com)",
+      "designer2": "Zhanna Mankauskaite (zmankauskajte@gmail.com)",
+      "designerResponsibilities1": "— Responsible for the main design concept, visual style, and user interface.",
+      "designerResponsibilities2": "— UX specialists, design adaptation for mobile devices, color palette.",
+      "developersTitle": "Developers",
+      "developer1": "Denys Khristoliubov (khristoliubov1986@gmail.com)",
+      "developer2": "Andrii Durytskyi (andy73594@gmail.com)",
+      "developerResponsibilities1": "— Backend development, database management, API, and project security.",
+      "developerResponsibilities2": "— Frontend development, translation integration, UI optimization, and responsiveness.",
+      "footer": "Thanks to every team member for the inspiration, ideas, and time invested in building this platform!"
+    }
 }

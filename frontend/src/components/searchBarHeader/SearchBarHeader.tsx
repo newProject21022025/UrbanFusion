@@ -7,11 +7,13 @@ import { useRouter } from "@/i18n/navigation";
 import { useState, useEffect } from "react";
 import Search from "../../svg/Search/search";
 import styles from "./SearchBar.module.css";
+import { useTranslations } from "next-intl";
 
 export default function SearchBar() {
   const router = useRouter();
   const [showSearch, setShowSearch] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const t = useTranslations("SearchBar");
 
   useEffect(() => {
     const checkScreen = () => setIsMobile(window.innerWidth <= 768);
@@ -35,7 +37,7 @@ export default function SearchBar() {
               <input
                 name="query"
                 type="text"
-                placeholder="Пошук товарів..."
+                placeholder={t("searchPlaceholderHeader")}
                 className={styles.searchInput}
                 autoFocus
                 value={values.query}

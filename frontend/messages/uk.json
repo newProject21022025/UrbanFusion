@@ -1,7 +1,8 @@
 {
   "Header": {
     "catalog": "Каталог",
-    "logo": "UrbanFusion"
+    "logo": "UrbanFusion",
+    "category": "Категорія"
   },
   "Home": {
     "title": "Нова колекція",
@@ -556,5 +557,51 @@
     "passwordUpdatedSuccessfully": "Пароль оновлено успішно!",
     "passwordUpdateError": "Помилка оновлення пароля",
     "somethingWentWrong": "Щось пішло не так"
+  },
+  "SearchBar": {
+    "searchPlaceholderHeader": "Пошук товарів...",
+    "searchPlaceholder": "Пошук за назвою або артикулом",
+    "searchButton": "Пошук",
+    "noResults": "Нічого не знайдено",
+    "searching": "Шукаємо...",
+    "error": "Помилка пошуку"
+  },
+  "CreateComment": {
+    "leaveComment": "Залишити коментар",
+    "rating": "Оцінка:",
+    "noRating": "Без оцінки",
+    "placeholder": "Ваш коментар...",
+    "submit": "Відправити",
+    "submitting": "Відправка...",
+    "loginToComment": "Ви маєте увійти, щоб залишити коментар"
+  },
+  "ForgotPassword": {
+    "title": "Відновлення паролю",
+    "labelEmail": "Email",
+    "placeholderEmail": "Введіть ваш email",
+    "sendNewPassword": "Надіслати новий пароль",
+    "invalidEmail": "Невірний формат email",
+    "requiredEmail": "Email обов'язковий",
+    "requestError": "Помилка надсилання запиту",
+    "unknownError": "Невідома помилка"
+  },
+  "Favorites": {
+    "title": "Обрані товари",
+    "empty": "У вас немає обраних товарів"
+  },
+  "Authors": {
+    "title": "Автори проєкту",
+    "description": "Цей проєкт було створено завдяки спільній роботі талановитих дизайнерів та розробників. Кожен учасник команди вніс свій внесок у візуальну естетику, функціональність та загальну ідею платформи.",
+    "designersTitle": "Дизайнери",
+    "designer1": "Анна Христолюбова (anna.khristoliubova@gmail.com)",
+    "designer2": "Жанна Манкаускайте (zmankauskajte@gmail.com)",
+    "designerResponsibilities1": "— відповідальні за основну концепцію дизайну, візуальний стиль та інтерфейс користувача.",
+    "designerResponsibilities2": "— спеціалісти з UX, адаптація дизайну для мобільних пристроїв, кольорова палітра.",
+    "developersTitle": "Розробники",
+    "developer1": "Денис Христолюбов (khristoliubov1986@gmail.com)",
+    "developer2": "Андрій Дурицький (andy73594@gmail.com)",
+    "developerResponsibilities1": "— бекенд-розробка, робота з базою даних, API та безпека проєкту.",
+    "developerResponsibilities2": "— фронтенд-розробка, інтеграція з перекладом, оптимізація інтерфейсу та адаптивність.",
+    "footer": "Дякуємо кожному учаснику за натхнення, ідеї та час, вкладений у створення платформи!"
   }
 }

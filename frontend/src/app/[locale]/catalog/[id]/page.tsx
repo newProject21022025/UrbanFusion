@@ -36,6 +36,19 @@ export default function ClothesPage() {
     (state: RootState) => state.user.role === "admin"
   );
 
+  const formatPrice = (amount: number) => {
+    return (
+      new Intl.NumberFormat(locale, {
+        style: "currency",
+        currency: "UAH",
+        minimumFractionDigits: 0,
+      })
+        .format(amount)
+        .replace("₴", "")
+        .trim() + " "
+    );
+  };
+  
   const fetchClothes = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -146,7 +159,6 @@ export default function ClothesPage() {
   const handleCommentAdded = () => {
     fetchClothes();
   };
-  
 
   return (
     <main className={styles.main}>
@@ -163,7 +175,7 @@ export default function ClothesPage() {
             />
           )}
         </div>
-        <div className={styles.rightColumn}>         
+        <div className={styles.rightColumn}>
           <p className={styles.article}>{clothes.article}</p>
           <h2 className={styles.title}>{clothes.name[locale]}</h2>
           <p className={styles.description}>{clothes.description[locale]}</p>
@@ -172,7 +184,7 @@ export default function ClothesPage() {
             {clothes.price.discount > 0 && (
               <>
                 <span className={styles.oldPrice}>
-                  {clothes.price.amount} {clothes.price.currency}
+                  {formatPrice(clothes.price.amount)}
                 </span>
                 <span className={styles.discount}>
                   -{clothes.price.discount}%
@@ -180,9 +192,10 @@ export default function ClothesPage() {
               </>
             )}
             <span className={styles.newPrice}>
-              {discountedPrice.toFixed(2)} {clothes.price.currency}
+              {formatPrice(discountedPrice)}
             </span>
           </div>
+
           <h2>{t("availableGoods")}:</h2>
           <div className={styles.stockBlock}>
             {/* Кольори у рядок */}
@@ -232,9 +245,7 @@ export default function ClothesPage() {
                           onChange={() => setSelectedSize(sizeObj.size)}
                           disabled={sizeObj.quantity <= 0}
                         />
-                        <label htmlFor={`size-${j}`}>
-                          {sizeObj.size}                          
-                        </label>
+                        <label htmlFor={`size-${j}`}>{sizeObj.size}</label>
                       </div>
                     ))}
                 </div>
@@ -349,7 +360,7 @@ export default function ClothesPage() {
                       locale={locale}
                       onChange={fetchClothes}
                       userVote={userVote}
-                      authorId={review.userId} 
+                      authorId={review.userId}
                     />
                   </div>
                 </li>

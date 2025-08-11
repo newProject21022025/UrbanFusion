@@ -2,12 +2,18 @@
 
 "use client";
 
-import { LoginForm } from "../../../components/loginForm/LoginForm";
+// import { LoginForm } from "../../../components/loginForm/LoginForm";
 import styles from "./page.module.css";
 import { User } from "../../../types/User";
 import RegisterForm from "../../../components/registerForm/RegisterForm";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import dynamic from "next/dynamic";
+
+const LoginForm = dynamic(
+  () => import("../../../components/loginForm/LoginForm"),
+  { ssr: false }
+);
 
 export default function LoginPage() {
   const [isRegistering, setIsRegistering] = useState(false);
