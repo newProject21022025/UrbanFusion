@@ -3,29 +3,27 @@
 "use client";
 import styles from './Favorites.module.css';
 import React, { useEffect, useState } from "react";
-import { useLocale } from "next-intl";
-import { useSelector } from "react-redux";
+import { useLocale, useTranslations } from "next-intl";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import Link from "next/link";
 import HeartBlack from "../../../svg/Heart/heartBlack";
-import { useDispatch } from "react-redux";
 import { removeFromFavorites } from "../../../redux/slices/favoritesSlice";
 
 export default function Favorites() {
   const [hasMounted, setHasMounted] = useState(false);
   const locale = useLocale();
+  const t = useTranslations("Favorites");
+
   const favoriteItems = useSelector((state: RootState) => state.favorites.items);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Прокрутка до верху сторінки при завантаженні
     window.scrollTo(0, 0);
     setHasMounted(true);
   }, []);
 
-  if (!hasMounted) {
-    return null;
-  }
+  if (!hasMounted) return null;
 
   const formatPrice = (amount: number) => {
     return (
@@ -36,7 +34,7 @@ export default function Favorites() {
       })
         .format(amount)
         .replace("₴", "")
-        .trim() + " ₴"
+        .trim() + " "
     );
   };
 
@@ -46,10 +44,10 @@ export default function Favorites() {
 
   return (
     <main className={styles.main}>
-      <h1 className={styles.title}>Обрані товари</h1>
+      <h1 className={styles.title}>{t("title")}</h1>
       
       {favoriteItems.length === 0 ? (
-        <div className={styles.empty}>У вас немає обраних товарів</div>
+        <div className={styles.empty}>{t("empty")}</div>
       ) : (
         <div className={styles.favoritesContainer}>
           {favoriteItems.map((item) => (

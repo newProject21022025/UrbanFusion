@@ -24,7 +24,7 @@ interface LoginFormProps {
   }) => Promise<{ success: boolean; isAdmin: boolean; user?: User }>;
 }
 
-export function LoginForm({ onSubmit }: LoginFormProps) {
+export default function LoginForm({ onSubmit }: LoginFormProps) {
   const router = useRouter();
   const dispatch = useDispatch();
   const t = useTranslations("login");

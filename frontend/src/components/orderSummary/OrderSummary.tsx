@@ -16,6 +16,19 @@ export default function OrderSummary() {
   const items = useSelector((state: RootState) => state.basket.items);
   const [basketItems, setBasketItems] = useState<typeof items>([]);
 
+  const formatPrice = (amount: number) => {
+    return (
+      new Intl.NumberFormat(locale, {
+        style: "currency",
+        currency: "UAH",
+        minimumFractionDigits: 0,
+      })
+        .format(amount)
+        .replace("₴", "")
+        .trim() + " "
+    );
+  };
+
   useEffect(() => {
     setBasketItems(items);
   }, [items]);
@@ -46,14 +59,21 @@ export default function OrderSummary() {
           const size = item.selectedSize ?? t("unknown");
 
           return (
-            <div key={`${item._id}-${item.selectedColor}-${item.selectedSize}`} className={styles.itemRow}>
+            <div
+              key={`${item._id}-${item.selectedColor}-${item.selectedSize}`}
+              className={styles.itemRow}
+            >
               <div className={styles.itemName}>
                 {itemName}
                 {size && <span className={styles.itemDetail}> • {size}</span>}
               </div>
               <div className={styles.itemDetails}>
-                <span>{item.quantity} × {finalPrice} грн</span>
-                <span className={styles.itemTotal}>{totalPrice} грн</span>
+                <span>
+                  {item.quantity} × {formatPrice(finalPrice)}
+                </span>
+                <span className={styles.itemTotal}>
+                  {formatPrice(totalPrice)}
+                </span>
               </div>
             </div>
           );
@@ -63,7 +83,7 @@ export default function OrderSummary() {
       <div className={styles.totalSection}>
         <div className={styles.totalRow}>
           <span>{t("totalSum")}:</span>
-          <span className={styles.totalAmount}>{totalSum} грн</span>
+          <span className={styles.totalAmount}>{formatPrice(totalSum)}</span>
         </div>
       </div>
     </div>

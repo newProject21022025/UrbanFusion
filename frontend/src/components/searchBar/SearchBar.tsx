@@ -6,6 +6,7 @@ import { useEffect, useState, useMemo } from "react";
 import { Clothes } from "../../app/api/clothes/clothesService";
 import { useLocale } from "next-intl";
 import styles from "./SearchBar.module.css";
+import { useTranslations } from "next-intl";
 
 type Props = {
   clothes: Clothes[];
@@ -15,6 +16,7 @@ type Props = {
 export default function SearchBar({ clothes, onResults }: Props) {
   const locale = useLocale();
   const [query, setQuery] = useState("");
+  const t = useTranslations("SearchBar");
 
   const filteredResults = useMemo(() => {
     const lowerQuery = query.toLowerCase().trim();
@@ -36,7 +38,7 @@ export default function SearchBar({ clothes, onResults }: Props) {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Пошук за назвою або артикулом"
+        placeholder={t("searchPlaceholder")}
         className={styles.searchInput}
       />
     </div>

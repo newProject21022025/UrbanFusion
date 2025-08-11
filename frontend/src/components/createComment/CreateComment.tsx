@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store"; 
 import styles from "./CreateComment.module.css";
 import { commentService } from "../../app/api/commentService";
+import { useTranslations } from "next-intl";
 
 interface CreateCommentProps {
   clothesId: string;
@@ -18,8 +19,9 @@ export default function CreateComment({
   onCommentAdded,
 }: CreateCommentProps) {
   const [comment, setComment] = useState("");
-  const [rating, setRating] = useState(0); // rating по дефолту 0
+  const [rating, setRating] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const t = useTranslations("CreateComment");
 
   const user = useSelector((state: RootState) => state.user);
   const userId = user.userId;
@@ -36,12 +38,12 @@ export default function CreateComment({
       await commentService.addComment(clothesId, locale, {
         userId,
         userName,
-        rating,  // відправляємо rating навіть якщо 0
+        rating,
         comment,
       });
 
       setComment("");
-      setRating(0); // скидаємо рейтинг назад у 0
+      setRating(0);
       onCommentAdded();
     } catch (error) {
       console.error("Error posting comment:", error);
@@ -52,14 +54,14 @@ export default function CreateComment({
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
-      <h3>Залишити коментар</h3>
+      <h3>{t("leaveComment")}</h3>
       <div className={styles.rating}>
-        <label>Оцінка:</label>
+        <label>{t("rating")}</label>
         <select
           value={rating}
           onChange={(e) => setRating(Number(e.target.value))}
         >
-          <option value={0}>Без оцінки</option> {/* Додана опція 0 */}
+          <option value={0}>{t("noRating")}</option>
           {[1, 2, 3, 4, 5].map((num) => (
             <option key={num} value={num}>
               {num} ⭐
@@ -70,7 +72,7 @@ export default function CreateComment({
       <textarea
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        placeholder="Ваш коментар..."
+        placeholder={t("placeholder")}
         required
         className={styles.textarea}
       />
@@ -78,9 +80,9 @@ export default function CreateComment({
         type="submit"
         disabled={isSubmitting || !userId}
         className={styles.submitButton}
-        title={!userId ? "Ви маєте увійти, щоб залишити коментар" : ""}
+        title={!userId ? t("loginToComment") : ""}
       >
-        {isSubmitting ? "Відправка..." : "Відправити"}
+        {isSubmitting ? t("submitting") : t("submit")}
       </button>
     </form>
   );
