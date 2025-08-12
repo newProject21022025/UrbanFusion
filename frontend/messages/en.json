@@ -608,7 +608,8 @@
       "technologiesBackend": "Backend: NestJS 11, TypeScript, MongoDB Atlas, Mongoose, Redis, bcrypt, Nodemailer, class-validator, Rate Limiter Flexible.",
       "technologiesInfrastructure": "Infrastructure: Vercel, Node.js 18+, Git, GitHub, ESLint, Prettier.",
       "technologiesDesign": "Design: Figma, Behance.",
-      "footer": "Thanks to each participant for the inspiration, ideas, and time invested in creating the platform!"
+      "footer": "Thanks to each participant for the inspiration, ideas, and time invested in creating the platform!",
+      "school": "Thank you ❤️"
     }
     
 }
